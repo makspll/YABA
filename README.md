@@ -4,6 +4,8 @@
 
 
 ## Set up environment
-- `make create-env` - creates env named `mlp-cw4` with all dependencies 
+    - `conda create --name mlp-cw4`
+	- `conda activate mlp-cw4`
+    - `make installEnv` 
 
 
