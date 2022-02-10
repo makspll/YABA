@@ -12,6 +12,7 @@ PARSER.add_argument("--datasets",
     default="datasets",
     help="Path to experiments directory")
 
+
 PARSER.add_argument("--resume",
     help="Path to experiments directory",
     action="store_const",
@@ -28,7 +29,8 @@ PARSER.add_argument("--verbose",
 
 PARSER.add_argument("--experiment_name",
     help="Overrides 'experiment_name' from the config file provided")
-
+PARSER.add_argument("--seed",
+    help="Overrides 'seeed' from the config file provided")
 PARSER.add_argument("--dataset",
     help="Overrides 'dataset' from the config file provided")
 

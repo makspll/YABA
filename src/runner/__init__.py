@@ -1,15 +1,10 @@
 
 from copy import deepcopy
 from csv import DictWriter
-from dataclasses import dataclass
 from datetime import date
-from logging import Logger
 import logging
-import sys
-from typing import Callable, Dict, List
-
+from typing import Callable, Dict, List, Union
 import numpy as np
-import common
 from exceptions import ConfigurationException
 from model import ModelClass
 from dataset import DatasetClass,Subset
@@ -20,8 +15,10 @@ from torch.optim import Adam
 from torch.optim.lr_scheduler import CosineAnnealingLR
 import yaml 
 import os 
-from os.path import join,isdir
+from os.path import join,isdir,isfile,realpath,dirname
 from torchvision import transforms
+from .trackers import Tracker
+from common import get_random_state_dicts, set_random_state_dict, set_seed
 
 class Config():
     """ object representing the config file for all experiments, converts certain
@@ -44,15 +41,24 @@ class Config():
         self.gpus : List[int] = config['gpus']
         self.batch_size : int = config['batch_size']
         self.learning_rate : float = config['learning_rate']
-        self.validation_list : List[int] = config['validation_list']
+        self.validation_list : Union[List[int],str] = config['validation_list']
         self.epochs : int = config['epochs']
-
+        self.model_kwargs : Dict = config['model_kwargs']
+        self.trackers : List[Tracker] = config['trackers']
+        self.seed : int = config['seed']
+        self.transforms : List = config.get('transforms',[])
+        self.transforms_test : List = config.get('transforms_test',[])
+        self.target_transforms : List = config.get('target_transforms',[])
+        self.target_transforms_test : List = config.get('target_transform_test',[])
+        
     def to_yaml(self,f):
         copy = deepcopy(self)
-        copy.dataset = DatasetClass.to_str_from_value(self.dataset)
-        copy.model = ModelClass.to_str_from_value(self.model)
-
+        copy.dataset = DatasetClass.to_str_from_value(copy.dataset)
+        copy.model = ModelClass.to_str_from_value(copy.model)
         yaml.dump(vars(copy),f)
+
+    def __repr__(self) -> str:
+        return "\n".join([f"\t{k}:{self.__getattribute__(k)}" for k in vars(self)])
 
 class ExperimentRunner():
     def __init__(self,
@@ -69,8 +75,11 @@ class ExperimentRunner():
         self.best_val_acc = -1
 
         ## sort out gpus and model   
-        self.model = config.model()
+        self.model = config.model(**self.config.model_kwargs)
 
+        # attach trackers
+        for t in self.config.trackers:
+            t.attach(self.model)
         if not torch.cuda.is_available():
             raise ConfigurationException("gpus", "No gpus are available, but some were requested. Stop using Windows you twat")
 
@@ -81,35 +90,34 @@ class ExperimentRunner():
                 self.model = nn.DataParallel(self.model)
         
 
-        ## define preprocessing transforms
-
-        # TODO: make this customizable via arguments
-        self.transforms = transforms.Compose([
-            transforms.ToTensor(), # TODO: change this default to something sensible
-            transforms.Lambda(lambda x: x.repeat(3,1,1)),
-        ])
-
-        self.target_transforms = transforms.Compose([
-            
-        ])
 
         ## sort out data
-        common_kwargs = {
+        common_kwargs_test = {
             "root": datasets,
-            "transform":self.transforms,
-            "target_transform":self.target_transforms
+            "transform": transforms.Compose(self.config.transforms_test),
+            "target_transform" : transforms.Compose(self.config.target_transforms_test),
         }
+        common_kwargs_train = {
+            "root": datasets,
+            "transform": transforms.Compose(self.config.transforms),
+            "target_transform" : transforms.Compose(self.config.target_transforms),
+        }
+        
+        # read validation list, either already a list or path to one
+        list_path = join(dirname(realpath(__file__)),'..','..','lists')
+        val_list = self.config.validation_list 
+        if isinstance(self.config.validation_list,str):
+            val_list = [int(x) for x in open(join(list_path,self.config.validation_list)).readlines()]
 
-        dataset_training = self.config.dataset(train=True,**common_kwargs)
-        training_list = [x for x in range(len(dataset_training)) if x not in config.validation_list]
+        dataset_training = self.config.dataset(train=True,**common_kwargs_train, download=True)
+        training_list = [x for x in range(len(dataset_training)) if x not in val_list]
         dataset_training = Subset(dataset_training,training_list)
 
-        dataset_validation = self.config.dataset(train=True,**common_kwargs)
-        dataset_validation = Subset(dataset_validation,indices=config.validation_list)
+        dataset_validation = self.config.dataset(train=True,**common_kwargs_test, download=True)
+        dataset_validation = Subset(dataset_validation,indices=val_list)
                 
 
-        dataset_test = self.config.dataset(train=False,**common_kwargs),
-
+        dataset_test = self.config.dataset(train=False,**common_kwargs_test, download=True)
 
         common_kwargs = {
             "batch_size":config.batch_size,
@@ -124,17 +132,6 @@ class ExperimentRunner():
 
         self.testing_data = DataLoader(
             dataset_test,**common_kwargs)
-        
-        ## sort out gradient descent parameters via arguments
-        self.optimizer = Adam(self.model.parameters(),
-            lr=config.learning_rate) # TODO: optimizer selection
-
-        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
-
-        self.lr_scheduler = CosineAnnealingLR(
-            self.optimizer,
-            T_max=config.epochs,
-            eta_min=0.00002) # TODO: lr scheduler selection via arguments
 
         ## create directories or retrieve existing ones
         if not isdir(self.root):
@@ -146,16 +143,33 @@ class ExperimentRunner():
         self.config_dir = join(self.experiment_root,"config")
         self.weights_dir = join(self.experiment_root,"weights")
 
+
+
         if isdir(self.experiment_root):
             if self.resume:
                 self.load(join(self.weights_dir, self.checkpoint_name(last=True)))
+                self.epoch += 1 # we store last processed epoch, start at next one
             else:
                 raise Exception("Experiment already exists, but 'resume' flag is not set.")
+        else:
+            set_seed(self.config.seed) 
 
         os.makedirs(self.log_dir,exist_ok=True)
         os.makedirs(self.config_dir,exist_ok=True)
         os.makedirs(self.weights_dir,exist_ok=True)
 
+
+        ## sort out gradient descent parameters via arguments
+        self.optimizer = Adam(self.model.parameters(),
+            lr=config.learning_rate, amsgrad=False,
+            weight_decay=0) # TODO: optimizer selection, different arguments
+
+        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
+
+        self.lr_scheduler = CosineAnnealingLR(
+            self.optimizer,
+            T_max=config.epochs,
+            eta_min=0.00002) # TODO: lr scheduler selection via arguments
 
         ## write down config (might be changed since resume, so name epoch too)
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
@@ -164,10 +178,12 @@ class ExperimentRunner():
         ## setup logger
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.FileHandler(join(self.log_dir,f"{date.today()}.log")))
-        self.logger.addHandler(logging.StreamHandler(sys.stdout))
 
     def start(self):
-        for i in range(self.epoch,self.config.epochs):
+
+        self.logger.info(f"Begun training at epoch {self.epoch}.")
+
+        for i in range(self.epoch,self.config.epochs+1):
             self.epoch = i 
             
             epoch_stats = {
@@ -182,6 +198,10 @@ class ExperimentRunner():
                 epoch_stats["train_loss"].append(loss)
                 epoch_stats["train_acc"].append(acc)
 
+            post_train_trackers = {}
+            for t in self.config.trackers:
+                post_train_trackers[t.key] = t.post_train_iter_hook()
+
             for x,y in self.validation_data:
                 loss, acc = self.iter(x,y,self.epoch, True)
                 epoch_stats["val_acc"].append(acc)
@@ -190,7 +210,7 @@ class ExperimentRunner():
             # convert stats to averages
             epoch_stats = {k:np.mean(v) for k,v in epoch_stats.items()}
 
-            self.logger.info(f"({self.epoch}/{self.config.epochs}) - {', '.join([f'{k}:{v}' for k,v in epoch_stats.items()])}")
+            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])}")
 
             if epoch_stats['val_acc'] > self.best_val_acc:
                 self.best_val_acc = epoch_stats['val_acc']
@@ -198,9 +218,9 @@ class ExperimentRunner():
 
             # TODO: track epoch time and log val acc + train acc after each epoch
 
-            self.dump_stats(self.epoch, epoch_stats)
-            self.checkpoint(self.checkpoint_name(self.epoch))
-            self.checkpoint(self.checkpoint_name(last=True)) # overwrite existing last 
+            self.dump_stats("epoch_stats",write_header=self.epoch==1,**epoch_stats)
+            self.checkpoint(self.checkpoint_name(self.epoch),**post_train_trackers)
+            self.checkpoint(self.checkpoint_name(last=True),**post_train_trackers) 
 
         ## load best model and run on test set
 
@@ -216,29 +236,37 @@ class ExperimentRunner():
             test_stats["test_loss"].append(loss)
 
         test_stats = {k:np.mean(v) for k,v in test_stats.items()}
-        self.dump_stats(self.best_val_epoch,final_test_stats=test_stats)
-    
-    def dump_stats(self,epoch: int, epoch_stats : Dict= None, final_test_stats : Dict = None):
+        self.dump_stats("final_test_stats",write_header=True,**test_stats)
+
+        self.logger.info("Completed training.")
+
+
+    def dump_stats(self,name,write_header=False, **kwargs):
         # TODO: more stats options, feature flags to enable tracking of certain things
-        if epoch_stats:
-            with open(join(self.log_dir,"epoch_stats.csv"),'w') as f:
-                w = DictWriter(f,epoch_stats.keys())
-                if epoch == 1:
-                    w.writeheader()
-
-                w.writerow(epoch_stats)
-
-        if final_test_stats:
-            with open(join(self.log_dir,"test_stats.csv"),'w') as f:
-                w = DictWriter(f,epoch_stats.keys())
+        with open(join(self.log_dir,f"{name}.csv"),'a') as f:
+            w = DictWriter(f,kwargs.keys())
+            if write_header == 1:
                 w.writeheader()
+            strings = {k:f"{v:{len(k)}.3f}" for k,v in kwargs.items()}
 
-                w.writerow(epoch_stats)
+            w.writerow(strings)
+
  
 
     def checkpoint_name(self, epoch_no: int = -1, last=False) -> str:
+        """ generates the epoch filename for the given epoch number, 
+        if last is true, will find the last epoch available in the weights directory """
+
         if last:
-            return f"epoch_last.pt"
+            last_epoch_file_name = sorted([ x for x in os.listdir(self.weights_dir) if isfile(join(self.weights_dir,x))])
+            if last_epoch_file_name:
+                last_epoch_file_name = last_epoch_file_name[-1]
+            else:
+                raise Exception("Requested last epoch name, but weight directory is empty, did you try to resume empty experiment ?")
+
+            assert(last_epoch_file_name.startswith('epoch') and last_epoch_file_name.endswith('.pt'))
+
+            return last_epoch_file_name
         else:
             return f"epoch_{epoch_no}.pt"
 
@@ -251,7 +279,6 @@ class ExperimentRunner():
 
         x,y = x.to(device=self.device),y.to(device=self.device)
         out = self.model(x)
-
         loss = self.loss_function(out,y)
 
         if not eval_mode:
@@ -261,28 +288,38 @@ class ExperimentRunner():
             self.optimizer.step()
             self.lr_scheduler.step()
         
-        accuracy = torch.sum(y == out)
-
+        _, predicted = torch.max(out.data, 1)  # get argmax of predictions (output is logit)
+        accuracy = np.mean(list(predicted.eq(y.data).cpu()))  # compute accuracy
         loss = loss.cpu().detach().numpy()
 
         return loss,accuracy
     
 
-    def checkpoint(self,name:str):
-        
+    def checkpoint(self,name:str, **kwargs):
+        model = self.model
+        if isinstance(self.model,nn.DataParallel):
+            model = self.model.module 
+
         torch.save({ # TODO: store gradients as well
             'epoch': self.epoch,
-            'model_state': self.model.state_dict(),
+            'model_state': model.state_dict(),
             'optimizer_state': self.optimizer.state_dict(),
             'best_val_acc': self.best_val_acc,
-            'best_val_epoch': self.best_val_epoch, 
+            'best_val_epoch': self.best_val_epoch,
+            'all_seed_states': get_random_state_dicts(),
+            **kwargs 
         }, join(self.weights_dir,name))
 
     def load(self, path :str):
+        model = self.model
+        if isinstance(self.model,nn.DataParallel):
+            model = self.model.module 
+
         checkpoint = torch.load(path)
         
-        self.model.load_state_dict(checkpoint['model_state'])
+        model.load_state_dict(checkpoint['model_state'])
         self.optimizer.load_state_dict(checkpoint['optimizer_state'])
         self.epoch = checkpoint['epoch']
         self.best_val_acc = checkpoint['best_val_acc']
         self.best_val_epoch = checkpoint['best_val_epoch']
+        set_random_state_dict(checkpoint['all_seed_states'])

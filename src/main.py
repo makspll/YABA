@@ -1,12 +1,12 @@
 import sys
 from typing import Dict, Union
 from args import PARSER
-import yaml 
+import yaml
+from yaml_addons import get_loader 
 import logging
 from exceptions import ConfigurationException 
 from runner import Config, ExperimentRunner
-
-
+import preprocessing
 
 def err_if_none_arg(arg,key):
     """if arg is none quits program and shows error message
@@ -41,12 +41,13 @@ if __name__ == "__main__":
     ## load yaml config
     config = None
     with open(args.config, 'r') as f:
-        config = yaml.safe_load(f)
+        config = yaml.load(f,get_loader())
 
     err_if_none_arg(config,"config")
 
     ## override config settings with configurable argument names passed
     override_if_not_none(args.experiment_name,"experiment_name",config)
+    override_if_not_none(args.seed,"seed",config)
     override_if_not_none(args.dataset,"dataset",config)
     override_if_not_none(args.model,"model",config)
     override_if_not_none(args.gpus,"gpus",config)
@@ -62,9 +63,11 @@ if __name__ == "__main__":
     except ConfigurationException as E:
         print(E)
         sys.exit(1)
-
+    
     ## setup logger
-    logger = logging.basicConfig(level=args.loglevel)
+    logging.basicConfig(level=args.loglevel)
+    
+    logging.info(f"Successfully loaded configuration:\n {config}")
 
     ## setup experiment 
     runner = ExperimentRunner(

@@ -1,13 +1,45 @@
-experiment_name: "test"
-dataset: "mnist"
-model: "resnet 200"
-learning_rate: 1.0
-batch_size: 4
-validation_list: 
-  - 1
-  - 2
-  - 3 
+## overridable via commandline
 
-epochs: 100
-gpus: 
+experiment_name: "VGG_38_bn_res_cifar100" # str
+seed: 7112018
+dataset: "cifar 100" # enum (spaces convert to '_')
+model: "resnet 200" # enum
+learning_rate: 0.02 # float
+batch_size: 100 # int
+validation_list: 'validation_cifar100_10%.txt' # list ints or name of list in 'lists' folder
+
+epochs: 100 # int
+gpus:  # list ints
   - 0
+
+## not overridable via commandline
+
+model_kwargs: # dict -> any value
+  input_shape:
+    - 4
+    - 3
+    - 32
+    - 32
+  num_output_classes: 100
+  num_filters: 32
+  use_bias: false
+  num_stages: 3
+  num_blocks_per_stage: 5
+  
+transforms:
+  - !PPRandomCrop {size: 32, padding: 4} # defined in preprocessing/__init__.py
+  - !PPRandomHorizontalFlip {}
+  - !PPToTensor {}
+  - !PPNormalize {mean: [0.4914,0.4822,0.4466], std: [0.2023,0.1994,0.2010]}
+
+transforms_test:
+  - !PPToTensor {}
+  - !PPNormalize {mean: [0.4914,0.4822,0.4466], std: [0.2023,0.1994,0.2010]}
+
+target_transforms: []
+target_transforms_test: []
+
+trackers: # list of enums -> kwarg dict
+  - !GradientsTracker {key: "gradients"}  # objects with 'yaml_tag' and inheriting from yaml.YAMLobject, can be instantiated this way!
+
+    

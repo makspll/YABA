@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Callable, Optional
 from torch.utils.data import Dataset
 from common import StringableEnum
-from torchvision.datasets import CIFAR10,MNIST
+from torchvision.datasets import CIFAR10,MNIST,CIFAR100
 
 
 class Subset(Dataset):
@@ -16,5 +16,6 @@ class Subset(Dataset):
         return len(self.indices)
 
 class DatasetClass(StringableEnum):
+    CIFAR_100 = CIFAR100
     CIFAR_10 = CIFAR10
     MNIST = MNIST
