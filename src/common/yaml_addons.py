@@ -1,4 +1,3 @@
-from argparse import ArgumentError
 from copy import deepcopy
 from itertools import zip_longest
 import yaml 
@@ -79,6 +78,7 @@ class YAMLObjectFiltered(yaml.YAMLObject):
 
 
 def get_loader():
+	import preprocessing
 	"""Add constructors to PyYAML loader."""
 	loader = yaml.Loader
 	return loader

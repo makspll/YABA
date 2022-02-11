@@ -1,42 +1,15 @@
 import sys
-from typing import Dict, Union
-from args import PARSER
 import yaml
-from yaml_addons import get_loader 
 import logging
 from exceptions import ConfigurationException 
 from runner import Config, ExperimentRunner
-import preprocessing
+from args import PARSER
+from common import err_if_none_arg, override_if_not_none
+from common.yaml_addons import get_loader 
 
-def err_if_none_arg(arg,key):
-    """if arg is none quits program and shows error message
-
-    Args:
-        arg ([type]): the value of key or none
-        key ([type]): the key name 
-    """
-    if not arg:
-        print(f"{key}: argument missing, needs to be specified in config or argument")
-        sys.exit(1)
-
-def override_if_not_none(arg : Union[None,object], key, config : Dict):
-    """Overrides key in the config if arg is not None, if no key in config and arg is none
-       quits the program with error message    
-
-    Args:
-        arg ([type]): the value or none
-        key ([type]): the key name 
-        config ([type]): config in dictionary form
-    """
-    if arg:
-        config[key] = arg
-    else:
-        err_if_none_arg(config.get(key,None),key)
-        
 
 if __name__ == "__main__":
     args = PARSER.parse_args()
-
 
     ## load yaml config
     config = None

@@ -15,7 +15,7 @@ from torch.optim import Adam
 from torch.optim.lr_scheduler import CosineAnnealingLR
 import yaml 
 import os 
-from os.path import join,isdir,isfile,realpath,dirname
+from os.path import join,isdir,isfile,realpath,dirname,basename
 from torchvision import transforms
 from .trackers import Tracker
 from common import get_random_state_dicts, set_random_state_dict, set_seed
@@ -258,13 +258,15 @@ class ExperimentRunner():
         if last is true, will find the last epoch available in the weights directory """
 
         if last:
-            last_epoch_file_name = sorted([ x for x in os.listdir(self.weights_dir) if isfile(join(self.weights_dir,x))])
+            last_epoch_file_name = sorted(
+                    [x for x in os.listdir(self.weights_dir) if isfile(join(self.weights_dir,x))],
+                    key=lambda x: int(''.join([c for c in x if c.isdigit()])))
             if last_epoch_file_name:
                 last_epoch_file_name = last_epoch_file_name[-1]
             else:
                 raise Exception("Requested last epoch name, but weight directory is empty, did you try to resume empty experiment ?")
 
-            assert(last_epoch_file_name.startswith('epoch') and last_epoch_file_name.endswith('.pt'))
+            assert(last_epoch_file_name.endswith('.pt'))
 
             return last_epoch_file_name
         else:

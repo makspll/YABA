@@ -1,4 +1,4 @@
-from yaml_addons import YAMLObjectFiltered
+from common.yaml_addons import YAMLObjectFiltered
 from torchvision import transforms
 
 class CenterCrop(YAMLObjectFiltered,transforms.CenterCrop):
