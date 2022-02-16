@@ -1,30 +1,28 @@
 ## overridable via commandline
 
-experiment_name: "VGG_38_gradient_graph" # str
+experiment_name: "resnet_50_cifar100" # str
 seed: 7112018
 dataset: "cifar 100" # enum (spaces convert to '_')
-model: "vgg" # enum
+model: "resnet" # enum
 learning_rate: 0.02 # float
 batch_size: 100 # int
 validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
 
-epochs: 200 # int
-gpus:  # list ints
-  - 0
+epochs: 100 # int
+gpus: []  # list ints
+
 
 ## not overridable via commandline
 
+freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
+
 model_kwargs: # dict -> any value
-  input_shape:
-    - 4
-    - 3
-    - 32
-    - 32
+  layers: [3, 4, 6, 3]
   num_output_classes: 100
-  num_filters: 32
-  use_bias: false
-  num_stages: 3
-  num_blocks_per_stage: 5
+  zero_init_residual: false
+  groups: 1
+  width_per_group: 64
+  replace_stride_with_dilation: null
   
 transforms:
   - !PPRandomCrop {size: 32, padding: 4} # defined in preprocessing/__init__.py

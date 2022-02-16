@@ -9,7 +9,7 @@ batch_size: 100 # int
 validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
 
 epochs: 100 # int
-gpus: [0]  # list ints
+gpus: []  # list ints
 
 
 ## not overridable via commandline
