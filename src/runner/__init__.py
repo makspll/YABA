@@ -19,6 +19,7 @@ from os.path import join,isdir,isfile,realpath,dirname,basename
 from torchvision import transforms
 from .trackers import Tracker
 from common import get_random_state_dicts, set_random_state_dict, set_seed
+import re
 
 class Config():
     """ object representing the config file for all experiments, converts certain
@@ -50,6 +51,7 @@ class Config():
         self.transforms_test : List = config.get('transforms_test',[])
         self.target_transforms : List = config.get('target_transforms',[])
         self.target_transforms_test : List = config.get('target_transform_test',[])
+        self.freeze_parameter_list : List[str] = config.get('freeze_parameter_list',[])
         
     def to_yaml(self,f):
         copy = deepcopy(self)
@@ -74,21 +76,43 @@ class ExperimentRunner():
         self.best_val_epoch = -1
         self.best_val_acc = -1
 
+        self.logger = logging.getLogger(__name__)
+
         ## sort out gpus and model   
         self.model = config.model(**self.config.model_kwargs)
+
+        # freeze parameters
+        frozen = []
+        compiled_regex = [re.compile(x) for x in self.config.freeze_parameter_list]
+        for r in compiled_regex:
+            for n,v in self.model.named_parameters():
+                if r.search(n):
+                    v.requires_grad = False
+                    frozen.append(n)
+
+        self.logger.info(f"Froze parametrs: {frozen}")
 
         # attach trackers
         for t in self.config.trackers:
             t.attach(self.model)
-        if not torch.cuda.is_available():
-            raise ConfigurationException("gpus", "No gpus are available, but some were requested. Stop using Windows you twat")
 
-        self.device = torch.cuda.current_device()
-        if torch.cuda.device_count() >= len(self.config.gpus):
-            self.model.to(self.device)
-            if len(self.config.gpus) > 1: # wrap around in parallelizer
-                self.model = nn.DataParallel(self.model)
-        
+
+        if len(self.config.gpus) > 0:
+            if not torch.cuda.is_available():
+                raise ConfigurationException("gpus", "No gpus are available, but some were requested. Stop using Windows you twat")
+
+            self.device = torch.cuda.current_device()
+            if torch.cuda.device_count() >= len(self.config.gpus):
+                if len(self.config.gpus) > 1: # wrap around in parallelizer
+                    self.model = nn.DataParallel(self.model)
+
+            for i in torch.cuda.device_count():
+                self.logger.info(f"Using GPU: {torch.cuda.get_device_name(i)}")
+                
+        else:
+            self.device = 'cpu'
+
+        self.model.to(self.device)
 
 
         ## sort out data
@@ -176,7 +200,6 @@ class ExperimentRunner():
             self.config.to_yaml(f)
 
         ## setup logger
-        self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.FileHandler(join(self.log_dir,f"{date.today()}.log")))
 
     def start(self):

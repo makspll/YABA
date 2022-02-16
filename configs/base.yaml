@@ -9,10 +9,12 @@ batch_size: 100 # int
 validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
 
 epochs: 100 # int
-gpus:  # list ints
-  - 0
+gpus: [0]  # list ints
+
 
 ## not overridable via commandline
+
+freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
 
 model_kwargs: # dict -> any value
   input_shape:

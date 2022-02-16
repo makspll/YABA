@@ -29,7 +29,6 @@ if __name__ == "__main__":
     override_if_not_none(args.validation_list,"validation_list",config)
     override_if_not_none(args.epochs,"epochs",config)
 
-
     ## convert config to python object (for static typing support)
     try:
         config = Config(config)
