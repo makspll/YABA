@@ -9,7 +9,7 @@ batch_size: 100 # int
 validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
 
 epochs: 100 # int
-gpus: []  # list ints
+gpus: [0]  # list ints
 
 
 ## not overridable via commandline
@@ -28,11 +28,11 @@ transforms:
   - !PPRandomCrop {size: 32, padding: 4} # defined in preprocessing/__init__.py
   - !PPRandomHorizontalFlip {}
   - !PPToTensor {}
-  - !PPNormalize {mean: [0.4914,0.4822,0.4466], std: [0.2023,0.1994,0.2010]}
+  - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
 
 transforms_test:
   - !PPToTensor {}
-  - !PPNormalize {mean: [0.4914,0.4822,0.4466], std: [0.2023,0.1994,0.2010]}
+  - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
 
 target_transforms: []
 target_transforms_test: []
