@@ -106,9 +106,9 @@ class ExperimentRunner():
                 if len(self.config.gpus) > 1: # wrap around in parallelizer
                     self.model = nn.DataParallel(self.model)
 
-            for i in torch.cuda.device_count():
+            for i in range(torch.cuda.device_count()):
                 self.logger.info(f"Using GPU: {torch.cuda.get_device_name(i)}")
-                
+
         else:
             self.device = 'cpu'
 
