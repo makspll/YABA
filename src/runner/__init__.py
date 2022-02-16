@@ -20,6 +20,7 @@ from torchvision import transforms
 from .trackers import Tracker
 from common import get_random_state_dicts, set_random_state_dict, set_seed
 import re
+import time
 
 class Config():
     """ object representing the config file for all experiments, converts certain
@@ -206,9 +207,12 @@ class ExperimentRunner():
 
         self.logger.info(f"Begun training at epoch {self.epoch}.")
 
+
+        
         for i in range(self.epoch,self.config.epochs+1):
             self.epoch = i 
-            
+            epoch_time = time.time()
+
             epoch_stats = {
                 "train_acc" : [],
                 "train_loss" : [],
@@ -216,24 +220,36 @@ class ExperimentRunner():
                 "val_loss" : [],
             }
 
+
+            epoch_training_time = time.time()
+            training_load_time = time.time()
             for x,y in self.training_data:
+                training_load_time = time.time() - training_load_time
+
+
                 loss, acc = self.iter(x,y,self.epoch,False)
                 epoch_stats["train_loss"].append(loss)
                 epoch_stats["train_acc"].append(acc)
 
+            epoch_training_time = time.time() - epoch_training_time
+
             post_train_trackers = {}
             for t in self.config.trackers:
                 post_train_trackers[t.key] = t.post_train_iter_hook()
+
+            epoch_validation_time = time.time()
 
             for x,y in self.validation_data:
                 loss, acc = self.iter(x,y,self.epoch, True)
                 epoch_stats["val_acc"].append(acc)
                 epoch_stats["val_loss"].append(acc)
 
+            epoch_validation_time = time.time() - epoch_validation_time
+
             # convert stats to averages
             epoch_stats = {k:np.mean(v) for k,v in epoch_stats.items()}
 
-            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])}")
+
 
             if epoch_stats['val_acc'] > self.best_val_acc:
                 self.best_val_acc = epoch_stats['val_acc']
@@ -241,9 +257,19 @@ class ExperimentRunner():
 
             # TODO: track epoch time and log val acc + train acc after each epoch
 
+            dump_time = time.time()
+
             self.dump_stats("epoch_stats",write_header=self.epoch==1,**epoch_stats)
             self.checkpoint(self.checkpoint_name(self.epoch),**post_train_trackers)
             self.checkpoint(self.checkpoint_name(last=True),**post_train_trackers) 
+
+            dump_time = time.time() - dump_time
+
+            epoch_time = time.time() - epoch_time
+
+
+            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time}s, ETA:{epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60}h)")
+            self.logger.debug(f"Time split: train:{epoch_training_time}s, load_train:{training_load_time}  val:{epoch_validation_time}s, stats:{dump_time}s)")
 
         ## load best model and run on test set
 
