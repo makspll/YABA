@@ -1,0 +1,31 @@
+## overridable via commandline
+
+experiment_name: "resnet 50" # str
+dataset: "cifar 100" # enum (spaces convert to '_')
+model: "resnet 50" # enum
+batch_size: 100 # int
+
+gpus:  # list ints
+  - 0
+
+## not overridable via commandline
+
+model_kwargs: # dict -> any value
+  input_shape:
+    - 4
+    - 3
+    - 32
+    - 32
+  num_output_classes: 100
+  num_filters: 32
+  use_bias: false
+  num_stages: 3
+  num_blocks_per_stage: 5
+
+transforms_test:
+  - !PPToTensor {}
+  - !PPNormalize {mean: [0.4914,0.4822,0.4466], std: [0.2023,0.1994,0.2010]}
+
+target_transforms_test: []
+
+    

@@ -20,12 +20,13 @@ from torchvision import transforms
 from .trackers import Tracker
 from common import get_random_state_dicts, set_random_state_dict, set_seed
 
-class Config():
-    """ object representing the config file for all experiments, converts certain
-        string format args to their respective enums,
-        let's us have static type hints, woohoo """
 
-    def __init__(self, config : Dict) -> None:
+
+
+class Config():
+    def __init__(self, config : Dict, supports_training = False) -> None:
+
+        self.supports_training = supports_training
         self.experiment_name : str = config['experiment_name']
 
         try:
@@ -40,17 +41,10 @@ class Config():
 
         self.gpus : List[int] = config['gpus']
         self.batch_size : int = config['batch_size']
-        self.learning_rate : float = config['learning_rate']
-        self.validation_list : Union[List[int],str] = config['validation_list']
-        self.epochs : int = config['epochs']
         self.model_kwargs : Dict = config['model_kwargs']
-        self.trackers : List[Tracker] = config['trackers']
-        self.seed : int = config['seed']
-        self.transforms : List = config.get('transforms',[])
         self.transforms_test : List = config.get('transforms_test',[])
-        self.target_transforms : List = config.get('target_transforms',[])
         self.target_transforms_test : List = config.get('target_transform_test',[])
-        
+
     def to_yaml(self,f):
         copy = deepcopy(self)
         copy.dataset = DatasetClass.to_str_from_value(copy.dataset)
@@ -60,12 +54,33 @@ class Config():
     def __repr__(self) -> str:
         return "\n".join([f"\t{k}:{self.__getattribute__(k)}" for k in vars(self)])
 
+class TrainingConfig(Config):
+    """ object representing the config file for all experiments, converts certain
+        string format args to their respective enums,
+        let's us have static type hints, woohoo """
+
+    def __init__(self, config : Dict) -> None:
+        super().__init__(config,True)
+
+        self.learning_rate : float = config['learning_rate']
+        self.validation_list : Union[List[int],str] = config['validation_list']
+        self.epochs : int = config['epochs']
+        self.trackers : List[Tracker] = config['trackers']
+        self.seed : int = config['seed']
+        self.transforms : List = config.get('transforms',[])
+        self.target_transforms : List = config.get('target_transforms',[])
+        
+
+class TestingConfig():
+    def __init__(self, config : Dict) -> None:
+        super().__init__(config,False)
+
 class ExperimentRunner():
     def __init__(self,
         config : Config,
         root : str,
-        resume : bool,
-        datasets : str) -> None:
+        datasets : str,
+        resume : bool = False) -> None:
 
         self.resume = resume
         self.root = root 
@@ -78,10 +93,11 @@ class ExperimentRunner():
         self.model = config.model(**self.config.model_kwargs)
 
         # attach trackers
-        for t in self.config.trackers:
-            t.attach(self.model)
-        if not torch.cuda.is_available():
-            raise ConfigurationException("gpus", "No gpus are available, but some were requested. Stop using Windows you twat")
+        if self.config.supports_training:
+            for t in self.config.trackers:
+                t.attach(self.model)
+            if not torch.cuda.is_available():
+                raise ConfigurationException("gpus", "No gpus are available, but some were requested. Stop using Windows you twat")
 
         self.device = torch.cuda.current_device()
         if torch.cuda.device_count() >= len(self.config.gpus):
@@ -97,38 +113,44 @@ class ExperimentRunner():
             "transform": transforms.Compose(self.config.transforms_test),
             "target_transform" : transforms.Compose(self.config.target_transforms_test),
         }
-        common_kwargs_train = {
-            "root": datasets,
-            "transform": transforms.Compose(self.config.transforms),
-            "target_transform" : transforms.Compose(self.config.target_transforms),
-        }
-        
-        # read validation list, either already a list or path to one
-        list_path = join(dirname(realpath(__file__)),'..','..','lists')
-        val_list = self.config.validation_list 
-        if isinstance(self.config.validation_list,str):
-            val_list = [int(x) for x in open(join(list_path,self.config.validation_list)).readlines()]
-
-        dataset_training = self.config.dataset(train=True,**common_kwargs_train, download=True)
-        training_list = [x for x in range(len(dataset_training)) if x not in val_list]
-        dataset_training = Subset(dataset_training,training_list)
-
-        dataset_validation = self.config.dataset(train=True,**common_kwargs_test, download=True)
-        dataset_validation = Subset(dataset_validation,indices=val_list)
-                
 
         dataset_test = self.config.dataset(train=False,**common_kwargs_test, download=True)
+
+
+        if self.config.supports_training:
+            common_kwargs_train = {
+                "root": datasets,
+                "transform": transforms.Compose(self.config.transforms),
+                "target_transform" : transforms.Compose(self.config.target_transforms),
+            }
+            
+            # read validation list, either already a list or path to one
+            list_path = join(dirname(realpath(__file__)),'..','..','lists')
+            val_list = self.config.validation_list 
+            if isinstance(self.config.validation_list,str):
+                val_list = [int(x) for x in open(join(list_path,self.config.validation_list)).readlines()]
+
+            dataset_training = self.config.dataset(train=True,**common_kwargs_train, download=True)
+            training_list = [x for x in range(len(dataset_training)) if x not in val_list]
+            dataset_training = Subset(dataset_training,training_list)
+
+            dataset_validation = self.config.dataset(train=True,**common_kwargs_test, download=True)
+            dataset_validation = Subset(dataset_validation,indices=val_list)
+                    
+
+ 
 
         common_kwargs = {
             "batch_size":config.batch_size,
             "num_workers":4
         }
 
-        self.training_data = DataLoader(
-            dataset_training,**common_kwargs)
-        
-        self.validation_data = DataLoader(
-            dataset_validation,**common_kwargs)
+        if self.config.supports_training:
+            self.training_data = DataLoader(
+                dataset_training,**common_kwargs)
+            
+            self.validation_data = DataLoader(
+                dataset_validation,**common_kwargs)
 
         self.testing_data = DataLoader(
             dataset_test,**common_kwargs)
@@ -160,16 +182,17 @@ class ExperimentRunner():
 
 
         ## sort out gradient descent parameters via arguments
-        self.optimizer = Adam(self.model.parameters(),
-            lr=config.learning_rate, amsgrad=False,
-            weight_decay=0) # TODO: optimizer selection, different arguments
+        if self.config.supports_training:
+            self.optimizer = Adam(self.model.parameters(),
+                lr=config.learning_rate, amsgrad=False,
+                weight_decay=0) # TODO: optimizer selection, different arguments
 
-        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
+            self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
 
-        self.lr_scheduler = CosineAnnealingLR(
-            self.optimizer,
-            T_max=config.epochs,
-            eta_min=0.00002) # TODO: lr scheduler selection via arguments
+            self.lr_scheduler = CosineAnnealingLR(
+                self.optimizer,
+                T_max=config.epochs,
+                eta_min=0.00002) # TODO: lr scheduler selection via arguments
 
         ## write down config (might be changed since resume, so name epoch too)
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
@@ -179,7 +202,29 @@ class ExperimentRunner():
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.FileHandler(join(self.log_dir,f"{date.today()}.log")))
 
+
+    def eval(self):
+        if self.config.supports_training:
+            raise Exception("The config provided does not support evaluation.")
+
+        self.logger.info(f"Begun evaluating model.")
+
+        epoch_stats = {
+            "val_acc":[],
+            "val_loss":[]
+        }
+
+        for x,y in self.testing_data:
+            loss, acc = self.iter(x,y,self.epoch, True)
+            epoch_stats["val_acc"].append(acc)
+            epoch_stats["val_loss"].append(acc)
+
+        self.dump_stats("final_test_stats",write_header=True,**epoch_stats)
+
+
     def start(self):
+        if not self.config.supports_training:
+            raise Exception("The config provided does not support training.")
 
         self.logger.info(f"Begun training at epoch {self.epoch}.")
 
@@ -242,7 +287,6 @@ class ExperimentRunner():
 
 
     def dump_stats(self,name,write_header=False, **kwargs):
-        # TODO: more stats options, feature flags to enable tracking of certain things
         with open(join(self.log_dir,f"{name}.csv"),'a') as f:
             w = DictWriter(f,kwargs.keys())
             if write_header == 1:

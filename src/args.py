@@ -29,40 +29,12 @@ PARSER.add_argument("--verbose",
     const=logging.DEBUG,
     default=logging.INFO)
 
-PARSER.add_argument("--experiment_name",
-
-    help="Overrides 'experiment_name' from the config file provided")
-PARSER.add_argument("--seed",
-    help="Overrides 'seeed' from the config file provided")
-
-PARSER.add_argument("--dataset",
-    help="Overrides 'dataset' from the config file provided")
-
-PARSER.add_argument("--model",
-    help="Overrides 'model' from the config file provided")
-
-PARSER.add_argument("--gpus",
-    help="Overrides 'gpus' from the config file provided",
-    nargs="+",
-    type=int)
-
-PARSER.add_argument("--batch_size",
-    help="Overrides 'batch_size' from the config file provided",
-    type=int)
-
-PARSER.add_argument("--learning_rate",
-    help="Overrides 'learning_rate' from the config file provided",
-    type=float)
-
-PARSER.add_argument("--validation_list",
-    help="Overrides 'validation_list' from the config file provided",
-    nargs="+",
-    type=int)
-
-PARSER.add_argument("--epochs",
-    help="Overrides 'epochs' from the config file provided",
-    type=int)
-
+PARSER.add_argument("--eval",
+    help="If given loads an evaluation configuration file and only evaluates the model",
+    action="store_const",
+    dest="eval",
+    const=True,
+    default=False)
 
 GRAPH_PARSER = argparse.ArgumentParser()
 
@@ -71,7 +43,7 @@ GRAPH_PARSER.add_argument("--experiment_name",
 
 GRAPH_PARSER.add_argument("--graph_type",
     help="the type of graph to produce",
-    choices=['gradient_magnitude'])
+    choices=['gradient_magnitude','gradient_flow'])
 
 GRAPH_PARSER.add_argument("--experiments",
     default="experiments",
