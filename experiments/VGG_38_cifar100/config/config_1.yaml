@@ -1,0 +1,134 @@
+batch_size: 100
+dataset: cifar 100
+epochs: 100
+experiment_name: VGG_38_cifar100
+freeze_parameter_list: []
+gpus:
+- 0
+- 1
+learning_rate: 0.02
+model: vgg
+model_kwargs:
+  input_shape:
+  - 4
+  - 3
+  - 32
+  - 32
+  num_blocks_per_stage: 5
+  num_filters: 32
+  num_output_classes: 100
+  num_stages: 3
+  use_bias: false
+seed: 7112018
+target_transforms: []
+target_transforms_test: []
+trackers:
+- !GradientsTracker
+  key: gradients
+transforms:
+- !PPRandomCrop
+  _backward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _buffers: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _is_full_backward_hook: null
+  _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _modules: !!python/object/apply:collections.OrderedDict
+  - []
+  _non_persistent_buffers_set: !!set {}
+  _parameters: !!python/object/apply:collections.OrderedDict
+  - []
+  _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  fill: 0
+  pad_if_needed: false
+  padding: 4
+  padding_mode: constant
+  size: !!python/tuple
+  - 32
+  - 32
+- !PPRandomHorizontalFlip
+  _backward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _buffers: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _is_full_backward_hook: null
+  _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _modules: !!python/object/apply:collections.OrderedDict
+  - []
+  _non_persistent_buffers_set: !!set {}
+  _parameters: !!python/object/apply:collections.OrderedDict
+  - []
+  _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  p: 0.5
+- !PPToTensor {}
+- !PPNormalize
+  _backward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _buffers: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _is_full_backward_hook: null
+  _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _modules: !!python/object/apply:collections.OrderedDict
+  - []
+  _non_persistent_buffers_set: !!set {}
+  _parameters: !!python/object/apply:collections.OrderedDict
+  - []
+  _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  inplace: false
+  mean:
+  - 0.4914
+  - 0.4822
+  - 0.4466
+  std:
+  - 0.2023
+  - 0.1994
+  - 0.201
+transforms_test:
+- !PPToTensor {}
+- !PPNormalize
+  _backward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _buffers: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _forward_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _is_full_backward_hook: null
+  _load_state_dict_pre_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  _modules: !!python/object/apply:collections.OrderedDict
+  - []
+  _non_persistent_buffers_set: !!set {}
+  _parameters: !!python/object/apply:collections.OrderedDict
+  - []
+  _state_dict_hooks: !!python/object/apply:collections.OrderedDict
+  - []
+  inplace: false
+  mean:
+  - 0.4914
+  - 0.4822
+  - 0.4466
+  std:
+  - 0.2023
+  - 0.1994
+  - 0.201
+validation_list: validation_cifar100_5%.txt
