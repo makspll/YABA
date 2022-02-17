@@ -28,7 +28,9 @@ createVm:
 		--image-family=ubuntu-2004-lts \
 		--image-project ubuntu-os-cloud \
 		--machine-type n1-standard-4 \
-		--create-disk size=20
+		--create-disk size=20 \
+		--accelerator type=nvidia-tesla-k80,count=2 \
+		--maintenance-policy TERMINATE --restart-on-failure \
 
 
 sshVm:
