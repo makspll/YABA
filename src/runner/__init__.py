@@ -168,7 +168,19 @@ class ExperimentRunner():
         self.config_dir = join(self.experiment_root,"config")
         self.weights_dir = join(self.experiment_root,"weights")
 
+        ## sort out gradient descent parameters via arguments
+        self.optimizer = Adam(self.model.parameters(),
+            lr=config.learning_rate, amsgrad=False,
+            weight_decay=0) # TODO: optimizer selection, different arguments
 
+        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
+
+        self.lr_scheduler = CosineAnnealingLR(
+            self.optimizer,
+            T_max=config.epochs,
+            eta_min=0.00002) # TODO: lr scheduler selection via arguments
+
+        ## load checkpoint
 
         if isdir(self.experiment_root):
             if self.resume:
@@ -182,19 +194,6 @@ class ExperimentRunner():
         os.makedirs(self.log_dir,exist_ok=True)
         os.makedirs(self.config_dir,exist_ok=True)
         os.makedirs(self.weights_dir,exist_ok=True)
-
-
-        ## sort out gradient descent parameters via arguments
-        self.optimizer = Adam(self.model.parameters(),
-            lr=config.learning_rate, amsgrad=False,
-            weight_decay=0) # TODO: optimizer selection, different arguments
-
-        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
-
-        self.lr_scheduler = CosineAnnealingLR(
-            self.optimizer,
-            T_max=config.epochs,
-            eta_min=0.00002) # TODO: lr scheduler selection via arguments
 
         ## write down config (might be changed since resume, so name epoch too)
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
@@ -268,7 +267,7 @@ class ExperimentRunner():
             epoch_time = time.time() - epoch_time
 
 
-            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time}s, ETA:{epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60}h)")
+            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time:.3f}s, ETA:{epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60:.3f}h)")
             self.logger.debug(f"Time split: train:{epoch_training_time}s, load_train:{training_load_time}  val:{epoch_validation_time}s, stats:{dump_time}s)")
 
         ## load best model and run on test set

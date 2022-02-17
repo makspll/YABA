@@ -1,18 +1,20 @@
 ## overridable via commandline
 
-experiment_name: "VGG_38_gradient_graph" # str
+experiment_name: "VGG_38_cifar100" # str
 seed: 7112018
 dataset: "cifar 100" # enum (spaces convert to '_')
 model: "vgg" # enum
-learning_rate: 0.02 # float
-batch_size: 100 # int
+learning_rate: 0.001 # float
+batch_size: 256 # intgrep -A3 'experiment_name:' configs/base/base.yaml | head -n1 | cut -d'"' -f 2
 validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
 
-epochs: 200 # int
-gpus:  # list ints
-  - 0
+epochs: 100 # int
+gpus: [0]  # list ints
+
 
 ## not overridable via commandline
+
+freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
 
 model_kwargs: # dict -> any value
   input_shape:
