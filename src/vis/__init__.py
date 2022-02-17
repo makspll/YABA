@@ -47,3 +47,35 @@ def plot_bn_vs_other_gradient_magnitudes(gradient_epoch_filenames : List[str]):
     plt.title('BN vs non-BN layer average gradient magnitudes')
     plt.xlabel("Epoch")
     plt.ylabel("Average gradient magnitude (no biases)")
+
+def plot_accuracy(train_accs, val_accs):
+    
+
+
+    plt.plot(range(1,len(train_accs)+1),
+                train_accs,
+                    label="train_acc")
+
+    plt.plot(range(1,len(val_accs)+1),
+                val_accs,
+                    label="val_acc")
+    plt.legend()
+    plt.title('Training and Validation Accuracies')
+    plt.xlabel("Epoch")
+    plt.ylabel("Accuracy")
+
+def plot_loss(train_loss, val_loss):
+    
+
+
+    plt.plot(range(1,len(train_loss)+1),
+                train_loss,
+                    label="train_loss")
+
+    plt.plot(range(1,len(val_loss)+1),
+                val_loss,
+                    label="val_loss")
+    plt.legend()
+    plt.title('Training and Validation Loss')
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
