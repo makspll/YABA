@@ -179,17 +179,6 @@ class ExperimentRunner():
         self.config_dir = join(self.experiment_root,"config")
         self.weights_dir = join(self.experiment_root,"weights")
 
-        ## sort out gradient descent parameters via arguments
-        self.optimizer = Adam(self.model.parameters(),
-            lr=config.learning_rate, amsgrad=False,
-            weight_decay=0) # TODO: optimizer selection, different arguments
-
-        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
-
-        self.lr_scheduler = CosineAnnealingLR(
-            self.optimizer,
-            T_max=config.epochs,
-            eta_min=0.00002) # TODO: lr scheduler selection via arguments
 
         ## load checkpoint
 
@@ -206,7 +195,6 @@ class ExperimentRunner():
         os.makedirs(self.config_dir,exist_ok=True)
         os.makedirs(self.weights_dir,exist_ok=True)
 
-<<<<<<< HEAD
 
         ## sort out gradient descent parameters via arguments
         if(config.optimizer == "Adam"):
@@ -227,12 +215,11 @@ class ExperimentRunner():
                 T_max=config.epochs,
                 eta_min=0.00002) # TODO: lr scheduler selection via arguments
         elif(config.scheduler == "MultiStepLR"):
-            self.lr_scheduler = MultiStepLR(self.optimizer,
+            self.lr_scheduler = MultiStepLR(
+                self.optimizer,
                 milestones=config.learning_rate_drop_intervals,
                 gamma=config.learning_rate_drop)
 
-=======
->>>>>>> ed621f95a04dd41f49f46830421d6387846038e6
         ## write down config (might be changed since resume, so name epoch too)
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
             self.config.to_yaml(f)
