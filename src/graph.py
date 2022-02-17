@@ -1,9 +1,10 @@
 
 from common import err_if_none_arg
-from vis import plot_bn_vs_other_gradient_magnitudes
+from vis import plot_bn_vs_other_gradient_magnitudes, plot_accuracy
 from args import GRAPH_PARSER
 from os.path import join,isdir,isfile,basename
 import os 
+import pandas as pd
 import logging 
 import matplotlib.pyplot as plt 
 
@@ -28,6 +29,24 @@ if __name__ == "__main__":
             ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
 
         plot_bn_vs_other_gradient_magnitudes(epoch_checkpoints)
+
+    if args.graph_type == "accuracy":
+        # get all 
+        csv_values  = (pd.read_csv(join(experiment_root), "epoch_stats.csv"))
+        train_acc   = csv_values["train_acc"].tolist()
+        val_acc     = csv_values["val_acc"].tolist()
+        
+
+        plot_accuracy(train_acc, val_acc)
+
+    if args.graph_type == "loss":
+        # get all 
+        csv_values  = (pd.read_csv(join(experiment_root), "epoch_stats.csv"))
+        train_loss   = csv_values["train_loss"].tolist()
+        val_loss     = csv_values["val_loss"].tolist()
+        
+
+        plot_accuracy(train_loss, val_loss)
     
     plt.savefig(args.out)
     if args.show:
