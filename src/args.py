@@ -71,7 +71,7 @@ GRAPH_PARSER.add_argument("--experiment_name",
 
 GRAPH_PARSER.add_argument("--graph_type",
     help="the type of graph to produce",
-    choices=['gradient_magnitude'])
+    choices=['gradient_magnitude', 'accuracy', 'loss'])
 
 GRAPH_PARSER.add_argument("--experiments",
     default="experiments",
