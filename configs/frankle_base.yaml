@@ -5,7 +5,7 @@ seed: 7112018
 dataset: "cifar 100" # enum (spaces convert to '_')
 model: "resnet" # enum
 learning_rate: 0.1 # float
-learning_rate_drop: 10 #reduce learning rate by dividing it by this number
+learning_rate_drop: 0.1 #reduce learning rate by dividing it by this number
 learning_rate_drop_intervals: [80, 120] #apply learning rate reduction at these epochs
 momentum: 0.9
 optimizer: "SGD"
