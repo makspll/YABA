@@ -11,8 +11,8 @@ from dataset import DatasetClass,Subset
 import torch 
 from torch.utils.data import Dataset,DataLoader
 import torch.nn as nn
-from torch.optim import Adam
-from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim import Adam, SGD
+from torch.optim.lr_scheduler import CosineAnnealingLR, MultiStepLR
 import yaml 
 import os 
 from os.path import join,isdir,isfile,realpath,dirname,basename
@@ -53,6 +53,15 @@ class Config():
         self.target_transforms : List = config.get('target_transforms',[])
         self.target_transforms_test : List = config.get('target_transform_test',[])
         self.freeze_parameter_list : List[str] = config.get('freeze_parameter_list',[])
+
+        self.learning_rate_drop : int = config.get('learning_rate_drop', 1)
+        self.learning_rate_drop_intervals: List[int] = config.get('learning_rate_drop_intervals', [])
+        self.weight_decay: float = config.get('weight_decay', 0)
+        self.momentum: float = config.get('momentum', 0.9)
+        self.optimizer = config.get('optimizer', 'Adam')
+        self.scheduler = config.get('scheduler', 'CosineAnnealingLR')
+        self.init_weights = config.get('init_weights', False)
+
         
     def to_yaml(self,f):
         copy = deepcopy(self)
@@ -81,6 +90,8 @@ class ExperimentRunner():
 
         ## sort out gpus and model   
         self.model = config.model(**self.config.model_kwargs)
+        if(config.init_weights):
+            self.model.apply(self.init_weights)
 
         # freeze parameters
         frozen = []
@@ -185,16 +196,27 @@ class ExperimentRunner():
 
 
         ## sort out gradient descent parameters via arguments
-        self.optimizer = Adam(self.model.parameters(),
-            lr=config.learning_rate, amsgrad=False,
-            weight_decay=0) # TODO: optimizer selection, different arguments
+        if(config.optimizer == "Adam"):
+            self.optimizer = Adam(self.model.parameters(),
+                lr = config.learning_rate, amsgrad=False,
+                weight_decay = config.weight_decay) # TODO: optimizer selection, different arguments
+        elif(config.optimizer == "SGD"):
+            self.optimizer = SGD(self.model.parameters(),
+                lr = config.learning_rate,
+                momentum = config.momentum,
+                weight_decay = config.weight_decay)
 
         self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
 
-        self.lr_scheduler = CosineAnnealingLR(
-            self.optimizer,
-            T_max=config.epochs,
-            eta_min=0.00002) # TODO: lr scheduler selection via arguments
+        if(config.scheduler == "CosineAnnealingLR"):
+            self.lr_scheduler = CosineAnnealingLR(
+                self.optimizer,
+                T_max=config.epochs,
+                eta_min=0.00002) # TODO: lr scheduler selection via arguments
+        elif(config.scheduler == "MultiStepLR"):
+            self.lr_scheduler = MultiStepLR(self.optimizer,
+                milestones=config.learning_rate_drop_intervals,
+                gamma=config.learning_rate_drop)
 
         ## write down config (might be changed since resume, so name epoch too)
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
@@ -374,3 +396,8 @@ class ExperimentRunner():
         self.best_val_acc = checkpoint['best_val_acc']
         self.best_val_epoch = checkpoint['best_val_epoch']
         set_random_state_dict(checkpoint['all_seed_states'])
+
+    def init_weights(self, m):
+        if isinstance(m, nn.Conv2d):
+            nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+
