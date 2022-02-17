@@ -93,6 +93,7 @@ class ExperimentRunner():
         if(config.init_weights):
             self.model.apply(self.init_weights)
 
+        
         # freeze parameters
         frozen = []
         compiled_regex = [re.compile(x) for x in self.config.freeze_parameter_list]
@@ -220,7 +221,7 @@ class ExperimentRunner():
                 milestones=config.learning_rate_drop_intervals,
                 gamma=config.learning_rate_drop)
 
-        ## write down config (might be changed since resume, so name epoch too)
+        ## write down config (might be changed since resume, so name epoch too)        
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
             self.config.to_yaml(f)
 
