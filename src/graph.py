@@ -1,6 +1,6 @@
 
 from common import err_if_none_arg
-from vis import plot_bn_vs_other_gradient_magnitudes, plot_accuracy
+from vis import plot_bn_vs_other_gradient_magnitudes, plot_accuracy, plot_loss
 from args import GRAPH_PARSER
 from os.path import join,isdir,isfile,basename
 import os 
@@ -22,6 +22,7 @@ if __name__ == "__main__":
 
     weights_root = join(experiment_root,"weights")
     logs_root = join(experiment_root,"logs")
+    stats = join(logs_root, "epoch_stats.csv")
     
     if args.graph_type == "gradient_magnitude":
         # get all 
@@ -32,7 +33,7 @@ if __name__ == "__main__":
 
     if args.graph_type == "accuracy":
         # get all 
-        csv_values  = (pd.read_csv(join(experiment_root), "epoch_stats.csv"))
+        csv_values  = pd.read_csv(stats)
         train_acc   = csv_values["train_acc"].tolist()
         val_acc     = csv_values["val_acc"].tolist()
         
@@ -41,12 +42,12 @@ if __name__ == "__main__":
 
     if args.graph_type == "loss":
         # get all 
-        csv_values  = (pd.read_csv(join(experiment_root), "epoch_stats.csv"))
+        csv_values  =  pd.read_csv(stats)
         train_loss   = csv_values["train_loss"].tolist()
         val_loss     = csv_values["val_loss"].tolist()
         
 
-        plot_accuracy(train_loss, val_loss)
+        plot_loss(train_loss, val_loss)
     
     plt.savefig(args.out)
     if args.show:
