@@ -22,7 +22,6 @@ gpus: [0,1]  # list ints
 
 ## not overridable via commandline
 
-freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
 
 model_kwargs: # dict -> any value
   layers: [3, 4, 6, 3]
