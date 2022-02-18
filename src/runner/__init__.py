@@ -267,7 +267,7 @@ class ExperimentRunner():
             for x,y in self.validation_data:
                 loss, acc = self.iter(x,y,self.epoch, True)
                 epoch_stats["val_acc"].append(acc)
-                epoch_stats["val_loss"].append(acc)
+                epoch_stats["val_loss"].append(loss)
 
             epoch_validation_time = time.time() - epoch_validation_time
 
