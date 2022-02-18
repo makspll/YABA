@@ -33,6 +33,14 @@ createVm:
 		--maintenance-policy TERMINATE --restart-on-failure \
 		--preemptible \
 
+createVmFromImage:
+	test -n "$(CONFIG)" # $$CONFIG;
+	@echo "creating ${CONFIG} instance on gcloud";
+	@echo "experiment_name: ${EXPERIMENT_NAME}";
+	gcloud beta compute instances create $(EXPERIMENT_NAME) \
+		--zone=$(CLOUDSDK_COMPUTE_ZONE) \
+		--source-machine-image=mlp-base-image  \
+
 
 sshVm:
 	test -n "$(CONFIG)" # $$CONFIG;
