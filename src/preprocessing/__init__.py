@@ -24,3 +24,6 @@ class Normalize(YAMLObjectFiltered, transforms.Normalize):
     yaml_fields=["mean","std","inplace"]
 
 
+class RandomAffine(YAMLObjectFiltered, transforms.RandomAffine):
+    yaml_tag="!PPRandomAffine"
+    yaml_fields=["degrees","translate", "scale", "shear", "interpolation", "fill", "fillcolor", "resample"]
