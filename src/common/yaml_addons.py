@@ -63,19 +63,18 @@ class YAMLObjectFiltered(yaml.YAMLObject):
 			try:
 				filtered_data = deepcopy(data)
 				to_remove = set()
+
 				for k,v in vars(filtered_data).items():
-					if k not in cls.yaml_fields and not k.startswith('_'):
+					if k not in cls.yaml_fields:
 						to_remove.add(k)
 				for k in to_remove:
-					delattr(filtered_data,k)
-				
-
+					filtered_data.__dict__.pop(k)
 			except AttributeError as E:
 				raise Exception(f"YAMLObjectFiltered requires a 'yaml_fields' class field: '{cls}'. {E}")
 
-			return dumper.represent_yaml_object(cls.yaml_tag, filtered_data, cls,
+			o = dumper.represent_yaml_object(cls.yaml_tag, filtered_data, cls,
 							flow_style=cls.yaml_flow_style)
-
+			return o
 
 def get_loader():
 	import preprocessing
