@@ -1,7 +1,7 @@
 
 export CLOUDSDK_CORE_PROJECT=s1860947-mlpractical
-export CLOUDSDK_COMPUTE_REGION=europe-west1
-export CLOUDSDK_COMPUTE_ZONE=europe-west1-d
+export CLOUDSDK_COMPUTE_REGION=us-west1
+export CLOUDSDK_COMPUTE_ZONE=us-west1-b
 
 EXPERIMENT_NAME=$(shell grep -A3 'experiment_name:' ${CONFIG} | head -n1 | cut -d'"' -f 2 |  tr -d '_' | tr '[:upper:]' '[:lower:]')
 
@@ -31,6 +31,7 @@ createVm:
 		--create-disk size=20 \
 		--accelerator type=nvidia-tesla-k80,count=2 \
 		--maintenance-policy TERMINATE --restart-on-failure \
+		--preemptible \
 
 
 sshVm:
