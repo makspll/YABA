@@ -25,7 +25,7 @@ gpus: [0,1]  # list ints
 
 model_kwargs: # dict -> any value
   layers: [3, 4, 6, 3]
-  num_output_classes: 100
+  num_output_classes: 10
   zero_init_residual: false
   groups: 1
   width_per_group: 64
