@@ -50,10 +50,6 @@ PARSER.add_argument("--batch_size",
     help="Overrides 'batch_size' from the config file provided",
     type=int)
 
-PARSER.add_argument("--learning_rate",
-    help="Overrides 'learning_rate' from the config file provided",
-    type=float)
-
 PARSER.add_argument("--validation_list",
     help="Overrides 'validation_list' from the config file provided",
     nargs="+",

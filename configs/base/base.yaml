@@ -2,32 +2,43 @@
 
 experiment_name: "VGG_38_cifar100" # str
 seed: 7112018
-dataset: "cifar 100" # enum (spaces convert to '_')
-model: "vgg" # enum
-learning_rate: 0.001 # float
-batch_size: 256 # intgrep -A3 'experiment_name:' configs/base/base.yaml | head -n1 | cut -d'"' -f 2
-validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
+dataset: 
+  !DCIFAR100
+    download: true
+
+fast_mode: True
+gpus: [0]       # list ints
+batch_size: 256 # 
+
+model: 
+  !MVGG
+    input_shape:
+      - 4
+      - 3
+      - 32
+      - 32
+    num_output_classes: 100
+    num_filters: 32
+    use_bias: false
+    num_stages: 3
+    num_blocks_per_stage: 5
+
+optimizer:
+  !OAdam
+    lr: 0.001
+    weight_decay: 0
+    amsgrad: false
 
 epochs: 100 # int
-gpus: [0]  # list ints
+scheduler:
+  !SCosineAnnealing
+    T_max: 100 # MAKE SURE TO SET TO MAX EPOCHS
+    eta_min: 0.00002
 
-
-## not overridable via commandline
-
+init_weights: false 
+validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
 freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
 
-model_kwargs: # dict -> any value
-  input_shape:
-    - 4
-    - 3
-    - 32
-    - 32
-  num_output_classes: 100
-  num_filters: 32
-  use_bias: false
-  num_stages: 3
-  num_blocks_per_stage: 5
-  
 transforms:
   - !PPRandomCrop {size: 32, padding: 4} # defined in preprocessing/__init__.py
   - !PPRandomHorizontalFlip {}

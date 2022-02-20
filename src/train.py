@@ -25,7 +25,6 @@ if __name__ == "__main__":
     override_if_not_none(args.model,"model",config)
     override_if_not_none(args.gpus,"gpus",config)
     override_if_not_none(args.batch_size,"batch_size",config)
-    override_if_not_none(args.learning_rate,"learning_rate",config)
     override_if_not_none(args.validation_list,"validation_list",config)
     override_if_not_none(args.epochs,"epochs",config)
 

@@ -1,22 +1,20 @@
 
-from copy import deepcopy
 from csv import DictWriter
 from datetime import date
 import logging
-from typing import Callable, Dict, List, Union
+from typing import Dict, List, Union
 import numpy as np
 from exceptions import ConfigurationException
-from model import ModelClass
-from dataset import DatasetClass,Subset
+from model import YAMLModel
+from dataset import Subset, YAMLDataset
 import torch 
-from torch.utils.data import Dataset,DataLoader
+from torch.utils.data import DataLoader
 import torch.nn as nn
-from torch.optim import Adam, SGD
-from torch.optim.lr_scheduler import CosineAnnealingLR, MultiStepLR
 import yaml 
 import os 
-from os.path import join,isdir,isfile,realpath,dirname,basename
+from os.path import join,isdir,isfile,realpath,dirname
 from torchvision import transforms
+from optimization import YAMLOptimizer, YAMLScheduler
 from .trackers import Tracker
 from common import get_random_state_dicts, set_random_state_dict, set_seed
 import re
@@ -29,23 +27,11 @@ class Config():
 
     def __init__(self, config : Dict) -> None:
         self.experiment_name : str = config['experiment_name']
-
-        try:
-            self.dataset : Callable[[], Dataset] = DatasetClass.from_str(config["dataset"]).value
-        except Exception as E:
-            raise ConfigurationException("dataset",f"{E.__class__.__name__}:{E}")
-        
-        try:
-            self.model : Callable[[],nn.Module] = ModelClass.from_str(config["model"]).value
-        except Exception as E:
-            raise ConfigurationException("model",f"{E.__class__.__name__}:{E.with_traceback(None)}")
-
         self.gpus : List[int] = config['gpus']
+        self.fast_mode : bool = config.get('fast_mode',False)
         self.batch_size : int = config['batch_size']
-        self.learning_rate : float = config['learning_rate']
         self.validation_list : Union[List[int],str] = config['validation_list']
         self.epochs : int = config['epochs']
-        self.model_kwargs : Dict = config['model_kwargs']
         self.trackers : List[Tracker] = config['trackers']
         self.seed : int = config['seed']
         self.transforms : List = config.get('transforms',[])
@@ -53,21 +39,14 @@ class Config():
         self.target_transforms : List = config.get('target_transforms',[])
         self.target_transforms_test : List = config.get('target_transform_test',[])
         self.freeze_parameter_list : List[str] = config.get('freeze_parameter_list',[])
-
-        self.learning_rate_drop : int = config.get('learning_rate_drop', 1)
-        self.learning_rate_drop_intervals: List[int] = config.get('learning_rate_drop_intervals', [])
-        self.weight_decay: float = config.get('weight_decay', 0)
-        self.momentum: float = config.get('momentum', 0.9)
-        self.optimizer = config.get('optimizer', 'Adam')
-        self.scheduler = config.get('scheduler', 'CosineAnnealingLR')
+        self.model : YAMLModel = config['model']
+        self.optimizer: YAMLOptimizer = config['optimizer']
+        self.scheduler: YAMLScheduler = config['scheduler']
+        self.dataset : YAMLDataset = config['dataset']
         self.init_weights = config.get('init_weights', False)
-
         
     def to_yaml(self,f):
-        copy = deepcopy(self)
-        copy.dataset = DatasetClass.to_str_from_value(copy.dataset)
-        copy.model = ModelClass.to_str_from_value(copy.model)
-        yaml.dump(vars(copy),f)
+        yaml.dump(vars(self),f)
 
     def __repr__(self) -> str:
         return "\n".join([f"\t{k}:{self.__getattribute__(k)}" for k in vars(self)])
@@ -89,7 +68,7 @@ class ExperimentRunner():
         self.logger = logging.getLogger(__name__)
 
         ## sort out gpus and model   
-        self.model = config.model(**self.config.model_kwargs)
+        self.model = self.config.model.create()
         if(config.init_weights):
             self.model.apply(self.init_weights)
 
@@ -139,22 +118,21 @@ class ExperimentRunner():
             "transform": transforms.Compose(self.config.transforms),
             "target_transform" : transforms.Compose(self.config.target_transforms),
         }
-        
+
         # read validation list, either already a list or path to one
         list_path = join(dirname(realpath(__file__)),'..','..','lists')
         val_list = self.config.validation_list 
         if isinstance(self.config.validation_list,str):
             val_list = [int(x) for x in open(join(list_path,self.config.validation_list)).readlines()]
 
-        dataset_training = self.config.dataset(train=True,**common_kwargs_train, download=True)
+        dataset_training = self.config.dataset.create(True,*common_kwargs_train.values())
         training_list = [x for x in range(len(dataset_training)) if x not in val_list]
         dataset_training = Subset(dataset_training,training_list)
 
-        dataset_validation = self.config.dataset(train=True,**common_kwargs_test, download=True)
+        dataset_validation = self.config.dataset.create(True,*common_kwargs_test.values())
         dataset_validation = Subset(dataset_validation,indices=val_list)
                 
-
-        dataset_test = self.config.dataset(train=False,**common_kwargs_test, download=True)
+        dataset_test = self.config.dataset.create(False,*common_kwargs_test.values())
 
         common_kwargs = {
             "batch_size":config.batch_size,
@@ -190,7 +168,7 @@ class ExperimentRunner():
             else:
                 raise Exception("Experiment already exists, but 'resume' flag is not set.")
         else:
-            set_seed(self.config.seed) 
+            set_seed(self.config.seed,self.config.fast_mode) 
 
         os.makedirs(self.log_dir,exist_ok=True)
         os.makedirs(self.config_dir,exist_ok=True)
@@ -198,28 +176,30 @@ class ExperimentRunner():
 
 
         ## sort out gradient descent parameters via arguments
-        if(config.optimizer == "Adam"):
-            self.optimizer = Adam(self.model.parameters(),
-                lr = config.learning_rate, amsgrad=False,
-                weight_decay = config.weight_decay) # TODO: optimizer selection, different arguments
-        elif(config.optimizer == "SGD"):
-            self.optimizer = SGD(self.model.parameters(),
-                lr = config.learning_rate,
-                momentum = config.momentum,
-                weight_decay = config.weight_decay)
+        self.optimizer = self.config.optimizer.create(self.model.parameters())
+        # if(config.optimizer == "Adam"):
+        #     self.optimizer = Adam(self.model.parameters(),
+        #         lr = config.learning_rate, amsgrad=False,
+        #         weight_decay = config.weight_decay) # TODO: optimizer selection, different arguments
+        # elif(config.optimizer == "SGD"):
+        #     self.optimizer = SGD(self.model.parameters(),
+        #         lr = config.learning_rate,
+        #         momentum = config.momentum,
+        #         weight_decay = config.weight_decay)
 
         self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
+        self.lr_scheduler = self.config.scheduler.create(self.optimizer)
 
-        if(config.scheduler == "CosineAnnealingLR"):
-            self.lr_scheduler = CosineAnnealingLR(
-                self.optimizer,
-                T_max=config.epochs,
-                eta_min=0.00002) # TODO: lr scheduler selection via arguments
-        elif(config.scheduler == "MultiStepLR"):
-            self.lr_scheduler = MultiStepLR(
-                self.optimizer,
-                milestones=config.learning_rate_drop_intervals,
-                gamma=config.learning_rate_drop)
+        # if(config.scheduler == "CosineAnnealingLR"):
+        #     self.lr_scheduler = CosineAnnealingLR(
+        #         self.optimizer,
+        #         T_max=config.epochs,
+        #         eta_min=0.00002) # TODO: lr scheduler selection via arguments
+        # elif(config.scheduler == "MultiStepLR"):
+        #     self.lr_scheduler = MultiStepLR(
+        #         self.optimizer,
+        #         milestones=config.learning_rate_drop_intervals,
+        #         gamma=config.learning_rate_drop)
 
         ## write down config (might be changed since resume, so name epoch too)        
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:

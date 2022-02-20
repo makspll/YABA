@@ -1,43 +1,44 @@
-## overridable via commandline
+# ## NEEDS UPDATED
 
-experiment_name: "resnet_50_cifar100" # str
-seed: 7112018
-dataset: "cifar 100" # enum (spaces convert to '_')
-model: "resnet" # enum
-learning_rate: 0.001 # float
-batch_size: 256 # int
-validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
+# experiment_name: "resnet_50_cifar100" # str
+# seed: 7112018
+# dataset: "cifar 100" # enum (spaces convert to '_')
+# model: "resnet" # enum
+# learning_rate: 0.001 # float
+# batch_size: 256 # int
+# validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
 
-epochs: 100 # int
-gpus: [0]  # list ints
+# epochs: 100 # int
+# gpus: []  # list ints
 
 
-## not overridable via commandline
+# ## not overridable via commandline
 
-freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
+# freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
 
-model_kwargs: # dict -> any value
-  layers: [3, 4, 6, 3]
-  num_output_classes: 100
-  zero_init_residual: false
-  groups: 1
-  width_per_group: 64
-  replace_stride_with_dilation: null
+# model_kwargs: # dict -> any value
+#   layers: [3, 4, 6, 3]
+#   num_output_classes: 100
+#   zero_init_residual: false
+#   groups: 1
+#   width_per_group: 64
+#   replace_stride_with_dilation: null
+#   sparse_bn: true
   
-transforms:
-  - !PPRandomCrop {size: 32, padding: 4} # defined in preprocessing/__init__.py
-  - !PPRandomHorizontalFlip {}
-  - !PPToTensor {}
-  - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
+# transforms:
+#   - !PPRandomCrop {size: 32, padding: 4} # defined in preprocessing/__init__.py
+#   - !PPRandomHorizontalFlip {}
+#   - !PPToTensor {}
+#   - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
 
-transforms_test:
-  - !PPToTensor {}
-  - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
+# transforms_test:
+#   - !PPToTensor {}
+#   - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
 
-target_transforms: []
-target_transforms_test: []
+# target_transforms: []
+# target_transforms_test: []
 
-trackers: # list of enums -> kwarg dict
-  - !GradientsTracker {key: "gradients"}  # objects with 'yaml_tag' and inheriting from yaml.YAMLobject, can be instantiated this way!
+# trackers: # list of enums -> kwarg dict
+#   - !GradientsTracker {key: "gradients"}  # objects with 'yaml_tag' and inheriting from yaml.YAMLobject, can be instantiated this way!
 
     

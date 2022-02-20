@@ -15,7 +15,7 @@ def err_if_none_arg(arg,key):
         arg ([type]): the value of key or none
         key ([type]): the key name 
     """
-    if not arg:
+    if arg is None:
         logger.error(f"{key}: argument missing, needs to be specified in config or argument")
         sys.exit(1)
 
@@ -31,17 +31,19 @@ def override_if_not_none(arg : Union[None,object], key, config : Dict):
     if arg:
         config[key] = arg
     else:
-        logger.error(config.get(key,None),key)
+        err_if_none_arg(config.get(key,None),key)
 
-def set_seed(seed):
+def set_seed(seed,fast_mode=False):
     torch.manual_seed(seed)
     np.random.seed(seed)
     random.seed(seed) 
     # for cuda
     torch.cuda.manual_seed_all(seed)
-    # torch.backends.cudnn.deterministic = True
-    # torch.backends.cudnn.benchmark = False
-    # torch.backends.cudnn.enabled = False
+    
+    if not fast_mode:
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.enabled = False
 
 def get_random_state_dicts():
 
