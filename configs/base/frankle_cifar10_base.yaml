@@ -8,13 +8,14 @@ dataset:
     download: true 
 
 model: 
-  !MResnet
-    layers: [3, 4, 6, 3]
+  !MResnetCIFAR
+    layers: [3, 4, 6]
     num_output_classes: 10
     zero_init_residual: false
     groups: 1
     width_per_group: 64
     replace_stride_with_dilation: null
+    sparse_bn: false
 
 optimizer: 
   !OSGD 
@@ -29,7 +30,7 @@ scheduler:
 
 init_weights: True
 batch_size: 128 # int
-validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
+validation_list: 'validation_cifar10_5%.txt' # list ints or name of list in 'lists' folder
 
 freeze_parameter_list: ["^((?!bn[0-9]+).)*$"]
 epochs: 160 # int

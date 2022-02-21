@@ -61,10 +61,7 @@ class YAMLObjectFiltered(yaml.YAMLObject):
 
 	@classmethod 
 	def from_yaml(cls, loader, node):
-		# try:
-		args,kwargs = get_func_call_params_from_kwargs(cls.__init__,loader.construct_mapping(node))
-		# except Exception as E:
-			# raise Exception(f"When parsing Tag {cls.yaml_tag} error occured: {E}")
+		args,kwargs = get_func_call_params_from_kwargs(cls.__init__,loader.construct_mapping(node,deep=True))
 		return cls(*args,**kwargs)
 
 	@classmethod

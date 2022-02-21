@@ -1,0 +1,57 @@
+## NEEDS UPDATED
+
+experiment_name: "resnet_56_cifar100" # str
+seed: 7112018
+
+dataset: 
+  !DCIFAR100
+    download: true
+    
+batch_size: 128 # int
+
+gpus: [0]  # list ints
+validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
+fast_mode: true 
+
+init_weights: true
+model:
+  !MResnetCIFAR
+    layers: [9, 9, 9] # these numbers multiplied by 2 and summed + 2 give N in ResNet-N, 
+                      #  i.e. [9,9,9] = 1 + 2*9 + 2*9 + 2*9 + 1 = ResNet-56
+    num_output_classes: 100
+    zero_init_residual: false
+    groups: 1
+    width_scale_factor: 1
+    sparse_bn: false
+
+epochs: 160
+optimizer: 
+  !OSGD 
+    lr: 0.1
+    momentum: 0.9
+    weight_decay: 0.0001
+
+scheduler: 
+  !SMultiStep
+    milestones: [80,120]
+    gamma: 0.1
+
+freeze_parameter_list: [] # list of regexes which if match a  fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)  
+  
+transforms:
+  - !PPRandomCrop {size: 32, padding: 4} # defined in preprocessing/__init__.py
+  - !PPRandomHorizontalFlip {}
+  - !PPToTensor {}
+  - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
+
+transforms_test:
+  - !PPToTensor {}
+  - !PPNormalize {mean: [0.5071, 0.4867, 0.4408], std: [0.2675, 0.2565, 0.2761]}
+
+target_transforms: []
+target_transforms_test: []
+
+trackers: # list of enums -> kwarg dict
+  - !GradientsTracker {key: "gradients"}  # objects with 'yaml_tag' and inheriting from yaml.YAMLobject, can be instantiated this way!
+
+    

@@ -1,6 +1,5 @@
-from functools import partial
-from common import StringableEnum
-from .Resnet import Resnet
+from .ResnetIMGNET import ResnetIMGNET
+from .ResnetCIFAR import ResnetCIFAR
 from .VGG import VGG
 from common.yaml_addons import YAMLObjectUninitializedFiltered
 
@@ -9,10 +8,15 @@ class YAMLModel(YAMLObjectUninitializedFiltered):
         return super().create()
 
 
-class Resnet(YAMLModel):
-    yaml_tag='!MResnet'
+class ResnetIMGNET(YAMLModel):
+    yaml_tag='!MResnetIMGNET'
     yaml_fields=["layers","block","num_output_classes","zero_init_residual","groups","width_per_group","replace_stride_with_dilation","sparse_bn","norm_layer"]
-    yaml_class_target=Resnet 
+    yaml_class_target=ResnetIMGNET 
+
+class ResnetCIFAR(YAMLModel):
+    yaml_tag='!MResnetCIFAR'
+    yaml_fields=["layers","block","num_output_classes","zero_init_residual","groups","width_scale_factor","replace_stride_with_dilation","sparse_bn","norm_layer"]
+    yaml_class_target=ResnetCIFAR 
 
 class VGG(YAMLModel):
     yaml_tag='!MVGG'

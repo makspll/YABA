@@ -1,4 +1,5 @@
 import argparse
+from email.policy import default
 import logging
 
 PARSER = argparse.ArgumentParser()
@@ -89,3 +90,23 @@ GRAPH_PARSER.add_argument("--show",
     const=True,
     default=False,
     action="store_const")
+
+
+CALC_PARSER = argparse.ArgumentParser()
+
+CALC_PARSER.add_argument("--config",
+    help="the yaml config file to parse looking for dataset object or others",
+    required=True)
+
+CALC_PARSER.add_argument("--out",
+    help="the path to output file",
+    default="calc_out.txt")
+
+CALC_PARSER.add_argument("--mode",
+    choices=["per pixel mean"],
+    required=True)
+
+CALC_PARSER.add_argument("--datasets",
+    default="datasets",
+    help="Path to experiments directory",
+    required=True)

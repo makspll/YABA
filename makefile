@@ -25,13 +25,14 @@ createVm:
 	@echo "creating ${CONFIG} instance on gcloud";
 	@echo "experiment_name: ${EXPERIMENT_NAME}";
 	gcloud compute instances create $(EXPERIMENT_NAME) \
-		--image-family=ubuntu-2004-lts \
-		--image-project ubuntu-os-cloud \
+		--image-family pytorch-1-10-cu110 \
+		--image-project deeplearning-platform-release \
 		--machine-type n1-standard-4 \
 		--create-disk size=40 \
 		--accelerator type=nvidia-tesla-k80,count=2 \
 		--maintenance-policy TERMINATE --restart-on-failure \
-		--preemptible \
+		--metadata="install-nvidia-driver=True" \
+		--preemptible 
 
 createVmFromImage:
 	test -n "$(CONFIG)" # $$CONFIG;
@@ -40,6 +41,11 @@ createVmFromImage:
 	gcloud beta compute instances create $(EXPERIMENT_NAME) \
 		--zone=$(CLOUDSDK_COMPUTE_ZONE) \
 		--source-machine-image=mlp-base-image  \
+		--machine-type n1-standard-4 \
+		--accelerator type=nvidia-tesla-k80,count=2 \
+		--maintenance-policy TERMINATE --restart-on-failure \
+		--preemptible 
+
 
 
 sshVm:
@@ -75,3 +81,4 @@ listDisksVm:
 
 listVms:
 	gcloud compute instances list
+

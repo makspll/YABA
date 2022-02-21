@@ -84,6 +84,9 @@ class ExperimentRunner():
 
         self.logger.info(f"Froze parametrs: {frozen}")
 
+        # log model stats
+        self.log_model_stats()
+
         # attach trackers
         for t in self.config.trackers:
             t.attach(self.model)
@@ -124,6 +127,8 @@ class ExperimentRunner():
         val_list = self.config.validation_list 
         if isinstance(self.config.validation_list,str):
             val_list = [int(x) for x in open(join(list_path,self.config.validation_list)).readlines()]
+
+        
 
         dataset_training = self.config.dataset.create(True,*common_kwargs_train.values())
         training_list = [x for x in range(len(dataset_training)) if x not in val_list]
@@ -177,29 +182,8 @@ class ExperimentRunner():
 
         ## sort out gradient descent parameters via arguments
         self.optimizer = self.config.optimizer.create(self.model.parameters())
-        # if(config.optimizer == "Adam"):
-        #     self.optimizer = Adam(self.model.parameters(),
-        #         lr = config.learning_rate, amsgrad=False,
-        #         weight_decay = config.weight_decay) # TODO: optimizer selection, different arguments
-        # elif(config.optimizer == "SGD"):
-        #     self.optimizer = SGD(self.model.parameters(),
-        #         lr = config.learning_rate,
-        #         momentum = config.momentum,
-        #         weight_decay = config.weight_decay)
-
-        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # TODO: loss function selection via arguments
+        self.loss_function  = nn.CrossEntropyLoss().to(self.device)
         self.lr_scheduler = self.config.scheduler.create(self.optimizer)
-
-        # if(config.scheduler == "CosineAnnealingLR"):
-        #     self.lr_scheduler = CosineAnnealingLR(
-        #         self.optimizer,
-        #         T_max=config.epochs,
-        #         eta_min=0.00002) # TODO: lr scheduler selection via arguments
-        # elif(config.scheduler == "MultiStepLR"):
-        #     self.lr_scheduler = MultiStepLR(
-        #         self.optimizer,
-        #         milestones=config.learning_rate_drop_intervals,
-        #         gamma=config.learning_rate_drop)
 
         ## write down config (might be changed since resume, so name epoch too)        
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
@@ -207,6 +191,19 @@ class ExperimentRunner():
 
         ## setup logger
         self.logger.addHandler(logging.FileHandler(join(self.log_dir,f"{date.today()}.log")))
+
+
+    def log_model_stats(self):
+        params = list(self.model.named_parameters())
+        non_trainable_params = sum([x.numel() for (k,x) in params if not x.requires_grad])
+        trainable_params = sum([x.numel() for (k,x) in params if x.requires_grad ])
+        conv_layers = len([1 for (k,x) in params if "conv" in k and not "bias" in k])
+
+        self.logger.info(f"Layer names containing 'conv' : {conv_layers}")
+        self.logger.info(f"Non-trainable parameters (Thousands): {non_trainable_params/1e3}")
+        self.logger.info(f"Trainable parameters (Thousands): {trainable_params/1e3}")
+        self.logger.info(f"Total Parameters (Thousands): {(trainable_params + non_trainable_params)/1e3}")
+
 
     def start(self):
 
@@ -331,14 +328,16 @@ class ExperimentRunner():
         if eval_mode:
             self.model.eval()
         else:
+            self.optimizer.zero_grad()
             self.model.train()
 
         x,y = x.to(device=self.device),y.to(device=self.device)
         out = self.model(x)
+
+
         loss = self.loss_function(out,y)
 
         if not eval_mode:
-            self.optimizer.zero_grad()
             loss.backward()
 
             self.optimizer.step()
