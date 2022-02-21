@@ -33,32 +33,12 @@ PARSER.add_argument("--verbose",
 PARSER.add_argument("--experiment_name",
 
     help="Overrides 'experiment_name' from the config file provided")
-PARSER.add_argument("--seed",
-    help="Overrides 'seeed' from the config file provided")
-
-PARSER.add_argument("--dataset",
-    help="Overrides 'dataset' from the config file provided")
-
-PARSER.add_argument("--model",
-    help="Overrides 'model' from the config file provided")
 
 PARSER.add_argument("--gpus",
     help="Overrides 'gpus' from the config file provided",
     nargs="+",
     type=int)
 
-PARSER.add_argument("--batch_size",
-    help="Overrides 'batch_size' from the config file provided",
-    type=int)
-
-PARSER.add_argument("--validation_list",
-    help="Overrides 'validation_list' from the config file provided",
-    nargs="+",
-    type=int)
-
-PARSER.add_argument("--epochs",
-    help="Overrides 'epochs' from the config file provided",
-    type=int)
 
 
 GRAPH_PARSER = argparse.ArgumentParser()

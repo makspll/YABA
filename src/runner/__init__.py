@@ -3,7 +3,7 @@ from csv import DictWriter
 from datetime import date
 import logging
 import sys
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union
 import numpy as np
 from exceptions import ConfigurationException
 from model import YAMLModel
@@ -26,30 +26,44 @@ class Config():
         string format args to their respective enums,
         let's us have static type hints, woohoo """
 
+    
     def __init__(self, config : Dict) -> None:
-        self.experiment_name : str = config['experiment_name']
-        self.gpus : List[int] = config['gpus']
+        self.eval_mode = config.get("evaluate_only",False)
+        def err_if_none_and_not_eval(key):
+            o = config.get(key,None)
+            if not o and self.eval_mode:
+                raise ConfigurationException(key,"'evaluate_only' is not set so expected this key to be present in config")
+            return o
+        def err_if_none(key):
+            o = config.get(key,None)
+            if not o:
+                raise ConfigurationException(key,"Expected this key to be present in config")
+            return o 
+
+        self.experiment_name : str = err_if_none('experiment_name')
+        self.gpus : List[int] = err_if_none_and_not_eval('gpus')
         self.fast_mode : bool = config.get('fast_mode',False)
-        self.batch_size : int = config['batch_size']
-        self.validation_list : Union[List[int],str] = config['validation_list']
-        self.epochs : int = config['epochs']
-        self.trackers : List[Tracker] = config['trackers']
-        self.seed : int = config['seed']
+        self.batch_size : int = err_if_none_and_not_eval('batch_size')
+        self.validation_list : Union[List[int],str] = err_if_none_and_not_eval('validation_list')
+        self.epochs : int = err_if_none_and_not_eval('epochs')
+        self.trackers : List[Tracker] = config.get('trackers',[])
+        self.seed : int = config.get('seed',0)
         self.transforms : List = config.get('transforms',[])
         self.transforms_test : List = config.get('transforms_test',[])
         self.target_transforms : List = config.get('target_transforms',[])
         self.target_transforms_test : List = config.get('target_transform_test',[])
         self.freeze_parameter_list : List[str] = config.get('freeze_parameter_list',[])
-        self.model : YAMLModel = config['model']
-        self.optimizer: YAMLOptimizer = config['optimizer']
-        self.scheduler: YAMLScheduler = config['scheduler']
-        self.dataset : YAMLDataset = config['dataset']
+        self.model : YAMLModel = err_if_none('model')
+        self.optimizer: YAMLOptimizer = err_if_none_and_not_eval('optimizer')
+        self.scheduler: YAMLScheduler = err_if_none_and_not_eval('scheduler')
+        self.dataset : YAMLDataset = err_if_none('dataset')
         
     def to_yaml(self,f):
         yaml.dump(vars(self),f)
 
     def __repr__(self) -> str:
         return "\n".join([f"\t{k}:{self.__getattribute__(k)}" for k in vars(self)])
+
 
 class ExperimentRunner():
     def __init__(self,
@@ -64,42 +78,13 @@ class ExperimentRunner():
         self.epoch = 1
         self.best_val_epoch = -1
         self.best_val_acc = -1
-
+        self.datasets = datasets 
 
         ## create directories or retrieve existing ones
-        if not isdir(self.root):
-            os.mkdir(self.root)
-
-        self.experiment_root = join(self.root,self.config.experiment_name)
-
-        self.log_dir = join(self.experiment_root,"logs")
-        self.config_dir = join(self.experiment_root,"config")
-        self.weights_dir = join(self.experiment_root,"weights")
-
-        # only create dirs but remember if experiment already exists
-        exists = isdir(self.experiment_root)
-        os.makedirs(self.log_dir,exist_ok=True)
-        os.makedirs(self.config_dir,exist_ok=True)
-        os.makedirs(self.weights_dir,exist_ok=True)
+        exists = self.make_experiment_dirs()
 
         ## setup logger
-        self.logger = logging.getLogger(__name__)
-        self.logger.propagate = False 
-
-        if self.logger.hasHandlers():
-            self.logger.handlers.clear()
-        self.logger.setLevel(logging.DEBUG)
-
-        file_handler = logging.FileHandler(join(self.log_dir,f"{date.today()}.log"))
-        file_handler.setLevel(logging.DEBUG)
-        detailed_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
-        file_handler.setFormatter(detailed_formatter)
-
-        stream_handler = logging.StreamHandler(sys.stdout)
-        stream_handler.setLevel(logging.getLogger().level)
-
-        self.logger.addHandler(file_handler)
-        self.logger.addHandler(stream_handler)
+        self.setup_loggers()
 
         ## sort out gpus and model   
         self.model = self.config.model.create()
@@ -117,19 +102,41 @@ class ExperimentRunner():
 
         # log model stats
         self.log_model_stats()
+        self.setup_gpus()
 
-        # attach trackers
-        for t in self.config.trackers:
-            t.attach(self.model)
+        if not self.config.eval_mode:
+            # attach trackers
+            for t in self.config.trackers:
+                t.attach(self.model)
 
+            # descent parameters
+            self.optimizer = self.config.optimizer.create(self.model.parameters())
+            self.lr_scheduler = self.config.scheduler.create(self.optimizer)
 
+        self.loss_function  = nn.CrossEntropyLoss().to(self.device) # needed for eval mode too
+        self.setup_datasets()
+
+        ## load checkpoint
+        if exists and not self.config.eval_mode:
+            if self.resume:
+                self.load(join(self.weights_dir, self.checkpoint_name(last=True)))
+                self.epoch += 1 # we store last processed epoch, start at next one
+            else:
+                raise ConfigurationException("experiment_name","Experiment already exists, but 'resume' flag is not set.")
+        else:
+            set_seed(self.config.seed,self.config.fast_mode) 
+
+        ## write down config (might be changed since resume, so name epoch too)        
+        with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
+            self.config.to_yaml(f)
+
+    def setup_gpus(self):
         if len(self.config.gpus) > 0:
             if not torch.cuda.is_available():
                 raise ConfigurationException("gpus", "No gpus are available, but some were requested. Stop using Windows you twat")
 
             self.device = torch.cuda.current_device()
-            if torch.cuda.device_count() >= len(self.config.gpus):
-                if len(self.config.gpus) > 1: # wrap around in parallelizer
+            if torch.cuda.device_count() >= len(self.config.gpus) and len(self.config.gpus) > 1:
                     self.model = nn.DataParallel(self.model)
 
             for i in range(torch.cuda.device_count()):
@@ -140,15 +147,32 @@ class ExperimentRunner():
 
         self.model.to(self.device)
 
+    def make_experiment_dirs(self) -> bool:
+        """ Creates experiment subfolders, also returns true if an experiment is already present """
+        if not isdir(self.root):
+            os.mkdir(self.root)
 
-        ## sort out data
+        self.experiment_root = join(self.root,self.config.experiment_name)
+
+        self.log_dir = join(self.experiment_root,"logs")
+        self.config_dir = join(self.experiment_root,"config")
+        self.weights_dir = join(self.experiment_root,"weights")
+
+        # only create dirs but remember if experiment already exists
+        exists = isdir(self.experiment_root)
+        os.makedirs(self.log_dir,exist_ok=True)
+        os.makedirs(self.config_dir,exist_ok=True)
+        os.makedirs(self.weights_dir,exist_ok=True)
+        return exists 
+
+    def setup_datasets(self):
         common_kwargs_test = {
-            "root": datasets,
+            "root": self.datasets,
             "transform": transforms.Compose(self.config.transforms_test),
             "target_transform" : transforms.Compose(self.config.target_transforms_test),
         }
         common_kwargs_train = {
-            "root": datasets,
+            "root": self.datasets,
             "transform": transforms.Compose(self.config.transforms),
             "target_transform" : transforms.Compose(self.config.target_transforms),
         }
@@ -171,7 +195,7 @@ class ExperimentRunner():
         dataset_test = self.config.dataset.create(False,*common_kwargs_test.values())
         self.logger.info(f"Using {len(training_list)} training samples, and {len(dataset_validation)} validation samples.")
         common_kwargs = {
-            "batch_size":config.batch_size,
+            "batch_size": self.config.batch_size,
             "num_workers":4
         }
 
@@ -184,29 +208,24 @@ class ExperimentRunner():
         self.testing_data = DataLoader(
             dataset_test,**common_kwargs)
 
+    def setup_loggers(self):
+        self.logger = logging.getLogger(__name__)
+        self.logger.propagate = False 
 
+        if self.logger.hasHandlers():
+            self.logger.handlers.clear()
+        self.logger.setLevel(logging.DEBUG)
 
-        
-        ## sort out gradient descent parameters via arguments
-        self.optimizer = self.config.optimizer.create(self.model.parameters())
-        self.loss_function  = nn.CrossEntropyLoss().to(self.device)
-        self.lr_scheduler = self.config.scheduler.create(self.optimizer)
+        file_handler = logging.FileHandler(join(self.log_dir,f"{date.today()}.log"))
+        file_handler.setLevel(logging.DEBUG)
+        detailed_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
+        file_handler.setFormatter(detailed_formatter)
 
-        ## load checkpoint
+        stream_handler = logging.StreamHandler(sys.stdout)
+        stream_handler.setLevel(logging.getLogger().level)
 
-        if exists:
-            if self.resume:
-                self.load(join(self.weights_dir, self.checkpoint_name(last=True)))
-                self.epoch += 1 # we store last processed epoch, start at next one
-            else:
-                raise Exception("Experiment already exists, but 'resume' flag is not set.")
-        else:
-            set_seed(self.config.seed,self.config.fast_mode) 
-
-        ## write down config (might be changed since resume, so name epoch too)        
-        with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
-            self.config.to_yaml(f)
-
+        self.logger.addHandler(file_handler)
+        self.logger.addHandler(stream_handler)
 
     def log_model_stats(self):
         params = list(self.model.named_parameters())
@@ -226,85 +245,85 @@ class ExperimentRunner():
 
         self.logger.info(f"Begun training at epoch {self.epoch}.")
 
+        if self.config.eval_mode:
+            pass 
+        else:
+            for i in range(self.epoch,self.config.epochs+1):
+                self.epoch = i 
+                epoch_time = time.perf_counter()
 
-        
-        for i in range(self.epoch,self.config.epochs+1):
-            self.epoch = i 
-            epoch_time = time.perf_counter()
-
-            epoch_stats = {
-                "train_acc" : [],
-                "train_loss" : [],
-                "val_acc" : [],
-                "val_loss" : [],
-            }
-
-
-            epoch_training_time = time.perf_counter()
-            for x,y in self.training_data:
+                epoch_stats = {
+                    "train_acc" : [],
+                    "train_loss" : [],
+                    "val_acc" : [],
+                    "val_loss" : [],
+                }
 
 
-                loss, acc = self.iter(x,y,self.epoch,False)
-                epoch_stats["train_loss"].append(loss)
-                epoch_stats["train_acc"].append(acc)
+                epoch_training_time = time.perf_counter()
+                if not self.config.eval_mode:
+                    for sample in self.training_data:
+                        loss, acc = self.iter(sample,self.epoch,False)
+                        epoch_stats["train_loss"].append(loss)
+                        epoch_stats["train_acc"].append(acc)
 
-            epoch_training_time = time.perf_counter() - epoch_training_time
+                epoch_training_time = time.perf_counter() - epoch_training_time
 
-            post_train_trackers = {}
-            for t in self.config.trackers:
-                post_train_trackers[t.key] = t.post_train_iter_hook()
+                post_train_trackers = {}
+                for t in self.config.trackers:
+                    post_train_trackers[t.key] = t.post_train_iter_hook()
 
-            epoch_validation_time = time.perf_counter()
+                epoch_validation_time = time.perf_counter()
 
-            for x,y in self.validation_data:
-                loss, acc = self.iter(x,y,self.epoch, True)
-                epoch_stats["val_acc"].append(acc)
-                epoch_stats["val_loss"].append(loss)
+                for sample in self.validation_data:
+                    loss, acc = self.iter(sample,self.epoch, True)
+                    epoch_stats["val_acc"].append(acc)
+                    epoch_stats["val_loss"].append(loss)
 
-            epoch_validation_time = time.perf_counter() - epoch_validation_time
+                epoch_validation_time = time.perf_counter() - epoch_validation_time
 
-            # convert stats to averages
-            epoch_stats = {k:np.mean(v) for k,v in epoch_stats.items()}
+                # convert stats to averages
+                epoch_stats = {k:np.mean(v) for k,v in epoch_stats.items()}
 
 
 
-            if epoch_stats['val_acc'] > self.best_val_acc:
-                self.best_val_acc = epoch_stats['val_acc']
-                self.best_val_epoch = self.epoch
+                if epoch_stats['val_acc'] > self.best_val_acc:
+                    self.best_val_acc = epoch_stats['val_acc']
+                    self.best_val_epoch = self.epoch
 
-            # TODO: track epoch time and log val acc + train acc after each epoch
+                # TODO: track epoch time and log val acc + train acc after each epoch
 
-            self.dump_stats("epoch_stats",write_header=self.epoch==1,**epoch_stats)
-            self.checkpoint(self.checkpoint_name(self.epoch),**post_train_trackers)
-            self.checkpoint(self.checkpoint_name(last=True),**post_train_trackers) 
+                self.dump_stats("epoch_stats",write_header=self.epoch==1,**epoch_stats)
+                self.checkpoint(self.checkpoint_name(self.epoch),**post_train_trackers)
+                self.checkpoint(self.checkpoint_name(last=True),**post_train_trackers) 
 
-            epoch_time = time.perf_counter() - epoch_time
+                epoch_time = time.perf_counter() - epoch_time
 
-            epoch_time_hours = epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60
-            epoch_time_minutes = (epoch_time_hours * 60) % 60
-            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time:.2f}s, ETA:{int(epoch_time_hours)}h:{int(epoch_time_minutes)}m)")
-            self.logger.debug(f"Time split: train:{epoch_training_time:.2f}s val:{epoch_validation_time:.2f}s")
-            
-            self.lr_scheduler.step()
-            self.logger.debug(f"Next learning rate: {self.optimizer.param_groups[0]['lr']:.4f}")
+                epoch_time_hours = epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60
+                epoch_time_minutes = (epoch_time_hours * 60) % 60
+                self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time:.2f}s, ETA:{int(epoch_time_hours)}h:{int(epoch_time_minutes)}m)")
+                self.logger.debug(f"Time split: train:{epoch_training_time:.2f}s val:{epoch_validation_time:.2f}s")
+                
+                self.lr_scheduler.step()
+                self.logger.debug(f"Next learning rate: {self.optimizer.param_groups[0]['lr']:.4f}")
 
         ## load best model and run on test set
 
-        self.load(join(self.weights_dir, self.checkpoint_name(epoch_no=self.best_val_epoch)))
+            self.load(join(self.weights_dir, self.checkpoint_name(epoch_no=self.best_val_epoch)))
         
         test_stats = {
             "test_acc" : [],
             "test_loss" : []
         }
-        for x,y in self.testing_data:
-            loss, acc = self.iter(x,y,self.best_val_epoch,True)
+        for sample in self.testing_data:
+            loss, acc = self.iter(sample,self.best_val_epoch,True)
             test_stats["test_acc"].append(acc)
             test_stats["test_loss"].append(loss)
 
         test_stats = {k:np.mean(v) for k,v in test_stats.items()}
         self.dump_stats("final_test_stats",write_header=True,**test_stats)
 
-        self.logger.info("Completed training.")
+        self.logger.info("Experiment Completed.")
 
 
     def dump_stats(self,name,write_header=False, **kwargs):
@@ -338,30 +357,8 @@ class ExperimentRunner():
         else:
             return f"epoch_{epoch_no}.pt"
 
-    def iter(self, x : torch.Tensor, y : torch.Tensor, epoch, eval_mode):
-        
-        if eval_mode:
-            self.model.eval()
-        else:
-            self.optimizer.zero_grad()
-            self.model.train()
-
-        x,y = x.to(device=self.device),y.to(device=self.device)
-        out = self.model(x)
-
-
-        loss = self.loss_function(out,y)
-
-        if not eval_mode:
-            loss.backward()
-
-            self.optimizer.step()
-
-        predicted = torch.argmax(out.data, 1)  # get argmax of predictions (output is logit)
-        accuracy = np.mean(list(predicted.eq(y.data).cpu()))  # compute accuracy
-        loss = loss.cpu().detach().numpy()
-
-        return loss,accuracy
+    def iter(self, sample: Tuple[torch.Tensor] , epoch, eval_mode):
+        raise NotImplementedError
     
 
     def checkpoint(self,name:str, **kwargs):
@@ -394,3 +391,33 @@ class ExperimentRunner():
         self.best_val_acc = checkpoint['best_val_acc']
         self.best_val_epoch = checkpoint['best_val_epoch']
         set_random_state_dict(checkpoint['all_seed_states'])
+
+class StandardRunner(ExperimentRunner):
+    """ runs an experiment expecting x,y tuples as output from the dataset """
+
+    def iter(self, sample: Tuple[torch.Tensor] , epoch, eval_mode):
+        (x,y) = sample
+
+        if eval_mode:
+            self.model.eval()
+        else:
+            self.optimizer.zero_grad()
+            self.model.train()
+
+        x,y = x.to(device=self.device),y.to(device=self.device)
+        out = self.model(x)
+
+
+        loss = self.loss_function(out,y)
+
+        if not eval_mode:
+            loss.backward()
+
+            self.optimizer.step()
+
+        predicted = torch.argmax(out.data, 1)  # get argmax of predictions (output is logit)
+        accuracy = np.mean(list(predicted.eq(y.data).cpu()))  # compute accuracy
+        loss = loss.cpu().detach().numpy()
+
+        return loss,accuracy
+    
