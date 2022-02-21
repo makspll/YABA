@@ -343,7 +343,7 @@ class ExperimentRunner():
             self.optimizer.step()
             self.lr_scheduler.step()
         
-        _, predicted = torch.max(out.data, 1)  # get argmax of predictions (output is logit)
+        predicted = torch.argmax(out.data, 1)  # get argmax of predictions (output is logit)
         accuracy = np.mean(list(predicted.eq(y.data).cpu()))  # compute accuracy
         loss = loss.cpu().detach().numpy()
 
