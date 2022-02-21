@@ -23,7 +23,6 @@ scheduler:
     milestones: [80,120]
     gamma: 0.1
 
-init_weights: True
 batch_size: 128 # int
 validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 

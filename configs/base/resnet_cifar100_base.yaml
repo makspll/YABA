@@ -13,7 +13,6 @@ gpus: [0]  # list ints
 validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 fast_mode: true 
 
-init_weights: true
 model:
   !MResnetCIFAR
     layers: [9, 9, 9] # these numbers multiplied by 2 and summed + 2 give N in ResNet-N, 

@@ -13,7 +13,6 @@ gpus: [0]
 validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 fast_mode: true 
 
-init_weights: true
 model:
   !MResnetCIFAR
     num_blocks: [9,9,9]

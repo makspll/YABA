@@ -43,7 +43,6 @@ class Config():
         self.optimizer: YAMLOptimizer = config['optimizer']
         self.scheduler: YAMLScheduler = config['scheduler']
         self.dataset : YAMLDataset = config['dataset']
-        self.init_weights = config.get('init_weights', False)
         
     def to_yaml(self,f):
         yaml.dump(vars(self),f)
@@ -386,8 +385,3 @@ class ExperimentRunner():
         self.best_val_acc = checkpoint['best_val_acc']
         self.best_val_epoch = checkpoint['best_val_epoch']
         set_random_state_dict(checkpoint['all_seed_states'])
-
-    def init_weights(self, m):
-        if isinstance(m, nn.Conv2d):
-            nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-
