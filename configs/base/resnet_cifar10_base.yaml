@@ -16,13 +16,16 @@ fast_mode: true
 init_weights: true
 model:
   !MResnetCIFAR
-    layers: [9, 9, 9] # these numbers multiplied by 2 and summed + 2 give N in ResNet-N, 
-                      #  i.e. [9,9,9] = 1 + 2*9 + 2*9 + 2*9 + 1 = ResNet-56
-    num_output_classes: 10
-    zero_init_residual: false
-    groups: 1
-    width_scale_factor: 1
-    sparse_bn: false
+    num_blocks: [9,9,9]
+    num_classes: 10
+
+    # layers: [9, 9, 9] # these numbers multiplied by 2 and summed + 2 give N in ResNet-N, 
+    #                   #  i.e. [9,9,9] = 1 + 2*9 + 2*9 + 2*9 + 1 = ResNet-56
+    # num_output_classes: 10
+    # zero_init_residual: false
+    # groups: 1
+    # width_scale_factor: 1
+    # sparse_bn: false
 
 epochs: 160
 optimizer: 

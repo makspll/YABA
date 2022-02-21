@@ -7,15 +7,10 @@ dataset:
   !DCIFAR10
     download: true 
 
-model: 
+model:
   !MResnetCIFAR
-    layers: [3, 4, 6]
-    num_output_classes: 10
-    zero_init_residual: false
-    groups: 1
-    width_per_group: 64
-    replace_stride_with_dilation: null
-    sparse_bn: false
+    num_blocks: [9,9,9]
+    num_classes: 10
 
 optimizer: 
   !OSGD 

@@ -164,6 +164,12 @@ class ExperimentRunner():
         self.weights_dir = join(self.experiment_root,"weights")
 
 
+        
+        ## sort out gradient descent parameters via arguments
+        self.optimizer = self.config.optimizer.create(self.model.parameters())
+        self.loss_function  = nn.CrossEntropyLoss().to(self.device)
+        self.lr_scheduler = self.config.scheduler.create(self.optimizer)
+        
         ## load checkpoint
 
         if isdir(self.experiment_root):
@@ -180,10 +186,6 @@ class ExperimentRunner():
         os.makedirs(self.weights_dir,exist_ok=True)
 
 
-        ## sort out gradient descent parameters via arguments
-        self.optimizer = self.config.optimizer.create(self.model.parameters())
-        self.loss_function  = nn.CrossEntropyLoss().to(self.device)
-        self.lr_scheduler = self.config.scheduler.create(self.optimizer)
 
         ## write down config (might be changed since resume, so name epoch too)        
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
@@ -342,7 +344,6 @@ class ExperimentRunner():
 
             self.optimizer.step()
             self.lr_scheduler.step()
-        
         predicted = torch.argmax(out.data, 1)  # get argmax of predictions (output is logit)
         accuracy = np.mean(list(predicted.eq(y.data).cpu()))  # compute accuracy
         loss = loss.cpu().detach().numpy()
