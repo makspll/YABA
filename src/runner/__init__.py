@@ -68,10 +68,7 @@ class ExperimentRunner():
 
         ## sort out gpus and model   
         self.model = self.config.model.create()
-        if(config.init_weights):
-            self.model.apply(self.init_weights)
 
-        
         # freeze parameters
         frozen = []
         compiled_regex = [re.compile(x) for x in self.config.freeze_parameter_list]
