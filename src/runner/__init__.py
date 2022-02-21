@@ -138,7 +138,7 @@ class ExperimentRunner():
         dataset_validation = Subset(dataset_validation,indices=val_list)
                 
         dataset_test = self.config.dataset.create(False,*common_kwargs_test.values())
-
+        self.logger.info(f"Using {len(training_list)} training samples, and {len(dataset_validation)} validation samples.")
         common_kwargs = {
             "batch_size":config.batch_size,
             "num_workers":4
@@ -169,7 +169,7 @@ class ExperimentRunner():
         self.optimizer = self.config.optimizer.create(self.model.parameters())
         self.loss_function  = nn.CrossEntropyLoss().to(self.device)
         self.lr_scheduler = self.config.scheduler.create(self.optimizer)
-        
+
         ## load checkpoint
 
         if isdir(self.experiment_root):
@@ -192,7 +192,11 @@ class ExperimentRunner():
             self.config.to_yaml(f)
 
         ## setup logger
-        self.logger.addHandler(logging.FileHandler(join(self.log_dir,f"{date.today()}.log")))
+        file_handler = logging.FileHandler(join(self.log_dir,f"{date.today()}.log"))
+        detailed_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
+        file_handler.setLevel(logging.DEBUG)
+        file_handler.setFormatter(detailed_formatter)
+        self.logger.addHandler(file_handler)
 
 
     def log_model_stats(self):
@@ -273,7 +277,10 @@ class ExperimentRunner():
 
 
             self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time:.3f}s, ETA:{epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60:.3f}h)")
-            self.logger.debug(f"Time split: train:{epoch_training_time}s, load_train:{training_load_time}  val:{epoch_validation_time}s, stats:{dump_time}s)")
+            self.logger.debug(f"Time split: train:{epoch_training_time:.2f}s, load_train:{training_load_time:.2f}  val:{epoch_validation_time:.2f}s, stats:{dump_time:.2f}s)")
+            
+            self.lr_scheduler.step()
+            self.logger.debug(f"Next learning rate: {self.optimizer.param_groups[0]['lr']:.4f}")
 
         ## load best model and run on test set
 
@@ -343,7 +350,7 @@ class ExperimentRunner():
             loss.backward()
 
             self.optimizer.step()
-            self.lr_scheduler.step()
+
         predicted = torch.argmax(out.data, 1)  # get argmax of predictions (output is logit)
         accuracy = np.mean(list(predicted.eq(y.data).cpu()))  # compute accuracy
         loss = loss.cpu().detach().numpy()

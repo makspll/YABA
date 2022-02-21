@@ -10,7 +10,7 @@ dataset:
 batch_size: 128 # int
 
 gpus: [0]  # list ints
-validation_list: 'validation_cifar100_5%.txt' # list ints or name of list in 'lists' folder
+validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 fast_mode: true 
 
 init_weights: true
