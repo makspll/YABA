@@ -2,6 +2,7 @@
 from csv import DictWriter
 from datetime import date
 import logging
+import sys
 from typing import Dict, List, Union
 import numpy as np
 from exceptions import ConfigurationException
@@ -64,7 +65,41 @@ class ExperimentRunner():
         self.best_val_epoch = -1
         self.best_val_acc = -1
 
+
+        ## create directories or retrieve existing ones
+        if not isdir(self.root):
+            os.mkdir(self.root)
+
+        self.experiment_root = join(self.root,self.config.experiment_name)
+
+        self.log_dir = join(self.experiment_root,"logs")
+        self.config_dir = join(self.experiment_root,"config")
+        self.weights_dir = join(self.experiment_root,"weights")
+
+        # only create dirs but remember if experiment already exists
+        exists = isdir(self.experiment_root)
+        os.makedirs(self.log_dir,exist_ok=True)
+        os.makedirs(self.config_dir,exist_ok=True)
+        os.makedirs(self.weights_dir,exist_ok=True)
+
+        ## setup logger
         self.logger = logging.getLogger(__name__)
+        self.logger.propagate = False 
+
+        if self.logger.hasHandlers():
+            self.logger.handlers.clear()
+        self.logger.setLevel(logging.DEBUG)
+
+        file_handler = logging.FileHandler(join(self.log_dir,f"{date.today()}.log"))
+        file_handler.setLevel(logging.DEBUG)
+        detailed_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
+        file_handler.setFormatter(detailed_formatter)
+
+        stream_handler = logging.StreamHandler(sys.stdout)
+        stream_handler.setLevel(logging.getLogger().level)
+
+        self.logger.addHandler(file_handler)
+        self.logger.addHandler(stream_handler)
 
         ## sort out gpus and model   
         self.model = self.config.model.create()
@@ -149,15 +184,6 @@ class ExperimentRunner():
         self.testing_data = DataLoader(
             dataset_test,**common_kwargs)
 
-        ## create directories or retrieve existing ones
-        if not isdir(self.root):
-            os.mkdir(self.root)
-
-        self.experiment_root = join(self.root,self.config.experiment_name)
-
-        self.log_dir = join(self.experiment_root,"logs")
-        self.config_dir = join(self.experiment_root,"config")
-        self.weights_dir = join(self.experiment_root,"weights")
 
 
         
@@ -168,7 +194,7 @@ class ExperimentRunner():
 
         ## load checkpoint
 
-        if isdir(self.experiment_root):
+        if exists:
             if self.resume:
                 self.load(join(self.weights_dir, self.checkpoint_name(last=True)))
                 self.epoch += 1 # we store last processed epoch, start at next one
@@ -177,22 +203,9 @@ class ExperimentRunner():
         else:
             set_seed(self.config.seed,self.config.fast_mode) 
 
-        os.makedirs(self.log_dir,exist_ok=True)
-        os.makedirs(self.config_dir,exist_ok=True)
-        os.makedirs(self.weights_dir,exist_ok=True)
-
-
-
         ## write down config (might be changed since resume, so name epoch too)        
         with open(join(self.config_dir,f"config_{self.epoch}.yaml"),'w') as f:
             self.config.to_yaml(f)
-
-        ## setup logger
-        file_handler = logging.FileHandler(join(self.log_dir,f"{date.today()}.log"))
-        detailed_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(detailed_formatter)
-        self.logger.addHandler(file_handler)
 
 
     def log_model_stats(self):
@@ -200,8 +213,10 @@ class ExperimentRunner():
         non_trainable_params = sum([x.numel() for (k,x) in params if not x.requires_grad])
         trainable_params = sum([x.numel() for (k,x) in params if x.requires_grad ])
         conv_layers = len([1 for (k,x) in params if "conv" in k and not "bias" in k])
+        bn_layers = len([1 for (k,x) in params if "bn" in k and not "bias" in k])
 
         self.logger.info(f"Layer names containing 'conv' : {conv_layers}")
+        self.logger.info(f"Layer names containing 'bn' : {bn_layers}")
         self.logger.info(f"Non-trainable parameters (Thousands): {non_trainable_params/1e3}")
         self.logger.info(f"Trainable parameters (Thousands): {trainable_params/1e3}")
         self.logger.info(f"Total Parameters (Thousands): {(trainable_params + non_trainable_params)/1e3}")
@@ -215,7 +230,7 @@ class ExperimentRunner():
         
         for i in range(self.epoch,self.config.epochs+1):
             self.epoch = i 
-            epoch_time = time.time()
+            epoch_time = time.perf_counter()
 
             epoch_stats = {
                 "train_acc" : [],
@@ -225,30 +240,28 @@ class ExperimentRunner():
             }
 
 
-            epoch_training_time = time.time()
-            training_load_time = time.time()
+            epoch_training_time = time.perf_counter()
             for x,y in self.training_data:
-                training_load_time = time.time() - training_load_time
 
 
                 loss, acc = self.iter(x,y,self.epoch,False)
                 epoch_stats["train_loss"].append(loss)
                 epoch_stats["train_acc"].append(acc)
 
-            epoch_training_time = time.time() - epoch_training_time
+            epoch_training_time = time.perf_counter() - epoch_training_time
 
             post_train_trackers = {}
             for t in self.config.trackers:
                 post_train_trackers[t.key] = t.post_train_iter_hook()
 
-            epoch_validation_time = time.time()
+            epoch_validation_time = time.perf_counter()
 
             for x,y in self.validation_data:
                 loss, acc = self.iter(x,y,self.epoch, True)
                 epoch_stats["val_acc"].append(acc)
                 epoch_stats["val_loss"].append(loss)
 
-            epoch_validation_time = time.time() - epoch_validation_time
+            epoch_validation_time = time.perf_counter() - epoch_validation_time
 
             # convert stats to averages
             epoch_stats = {k:np.mean(v) for k,v in epoch_stats.items()}
@@ -261,19 +274,16 @@ class ExperimentRunner():
 
             # TODO: track epoch time and log val acc + train acc after each epoch
 
-            dump_time = time.time()
-
             self.dump_stats("epoch_stats",write_header=self.epoch==1,**epoch_stats)
             self.checkpoint(self.checkpoint_name(self.epoch),**post_train_trackers)
             self.checkpoint(self.checkpoint_name(last=True),**post_train_trackers) 
 
-            dump_time = time.time() - dump_time
+            epoch_time = time.perf_counter() - epoch_time
 
-            epoch_time = time.time() - epoch_time
-
-
-            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time:.3f}s, ETA:{epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60:.3f}h)")
-            self.logger.debug(f"Time split: train:{epoch_training_time:.2f}s, load_train:{training_load_time:.2f}  val:{epoch_validation_time:.2f}s, stats:{dump_time:.2f}s)")
+            epoch_time_hours = epoch_time * (self.config.epochs+1 - self.epoch) / 60 / 60
+            epoch_time_minutes = (epoch_time_hours * 60) % 60
+            self.logger.info(f"Epoch {self.epoch}/{self.config.epochs} : {', '.join([f'{k}:{v:.3f}' for k,v in epoch_stats.items()])} ({epoch_time:.2f}s, ETA:{int(epoch_time_hours)}h:{int(epoch_time_minutes)}m)")
+            self.logger.debug(f"Time split: train:{epoch_training_time:.2f}s val:{epoch_validation_time:.2f}s")
             
             self.lr_scheduler.step()
             self.logger.debug(f"Next learning rate: {self.optimizer.param_groups[0]['lr']:.4f}")
@@ -363,6 +373,7 @@ class ExperimentRunner():
             'epoch': self.epoch,
             'model_state': model.state_dict(),
             'optimizer_state': self.optimizer.state_dict(),
+            'scheduler_state' : self.lr_scheduler.state_dict(),
             'best_val_acc': self.best_val_acc,
             'best_val_epoch': self.best_val_epoch,
             'all_seed_states': get_random_state_dicts(),
@@ -378,6 +389,7 @@ class ExperimentRunner():
         
         model.load_state_dict(checkpoint['model_state'])
         self.optimizer.load_state_dict(checkpoint['optimizer_state'])
+        self.lr_scheduler.load_state_dict(checkpoint['scheduler_state'])
         self.epoch = checkpoint['epoch']
         self.best_val_acc = checkpoint['best_val_acc']
         self.best_val_epoch = checkpoint['best_val_epoch']
