@@ -17,7 +17,7 @@ def plot_gradient_magnitude(weights_root, out):
     out = join(out, "gradient_magnitudes.png")
     plt.savefig(out)
 
-def plot_acc(stats, out):
+def plot_acc_curve(stats, out):
     # get all 
     csv_values  = pd.read_csv(stats)
     train_acc   = csv_values["train_acc"].tolist()
@@ -28,7 +28,7 @@ def plot_acc(stats, out):
     out = join(out, "accuracy.png")
     plt.savefig(out)
 
-def plot_loss(stats, out):
+def plot_loss_curve(stats, out):
     # get all 
     csv_values  =  pd.read_csv(stats)
     train_loss   = csv_values["train_loss"].tolist()
@@ -55,23 +55,24 @@ if __name__ == "__main__":
     logs_root = join(experiment_root,"logs")
     stats = join(logs_root, "epoch_stats.csv")
     graphs_root = join("graphs", args.experiment_name)
-    os.mkdir(graphs_root)
+    if(not os.path.exists(graphs_root)):
+    	os.mkdir(graphs_root)
  
     
     if args.graph_type == "gradient_magnitude":
         plot_gradient_magnitude(weights_root, graphs_root)
 
     if args.graph_type == "accuracy":
-        plot_acc(stats, graphs_root)
+        plot_acc_curve(stats, graphs_root)
 
     if args.graph_type == "loss":
-        plot_loss(stats, graphs_root)
+        plot_loss_curve(stats, graphs_root)
         
 
     if args.graph_type == "all":
         plot_gradient_magnitude(weights_root, graphs_root)
-        plot_acc(stats, graphs_root)
-        plot_loss(stats, graphs_root)
+        plot_acc_curve(stats, graphs_root)
+        plot_loss_curve(stats, graphs_root)
         
     
     if args.show:
