@@ -187,7 +187,6 @@ class ResnetIMGNET(nn.Module):
             norm = norm_layer if not sparse_bn else (
                 None if i % 2 == 0 else norm_layer 
             )
-            print(self.inplanes,planes,self.groups)
             layers.append(block(self.inplanes, planes, groups=self.groups,
                                 base_width=self.base_width, dilation=self.dilation,
                                 norm_layer=norm))

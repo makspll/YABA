@@ -12,6 +12,13 @@ class RandomCrop(YAMLObjectFiltered,transforms.RandomCrop):
     yaml_tag='!PPRandomCrop'
     yaml_fields=["size","padding","pad_if_needed","fill","padding_mode"]
 
+class RandomResizedCrop(YAMLObjectFiltered, transforms.RandomResizedCrop):
+    yaml_tag='!PPRandomResizedCrop'
+    yaml_fields=["size","scale","ratio","interpolation"]
+
+class Resize(YAMLObjectFiltered, transforms.Resize):
+    yaml_tag="!PPResize"
+    yaml_fields=["size","interpolation","max_size","antialias"]
 
 class RandomHorizontalFlip(YAMLObjectFiltered, transforms.RandomHorizontalFlip):
     yaml_tag="!PPRandomHorizontalFlip"
