@@ -1,6 +1,6 @@
 ## overridable via commandline
 
-experiment_name: "frankle_resnet_cifar10" # str
+experiment_name: "frankle_resnet_110_cifar10" # str
 seed: 7112018
 fast_mode: true
 dataset: 
@@ -9,7 +9,7 @@ dataset:
 
 model:
   !MResnetCIFAR
-    num_blocks: [9,9,9]
+    num_blocks: [18,18,18]
     num_classes: 10
 
 optimizer: 

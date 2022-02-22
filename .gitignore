@@ -132,4 +132,4 @@ dmypy.json
 # local
 
 **datasets
-**experiments
+**experiments/*/weights

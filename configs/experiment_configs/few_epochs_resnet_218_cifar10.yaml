@@ -1,6 +1,6 @@
 ## overridable via commandline
 
-experiment_name: "frankle_resnet_cifar10" # str
+experiment_name: "few_epochs_resnet_218_cifar10" # str
 seed: 7112018
 fast_mode: true
 dataset: 
@@ -9,7 +9,7 @@ dataset:
 
 model:
   !MResnetCIFAR
-    num_blocks: [9,9,9]
+    num_blocks: [36,36,36]
     num_classes: 10
 
 optimizer: 
@@ -20,14 +20,14 @@ optimizer:
 
 scheduler: 
   !SMultiStep
-    milestones: [80,120]
+    milestones: [40,60]
     gamma: 0.1
 
 batch_size: 128 # int
 validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 
 freeze_parameter_list: ["^((?!bn[0-9]+).)*$"]
-epochs: 160 # int
+epochs: 80 # int
 gpus: [0,1]  # list ints
 
 transforms:
