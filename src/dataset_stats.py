@@ -34,7 +34,6 @@ if __name__ == "__main__":
         summed = np.zeros_like(np.moveaxis(np.asarray(ds[0][0]),-1,0))
         for x,y in ds:
             summed += np.moveaxis(np.asarray(x),-1,0)
-        print(summed.shape)
         summed = summed / np.array(len(ds),dtype=float)
 
         out.writelines([f"{str(x)}\n" for x in summed.flatten(order='C')]) # row major order, default but just gotta make sure ya kno

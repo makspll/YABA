@@ -40,6 +40,7 @@ class Config():
                 raise ConfigurationException(key,"Expected this key to be present in config")
             return o 
 
+        self.store_intermediate_weights : str = config.get('store_intermediate_weights',True)
         self.experiment_name : str = err_if_none('experiment_name')
         self.gpus : List[int] = err_if_none_and_not_eval('gpus')
         self.fast_mode : bool = config.get('fast_mode',False)
@@ -294,7 +295,9 @@ class ExperimentRunner():
                 # TODO: track epoch time and log val acc + train acc after each epoch
 
                 self.dump_stats("epoch_stats",write_header=self.epoch==1,**epoch_stats)
-                self.checkpoint(self.checkpoint_name(self.epoch),**post_train_trackers)
+
+                if self.config.store_intermediate_weights:
+                    self.checkpoint(self.checkpoint_name(self.epoch),**post_train_trackers)
                 self.checkpoint(self.checkpoint_name(last=True),**post_train_trackers) 
 
                 epoch_time = time.perf_counter() - epoch_time
