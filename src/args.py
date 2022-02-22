@@ -83,8 +83,13 @@ CALC_PARSER.add_argument("--out",
     default="calc_out.txt")
 
 CALC_PARSER.add_argument("--mode",
-    choices=["per pixel mean"],
+    choices=["per pixel mean","stratified split"],
     required=True)
+
+CALC_PARSER.add_argument("--split_size",
+    default="datasets",
+    help="size of the split if using 'stratified split' mode",
+    type=int)
 
 CALC_PARSER.add_argument("--datasets",
     default="datasets",
