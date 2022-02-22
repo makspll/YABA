@@ -18,7 +18,8 @@ installEnv:
 	matplotlib \
 	seaborn \
 	pandas \
-	-c pytorch 
+	-c pytorch;
+	conda install -c conda-forge pydrive 
 
 createVm:
 	test -n "$(CONFIG)" # $$CONFIG;
