@@ -16,6 +16,7 @@ def plot_gradient_magnitude(weights_root, out):
     plot_bn_vs_other_gradient_magnitudes(epoch_checkpoints)
     out = join(out, "gradient_magnitudes.png")
     plt.savefig(out)
+    plt.clf()
 
 def plot_acc_curve(stats, out):
     # get all 
@@ -27,6 +28,7 @@ def plot_acc_curve(stats, out):
     plot_accuracy(train_acc, val_acc)
     out = join(out, "accuracy.png")
     plt.savefig(out)
+    plt.clf()
 
 def plot_loss_curve(stats, out):
     # get all 
@@ -38,7 +40,8 @@ def plot_loss_curve(stats, out):
     plot_loss(train_loss, val_loss)
     out = join(out, "loss.png")
     plt.savefig(out)
-    
+    plt.clf()
+
 if __name__ == "__main__":
     args = GRAPH_PARSER.parse_args()
 
