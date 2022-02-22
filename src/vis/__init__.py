@@ -25,7 +25,7 @@ def plot_bn_vs_other_gradient_magnitudes(gradient_epoch_filenames : List[str]):
             if 'weight' in param_name: # no biases, or optimizer parameters
                 continue
 
-            if not gradient:
+            if gradient is None:
                 abs_mean = 0
             else:
                 abs_mean = gradient.abs().mean()
