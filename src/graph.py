@@ -8,6 +8,37 @@ import pandas as pd
 import logging 
 import matplotlib.pyplot as plt 
 
+def plot_gradient_magnitude(weights_root, out):
+    # get all 
+    epoch_checkpoints = sorted([join(weights_root,x) for x in os.listdir(weights_root) if isfile(join(weights_root,x)) and x.startswith("epoch")]
+        ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
+
+    plot_bn_vs_other_gradient_magnitudes(epoch_checkpoints)
+    out = join(out, "gradient_magnitudes.png")
+    plt.savefig(out)
+
+def plot_acc(stats, out):
+    # get all 
+    csv_values  = pd.read_csv(stats)
+    train_acc   = csv_values["train_acc"].tolist()
+    val_acc     = csv_values["val_acc"].tolist()
+    
+
+    plot_accuracy(train_acc, val_acc)
+    out = join(out, "accuracy.png")
+    plt.savefig(out)
+
+def plot_loss(stats, out):
+    # get all 
+    csv_values  =  pd.read_csv(stats)
+    train_loss   = csv_values["train_loss"].tolist()
+    val_loss     = csv_values["val_loss"].tolist()
+    
+
+    plot_loss(train_loss, val_loss)
+    out = join(out, "loss.png")
+    plt.savefig(out)
+    
 if __name__ == "__main__":
     args = GRAPH_PARSER.parse_args()
 
@@ -47,34 +78,5 @@ if __name__ == "__main__":
         plt.show()
 
 
-def plot_gradient_magnitude(weights_root, out):
-    # get all 
-    epoch_checkpoints = sorted([join(weights_root,x) for x in os.listdir(weights_root) if isfile(join(weights_root,x)) and x.startswith("epoch")]
-        ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
 
-    plot_bn_vs_other_gradient_magnitudes(epoch_checkpoints)
-    out = join(out, "gradient_magnitudes.png")
-    plt.savefig(out)
-
-def plot_acc(stats, out):
-    # get all 
-    csv_values  = pd.read_csv(stats)
-    train_acc   = csv_values["train_acc"].tolist()
-    val_acc     = csv_values["val_acc"].tolist()
-    
-
-    plot_accuracy(train_acc, val_acc)
-    out = join(out, "accuracy.png")
-    plt.savefig(out)
-
-def plot_loss(stats, out):
-    # get all 
-    csv_values  =  pd.read_csv(stats)
-    train_loss   = csv_values["train_loss"].tolist()
-    val_loss     = csv_values["val_loss"].tolist()
-    
-
-    plot_loss(train_loss, val_loss)
-    out = join(out, "loss.png")
-    plt.savefig(out)
 
