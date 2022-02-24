@@ -9,7 +9,7 @@ dataset:
 
 model:
   !MResnetCIFAR
-    num_blocks: [9,9,9]
+    num_blocks: [9,9,9] 
     num_classes: 10
 
 optimizer: 
