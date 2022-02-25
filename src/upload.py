@@ -40,7 +40,7 @@ if __name__ == "__main__":
     # of the desired directory
     for x in os.listdir(path):
     
-        f = drive.CreateFile({'parents': [{'id': '1O_gD_vQCS6qLTpzMHAPMTKiNEQYqp9Fs'}]'title': x})
+        f = drive.CreateFile({'parents': [{'id': '1O_gD_vQCS6qLTpzMHAPMTKiNEQYqp9Fs'}],'title': x})
         f.SetContentFile(os.path.join(path, x))
         f.Upload()
     

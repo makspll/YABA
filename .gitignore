@@ -132,3 +132,5 @@ dmypy.json
 
 **datasets
 **experiments/*/weights
+*.pt
+mlp-cw4
