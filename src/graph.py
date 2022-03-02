@@ -59,22 +59,15 @@ if __name__ == "__main__":
     stats = join(logs_root, "epoch_stats.csv")
     graphs_root = join("graphs", args.experiment_name)
     if(not os.path.exists(graphs_root)):
-    	os.mkdir(graphs_root)
+        os.mkdir(graphs_root)
  
-    
-    if args.graph_type == "gradient_magnitude":
+    if args.graph_type == "gradient_magnitude" or args.graph_type == "all":
         plot_gradient_magnitude(weights_root, graphs_root)
 
-    if args.graph_type == "accuracy":
+    if args.graph_type == "accuracy"  or args.graph_type == "all":
         plot_acc_curve(stats, graphs_root)
 
-    if args.graph_type == "loss":
-        plot_loss_curve(stats, graphs_root)
-        
-
-    if args.graph_type == "all":
-        plot_gradient_magnitude(weights_root, graphs_root)
-        plot_acc_curve(stats, graphs_root)
+    if args.graph_type == "loss"  or args.graph_type == "all":
         plot_loss_curve(stats, graphs_root)
         
     

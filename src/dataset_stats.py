@@ -40,9 +40,7 @@ if __name__ == "__main__":
             for idx,(_,label) in enumerate(ds):
                 X.append(idx)
                 y.append(label)
-
             X_train,X_test,y_train,y_test = train_test_split(X,y,
                 train_size=args.split_size,
                 stratify=y)
-
             out.writelines([f"{str(x)}\n" for x in X_train])

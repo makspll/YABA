@@ -22,15 +22,17 @@ def plot_bn_vs_other_gradient_magnitudes(gradient_epoch_filenames : List[str]):
         non_bn_mags = []
 
         for param_name,gradient in gradients.items():
-            if 'weight' in param_name: # no biases, or optimizer parameters
-                continue
+            # if 'weight' in param_name: # no biases, or optimizer parameters
+            #     print("skipping:",param_name)
+            #     continue
 
             if gradient is None:
                 abs_mean = 0
             else:
                 abs_mean = gradient.abs().mean()
 
-            if 'bn_' in param_name:
+
+            if 'bn' in param_name:
                 bn_mags.append(abs_mean)
             else:
                 non_bn_mags.append(abs_mean)
@@ -49,7 +51,7 @@ def plot_bn_vs_other_gradient_magnitudes(gradient_epoch_filenames : List[str]):
     plt.legend()
     plt.title('BN vs non-BN layer average gradient magnitudes')
     plt.xlabel("Epoch")
-    plt.ylabel("Average gradient magnitude (no biases)")
+    plt.ylabel("Average gradient magnitude")
 
 def plot_accuracy(train_accs, val_accs):
     
