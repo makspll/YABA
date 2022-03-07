@@ -28,6 +28,14 @@ import torch.nn.init as init
 
 from torch.autograd import Variable
 
+class NonNormBatchNorm2D(nn.Module):
+    def __init__(self,in_size):
+        super().__init__()
+        self.params = nn.ParameterList([nn.Parameter(torch.ones((in_size,))),nn.Parameter(torch.zeros((in_size,)))])
+
+    def forward(self, x):
+        # ParameterList can act as an iterable, or be indexed using ints
+        return (x * self.params[0]) + self.params[1] # TODO: make this feature-wise
 
 def _weights_init(m):
     if isinstance(m, nn.Conv2d):
@@ -48,16 +56,18 @@ class LambdaLayer(nn.Module):
 class BasicBlock(nn.Module):
     expansion = 1
 
-    def __init__(self, in_planes, planes, stride=1, option='A', sparse_bn=False):
+    def __init__(self, in_planes, planes, stride=1, option='A', sparse_bn=False, batch_norm_layer=nn.BatchNorm2d):
         super(BasicBlock, self).__init__()
+        self.batch_norm = batch_norm_layer
+
         self.conv1 = nn.Conv2d(in_planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(planes)
+        self.bn1 = self.batch_norm(planes)
         self.conv2 = nn.Conv2d(planes, planes, kernel_size=3, stride=1, padding=1, bias=False)
 
         self.sparse_bn = sparse_bn
 
         if not self.sparse_bn:
-            self.bn2 = nn.BatchNorm2d(planes)
+            self.bn2 = self.batch_norm(planes)
 
         self.shortcut = nn.Sequential()
         if stride != 1 or in_planes != planes:
@@ -70,7 +80,7 @@ class BasicBlock(nn.Module):
             elif option == 'B':
                 self.shortcut = nn.Sequential(
                      nn.Conv2d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False),
-                     nn.BatchNorm2d(self.expansion * planes)
+                     self.batch_norm(self.expansion * planes)
                 )
 
     def forward(self, x):
@@ -84,15 +94,16 @@ class BasicBlock(nn.Module):
 
 
 class ResnetCIFAR(nn.Module):
-    def __init__(self, num_blocks, num_classes=10,sparse_bn=False):
+    def __init__(self, num_blocks, num_classes=10,sparse_bn=False, non_norm_bn=False):
         super(ResnetCIFAR, self).__init__()
         self.in_planes = 16
         block = BasicBlock
 
         self.sparse_bn = sparse_bn
-        
+        self.bn_layer = nn.BatchNorm2d if not non_norm_bn else NonNormBatchNorm2D
+        print(non_norm_bn)
         self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(16)
+        self.bn1 = self.bn_layer(16)
         self.layer1 = self._make_layer(block, 16, num_blocks[0], stride=1)
         self.layer2 = self._make_layer(block, 32, num_blocks[1], stride=2)
         self.layer3 = self._make_layer(block, 64, num_blocks[2], stride=2)
@@ -104,7 +115,7 @@ class ResnetCIFAR(nn.Module):
         strides = [stride] + [1]*(num_blocks-1)
         layers = []
         for stride in strides:
-            layers.append(block(self.in_planes, planes, stride, sparse_bn=self.sparse_bn))
+            layers.append(block(self.in_planes, planes, stride, sparse_bn=self.sparse_bn,batch_norm_layer=self.bn_layer))
             self.in_planes = planes * block.expansion
 
         return nn.Sequential(*layers)

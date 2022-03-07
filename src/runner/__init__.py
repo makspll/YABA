@@ -92,14 +92,18 @@ class ExperimentRunner():
 
         # freeze parameters
         frozen = []
+        unfrozen = []
         compiled_regex = [re.compile(x) for x in self.config.freeze_parameter_list]
         for r in compiled_regex:
             for n,v in self.model.named_parameters():
                 if r.search(n):
                     v.requires_grad = False
                     frozen.append(n)
+                else:
+                    unfrozen.append((n,v.numel()))
 
         self.logger.info(f"Froze parametrs: {frozen}")
+        self.logger.info(f"Unfrozen parametrs: {unfrozen}")
 
         # log model stats
         self.log_model_stats()

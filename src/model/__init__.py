@@ -15,7 +15,7 @@ class ResnetIMGNET(YAMLModel):
 
 class ResnetCIFAR(YAMLModel):
     yaml_tag='!MResnetCIFAR'
-    yaml_fields=["num_blocks","num_classes","sparse_bn"]
+    yaml_fields=["num_blocks","num_classes","sparse_bn","non_norm_bn"]
     yaml_class_target=ResnetCIFAR 
 
 class VGG(YAMLModel):
