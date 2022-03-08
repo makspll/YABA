@@ -1,6 +1,6 @@
 ## NEEDS UPDATED
 
-experiment_name: "nobatchdecay_resnet_56_cifar10" # str
+experiment_name: "noregulardecay_resnet_218_cifar10" # str
 seed: 69420
 dataset: 
   !DCIFAR10
@@ -14,7 +14,7 @@ fast_mode: true
 
 model:
   !MResnetCIFAR
-    num_blocks: [9,9,9]
+    num_blocks: [36,36,36]
     num_classes: 10
 
     # layers: [9, 9, 9] # these numbers multiplied by 2 and summed + 2 give N in ResNet-N, 
@@ -39,7 +39,7 @@ scheduler:
 
 freeze_parameter_list: [] # list of regexes which if match a fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights frozen (not updated but calculated)
 
-no_decay_parameter_list: [.*bn.*] # list of regexes which if match a fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights decay turned off
+no_decay_parameter_list: ["^((?!bn[0-9]+).)*$"] # list of regexes which if match a fully qualified parameter name (i.e. resnet.model.bn_1.weight) have their weights decay turned off
   
 transforms:
   - !PPRandomAffine {degrees: 0, translate: !!python/tuple [0.125, 0.125]} #should translate by 4 pixels since the images are 32x32
