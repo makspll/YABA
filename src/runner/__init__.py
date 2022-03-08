@@ -54,6 +54,7 @@ class Config():
         self.target_transforms : List = config.get('target_transforms',[])
         self.target_transforms_test : List = config.get('target_transform_test',[])
         self.freeze_parameter_list : List[str] = config.get('freeze_parameter_list',[])
+        self.no_decay_paramater_list : List[str] = config.get('no_decay_parameter_list',[])
         self.model : YAMLModel = err_if_none('model')
         self.optimizer: YAMLOptimizer = err_if_none_and_not_eval('optimizer')
         self.scheduler: YAMLScheduler = err_if_none_and_not_eval('scheduler')
@@ -105,6 +106,21 @@ class ExperimentRunner():
         self.logger.info(f"Froze parametrs: {frozen}")
         self.logger.info(f"Unfrozen parametrs: {unfrozen}")
 
+        # turn off weight decay
+        no_weight_decay = []
+        weight_decay = []
+        compiled_regex = [re.compile(x) for x in self.config.no_decay_parameter_list]
+        for r in compiled_regex:
+            for n,v in self.model.named_parameters():
+                if r.search(n):
+                    v.requires_grad = False
+                    no_weight_decay.append(n)
+                else:
+                    weight_decay.append((n,v.numel()))
+
+        self.logger.info(f"Froze parametrs: {no_weight_decay}")
+        self.logger.info(f"Unfrozen parametrs: {weight_decay}")
+
         # log model stats
         self.log_model_stats()
         self.setup_gpus()
@@ -115,7 +131,13 @@ class ExperimentRunner():
                 t.attach(self.model)
 
             # descent parameters
-            self.optimizer = self.config.optimizer.create(self.model.parameters())
+            if len(no_weight_decay) == 0:
+                self.optimizer = self.config.optimizer.create(self.model.parameters())
+            else:
+                self.optimizer = self.config.optimizer.create([
+                    {'params': self.model.parameters()},
+                    {'params': no_weight_decay, "weight_decay": 0}
+                ])
             self.lr_scheduler = self.config.scheduler.create(self.optimizer)
 
         self.loss_function  = nn.CrossEntropyLoss().to(self.device) # needed for eval mode too
