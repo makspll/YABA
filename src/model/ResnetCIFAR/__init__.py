@@ -31,9 +31,11 @@ from torch.autograd import Variable
 class NonNormBatchNorm2D(nn.Module):
     def __init__(self,in_size):
         super().__init__()
-        self.params = nn.ParameterList([nn.Parameter(torch.ones((in_size,))),nn.Parameter(torch.zeros((in_size,)))])
+        self.params = nn.ParameterList([nn.Parameter(torch.ones((1,in_size,1,1))),nn.Parameter(torch.zeros((1,in_size,1,1)))])
 
     def forward(self, x):
+        # X :     B x C x H x W
+        # params: 1 x C x 1 x 1
         # ParameterList can act as an iterable, or be indexed using ints
         return (x * self.params[0]) + self.params[1] # TODO: make this feature-wise
 
