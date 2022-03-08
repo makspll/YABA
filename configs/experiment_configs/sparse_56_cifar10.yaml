@@ -1,6 +1,6 @@
 ## overridable via commandline
 
-experiment_name: "sparse_frankle_resnet_218_cifar10" # str
+experiment_name: "sparse_56_cifar10" # str
 seed: 7112018
 fast_mode: true
 dataset: 
@@ -9,7 +9,7 @@ dataset:
 
 model:
   !MResnetCIFAR
-    num_blocks: [36,36,36]
+    num_blocks: [9,9,9]
     num_classes: 10
     sparse_bn: true
 
@@ -27,7 +27,7 @@ scheduler:
 batch_size: 128 # int
 validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 
-freeze_parameter_list: ["^((?!bn[0-9]+).)*$"]
+# freeze_parameter_list: ["^((?!bn[0-9]+).)*$"]
 epochs: 160 # int
 gpus: [0,1]  # list ints
 

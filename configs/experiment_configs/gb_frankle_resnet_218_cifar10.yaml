@@ -1,6 +1,6 @@
 ## overridable via commandline
 
-experiment_name: "frankle_resnet_218_cifar10" # str
+experiment_name: "gb_frankle_resnet_218_cifar10" # str
 seed: 7112018
 fast_mode: true
 dataset: 
