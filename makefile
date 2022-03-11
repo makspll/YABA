@@ -60,6 +60,16 @@ removeVm:
 	@echo "experiment_name: ${EXPERIMENT_NAME}";
 	gcloud compute instances delete ${EXPERIMENT_NAME}
 
+startVm:
+	test -n "$(CONFIG)" # $$CONFIG;
+	@echo "experiment_name: ${EXPERIMENT_NAME}";
+	gcloud compute instances start ${EXPERIMENT_NAME}
+
+stopVm:
+	test -n "$(CONFIG)" # $$CONFIG;
+	@echo "experiment_name: ${EXPERIMENT_NAME}";
+	gcloud compute instances stop ${EXPERIMENT_NAME}
+
 toVm:
 	test -n "$(CONFIG)" # $$CONFIG;
 	test -n "$(FROM)" # $$CONFIG;
