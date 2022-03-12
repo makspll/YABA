@@ -26,7 +26,6 @@ scheduler:
 batch_size: 128 # int
 validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 
-freeze_parameter_list: ["^((?!bn[0-9]+).)*$"]
 epochs: 160 # int
 gpus: [0,1]  # list ints
 
