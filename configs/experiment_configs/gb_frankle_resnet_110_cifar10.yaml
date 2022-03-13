@@ -1,0 +1,50 @@
+## overridable via commandline
+
+experiment_name: "gb_frankle_resnet_110_cifar10" # str
+seed: 7112018
+fast_mode: true
+dataset: 
+  !DCIFAR10
+    download: true 
+
+model:
+  !MResnetCIFAR
+    num_blocks: [18,18,18]
+    num_classes: 10
+    non_norm_bn: true 
+
+optimizer: 
+  !OSGD 
+    lr: 0.1
+    momentum: 0.9
+    weight_decay: 0.0001
+
+scheduler: 
+  !SMultiStep
+    milestones: [80,120]
+    gamma: 0.1
+
+batch_size: 128 # int
+validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
+
+freeze_parameter_list: ["^((?!bn[0-9]+).)*$"]
+epochs: 160 # int
+gpus: [0,1]  # list ints
+
+transforms:
+  - !PPRandomAffine         {degrees: 0, translate: !!python/tuple [0.125, 0.125]} #should translate by 4 pixels since the images are 32x32
+  - !PPRandomHorizontalFlip {p: 0.5}
+  - !PPToTensor {}
+  - &norm !PPElementwiseZeroing { input_shape: [3,32,32], mean_file: "./lists/cifar_10_pixel_mean.txt"}
+
+transforms_test:
+  - !PPToTensor {}
+  - *norm # reference previous
+
+target_transforms: []
+target_transforms_test: []
+
+trackers: # list of enums -> kwarg dict
+  - !GradientsTracker {key: "gradients"}  # objects with 'yaml_tag' and inheriting from yaml.YAMLobject, can be instantiated this way!
+
+    
