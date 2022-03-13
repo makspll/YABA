@@ -54,7 +54,7 @@ class Config():
         self.target_transforms : List = config.get('target_transforms',[])
         self.target_transforms_test : List = config.get('target_transform_test',[])
         self.freeze_parameter_list : List[str] = config.get('freeze_parameter_list',[])
-        self.no_decay_paramater_list : List[str] = config.get('no_decay_parameter_list',[])
+        self.no_decay_parameter_list : List[str] = config.get('no_decay_parameter_list',[])
         self.model : YAMLModel = err_if_none('model')
         self.optimizer: YAMLOptimizer = err_if_none_and_not_eval('optimizer')
         self.scheduler: YAMLScheduler = err_if_none_and_not_eval('scheduler')
