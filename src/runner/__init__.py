@@ -108,18 +108,19 @@ class ExperimentRunner():
 
         # turn off weight decay
         no_weight_decay = []
+        no_weight_decay_names = []
         weight_decay = []
         compiled_regex = [re.compile(x) for x in self.config.no_decay_parameter_list]
         for r in compiled_regex:
             for n,v in self.model.named_parameters():
                 if r.search(n):
-                    v.requires_grad = False
-                    no_weight_decay.append(n)
+                    no_weight_decay.append(v)
+                    no_weight_decay_names.append(n)
                 else:
-                    weight_decay.append((n,v.numel()))
+                    weight_decay_names.append(n)
 
-        self.logger.info(f"Froze parametrs: {no_weight_decay}")
-        self.logger.info(f"Unfrozen parametrs: {weight_decay}")
+        self.logger.info(f"Froze parametrs: {no_weight_decay_names}")
+        self.logger.info(f"Unfrozen parametrs: {weight_decay_names}")
 
         # log model stats
         self.log_model_stats()
