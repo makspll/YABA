@@ -136,7 +136,7 @@ class ExperimentRunner():
                 self.optimizer = self.config.optimizer.create(self.model.parameters())
             else:
                 self.optimizer = self.config.optimizer.create([
-                    {'params': self.model.parameters()},
+                    {'params': list(set(self.model.parameters()) - set(no_weight_decay))},
                     {'params': no_weight_decay, "weight_decay": 0}
                 ])
             self.lr_scheduler = self.config.scheduler.create(self.optimizer)
