@@ -109,7 +109,7 @@ class ExperimentRunner():
         # turn off weight decay
         no_weight_decay = []
         no_weight_decay_names = []
-        weight_decay = []
+        weight_decay_names = []
         compiled_regex = [re.compile(x) for x in self.config.no_decay_parameter_list]
         for r in compiled_regex:
             for n,v in self.model.named_parameters():
