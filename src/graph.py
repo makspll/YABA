@@ -31,7 +31,7 @@ def plot_acc_curve(stat, out):
     plt.savefig(out)
     plt.clf()
 
-def plot_final_accs_curve(stats, out, exp_types):
+def plot_final_accs_curve(stats, out, exp_types, title):
     all_accs = []
     for stat in stats:
         exp_accs = []
@@ -42,10 +42,8 @@ def plot_final_accs_curve(stats, out, exp_types):
             except:
                 exp_accs.append(0)
         all_accs.append(exp_accs)
-    print(all_accs)
-    print(exp_types)
-    plot_final_accuracy(all_accs, exp_types)
-    out = join(out, "accuracy.png")
+
+    plot_final_accuracy(all_accs, exp_types, title)
     plt.savefig(out)
     plt.clf()
 
@@ -74,10 +72,12 @@ if __name__ == "__main__":
 
     weights_roots = []
     logs_roots = []
-    final_stats_roots = []
+    final_stats_base = []
+    final_stats_frankle = []
     weights_roots = []
     graphs_roots = []
-    exp_types = []
+    exp_types_base = []
+    exp_types_frankle = []
     rootdir = args.experiments
     for file in os.listdir(rootdir):
         d = os.path.join(rootdir, file)
@@ -86,12 +86,17 @@ if __name__ == "__main__":
             exp_type = (os.path.basename(os.path.normpath(d)))
             exp_type = re.findall('([a-zA-Z\_ ]*)\d*.*',exp_type)
             exp_type = (exp_type[0][:-1])
-            exp_types.append(exp_type)
+            if "frankle" in exp_type:
+                exp_types_frankle.append(exp_type)
+            else:
+                exp_types_base.append(exp_type)
 
     exp_folders = []
 
-    exp_types = list(dict.fromkeys(exp_types))
-    for exp_type in exp_types:
+    exp_types_base = list(dict.fromkeys(exp_types_base))
+    exp_types_frankle = list(dict.fromkeys(exp_types_frankle))
+
+    for exp_type in exp_types_base:
         exp_56 = exp_type + "_56_cifar10"
         exp_110 = exp_type + "_110_cifar10"
         exp_218 = exp_type + "_218_cifar10"
@@ -101,11 +106,21 @@ if __name__ == "__main__":
         stats.append("experiments/"+ exp_56 + "/logs/final_test_stats.csv")
         stats.append("experiments/"+ exp_110 + "/logs/final_test_stats.csv")
         stats.append("experiments/"+ exp_218 + "/logs/final_test_stats.csv")
-        final_stats_roots.append(stats)
+        final_stats_base.append(stats)
 
+    for exp_type in exp_types_frankle:
+        exp_56 = exp_type + "_56_cifar10"
+        exp_110 = exp_type + "_110_cifar10"
+        exp_218 = exp_type + "_218_cifar10"
+        exps = [exp_56, exp_110, exp_218]
+        stats = []
             
-            # 
-    #err_if_none_arg(args.out,"out")
+        stats.append("experiments/"+ exp_56 + "/logs/final_test_stats.csv")
+        stats.append("experiments/"+ exp_110 + "/logs/final_test_stats.csv")
+        stats.append("experiments/"+ exp_218 + "/logs/final_test_stats.csv")
+        final_stats_frankle.append(stats)
+            
+
     
     experiment_root = join(args.experiments,args.experiment_name)
     
@@ -128,7 +143,8 @@ if __name__ == "__main__":
         plot_loss_curve(stats, graphs_root)
 
     if args.experiment_name == "all" and args.graph_type == "all_acc":
-        plot_final_accs_curve(final_stats_roots, graphs_root, exp_types)
+        plot_final_accs_curve(final_stats_base, join(graphs_root, "resnet_accs.png"), exp_types_base, "Accuracies for Resnet Models")
+        plot_final_accs_curve(final_stats_frankle, join(graphs_root, "frankle_accs.png"), exp_types_frankle, "Accuracies for Frankle (Frozen) Models")
 
     if args.show:
         plt.show()

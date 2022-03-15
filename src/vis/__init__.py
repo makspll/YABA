@@ -69,21 +69,25 @@ def plot_accuracy(train_accs, val_accs):
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
 
-def plot_final_accuracy(test_accs, exp_types):
+def plot_final_accuracy(test_accs, exp_types, title):
     
     depths = [56, 110, 218]
     print(test_accs)
     for i in range(len(exp_types)):
-        
-        plt.plot(depths,
-                test_accs[i],
-                    label=exp_types[i])
+        color = "blue"
+        if "nodecay" in exp_types[i]:
+            color = "orange"
+        elif "sparse" in exp_types[i]:
+            color = "green"
+        plt.plot(depths, test_accs[i], label=exp_types[i], linewidth = 2, color = color)
 
     plt.legend()
     plt.xticks(depths)
     plt.title('Test Accuracies')
     plt.xlabel("Network Depth")
     plt.ylabel("Accuracy")
+    plt.tight_layout()
+    plt.title(title)
 
 def plot_loss(train_loss, val_loss):
     
