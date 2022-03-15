@@ -69,6 +69,22 @@ def plot_accuracy(train_accs, val_accs):
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
 
+def plot_final_accuracy(test_accs, exp_types):
+    
+    depths = [56, 110, 218]
+    print(test_accs)
+    for i in range(len(exp_types)):
+        
+        plt.plot(depths,
+                test_accs[i],
+                    label=exp_types[i])
+
+    plt.legend()
+    plt.xticks(depths)
+    plt.title('Test Accuracies')
+    plt.xlabel("Network Depth")
+    plt.ylabel("Accuracy")
+
 def plot_loss(train_loss, val_loss):
     
 
