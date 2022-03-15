@@ -489,3 +489,12 @@
 2022-03-15 16:41:43,052 - runner - DEBUG: Time split: train:14.60s val:0.62s
 2022-03-15 16:41:43,052 - runner - DEBUG: Next learning rate: 0.0010
 2022-03-15 16:41:44,268 - runner - INFO: Experiment Completed.
+2022-03-15 17:56:11,245 - runner - INFO: Froze parametrs: []
+2022-03-15 17:56:11,286 - runner - INFO: Unfrozen parametrs: []
+2022-03-15 17:56:11,287 - runner - INFO: Layer names containing 'conv' : 109
+2022-03-15 17:56:11,287 - runner - INFO: Layer names containing 'bn' : 109
+2022-03-15 17:56:11,287 - runner - INFO: Non-trainable parameters (Thousands): 0.0
+2022-03-15 17:56:11,287 - runner - INFO: Trainable parameters (Thousands): 1727.962
+2022-03-15 17:56:11,287 - runner - INFO: Total Parameters (Thousands): 1727.962
+2022-03-15 17:56:11,379 - runner - INFO: Using GPU: NVIDIA GeForce GTX 1080 Ti
+2022-03-15 17:56:31,300 - runner - INFO: Using 45000 training samples, and 5000 validation samples.
