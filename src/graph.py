@@ -127,7 +127,7 @@ if __name__ == "__main__":
     if args.graph_type == "loss"  or args.graph_type == "all":
         plot_loss_curve(stats, graphs_root)
 
-    if args.graph_type == "all_acc":
+    if args.experiment_name == "all" and args.graph_type == "all_acc":
         plot_final_accs_curve(final_stats_roots, graphs_root, exp_types)
 
     if args.show:
