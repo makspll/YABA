@@ -124,7 +124,7 @@ class ResnetCIFAR(nn.Module):
         strides = [stride] + [1]*(num_blocks-1)
         layers = []
         for i, stride in enumerate(strides):
-            bns_remove = self.spase_bn
+            bns_remove = self.sparse_bn
             if self.sparse_bn == 2 and not i % 2 == 0:
                 bns_remove = 1
             layers.append(block(self.in_planes, planes, stride, sparse_bn=bns_remove,batch_norm_layer=self.bn_layer))
