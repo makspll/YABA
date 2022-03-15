@@ -31,7 +31,6 @@ from torch.autograd import Variable
 class NonNormBatchNorm2D(nn.Module):
     def __init__(self,in_size):
         super().__init__()
-#        self.params = nn.ParameterList([nn.Parameter(torch.ones((1,in_size,1,1))),nn.Parameter(torch.zeros((1,in_size,1,1)))])
         self.gamma = nn.Parameter(torch.ones((1,in_size,1,1)))
         self.beta = nn.Parameter(torch.zeros((1,in_size,1,1)))
 
@@ -39,6 +38,7 @@ class NonNormBatchNorm2D(nn.Module):
         # X :     B x C x H x W
         # params: 1 x C x 1 x 1
         # ParameterList can act as an iterable, or be indexed using ints
+
         return (x * self.gamma) + self.beta # TODO: make this feature-wise
 
 def _weights_init(m):

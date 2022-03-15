@@ -15,20 +15,20 @@ model:
 
 optimizer: 
   !OSGD 
-    lr: 0.1
+    lr: 0.001
     momentum: 0.9
     weight_decay: 0.0001
 
 scheduler: 
   !SMultiStep
-    milestones: [80,120]
+    milestones: [160,240]
     gamma: 0.1
 
 batch_size: 128 # int
 validation_list: 'validation_cifar_10%.txt' # list ints or name of list in 'lists' folder
 
 freeze_parameter_list: ["^((?!bn[0-9]+).)*$"]
-epochs: 160 # int
+epochs: 320 # int
 gpus: [0,1]  # list ints
 
 transforms:
