@@ -71,7 +71,7 @@ def plot_accuracy(train_accs, val_accs):
 
 def plot_final_accuracy(test_accs, exp_types, title):
     
-    depths = [56, 110, 218]
+    depths = ["56", "110", "218"]
     print(test_accs)
     for i in range(len(exp_types)):
         color = "blue"
