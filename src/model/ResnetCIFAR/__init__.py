@@ -64,11 +64,13 @@ class BasicBlock(nn.Module):
         super(BasicBlock, self).__init__()
         self.batch_norm = batch_norm_layer
 
+        self.sparse_bn = sparse_bn
+
         self.conv1 = nn.Conv2d(in_planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
-        self.bn1 = self.batch_norm(planes)
+        if not self.sparse_bn >= 2:
+            self.bn1 = self.batch_norm(planes)
         self.conv2 = nn.Conv2d(planes, planes, kernel_size=3, stride=1, padding=1, bias=False)
 
-        self.sparse_bn = sparse_bn
 
         if not self.sparse_bn:
             self.bn2 = self.batch_norm(planes)
@@ -88,7 +90,10 @@ class BasicBlock(nn.Module):
                 )
 
     def forward(self, x):
-        out = F.relu(self.bn1(self.conv1(x)))
+        out = self.conv1(x)
+        if self.sparse_bn < 2:
+            out = self.bn1(out)
+        out = F.relu(out)
         out = self.conv2(out)
         if not self.sparse_bn:
             out = self.bn2(out)
@@ -103,7 +108,7 @@ class ResnetCIFAR(nn.Module):
         self.in_planes = 16
         block = BasicBlock
 
-        self.sparse_bn = sparse_bn
+        self.sparse_bn = int(sparse_bn) # To prevent old configs being screwed we cast to int
         self.bn_layer = nn.BatchNorm2d if not non_norm_bn else NonNormBatchNorm2D
         print(non_norm_bn)
         self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1, bias=False)
@@ -118,8 +123,11 @@ class ResnetCIFAR(nn.Module):
     def _make_layer(self, block, planes, num_blocks, stride):
         strides = [stride] + [1]*(num_blocks-1)
         layers = []
-        for stride in strides:
-            layers.append(block(self.in_planes, planes, stride, sparse_bn=self.sparse_bn,batch_norm_layer=self.bn_layer))
+        for i, stride in enumerate(strides):
+            bns_remove = self.spase_bn
+            if self.sparse_bn == 2 and not i % 2 == 0:
+                bns_remove = 1
+            layers.append(block(self.in_planes, planes, stride, sparse_bn=bns_remove,batch_norm_layer=self.bn_layer))
             self.in_planes = planes * block.expansion
 
         return nn.Sequential(*layers)
