@@ -54,6 +54,12 @@ sshVm:
 	@echo "experiment_name: ${EXPERIMENT_NAME}";
 	gcloud compute ssh ${EXPERIMENT_NAME}
 
+sshVmUser:
+	test -n "$(CONFIG)" # $$CONFIG;
+	test -n "$(USER)" # $$CONFIG;
+	@echo "experiment_name: ${EXPERIMENT_NAME}";
+	gcloud compute ssh ${USER}@${EXPERIMENT_NAME}
+
 
 removeVm:
 	test -n "$(CONFIG)" # $$CONFIG;
