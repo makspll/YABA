@@ -1,0 +1,491 @@
+2022-03-16 01:40:50,013 - runner - INFO: Froze parametrs: []
+2022-03-16 01:40:50,013 - runner - INFO: Unfrozen parametrs: []
+2022-03-16 01:40:50,014 - runner - INFO: Layer names containing 'conv' : 109
+2022-03-16 01:40:50,014 - runner - INFO: Layer names containing 'bn' : 55
+2022-03-16 01:40:50,014 - runner - INFO: Non-trainable parameters (Thousands): 0.0
+2022-03-16 01:40:50,014 - runner - INFO: Trainable parameters (Thousands): 1723.93
+2022-03-16 01:40:50,014 - runner - INFO: Total Parameters (Thousands): 1723.93
+2022-03-16 01:40:50,053 - runner - INFO: Using GPU: NVIDIA GeForce GTX 1080 Ti
+2022-03-16 01:41:05,342 - runner - INFO: Using 45000 training samples, and 5000 validation samples.
+2022-03-16 01:41:05,369 - runner - INFO: Begun training at epoch 1.
+2022-03-16 01:41:31,534 - runner - INFO: Epoch 1/160 : train_acc:0.243, train_loss:1.985, val_acc:0.299, val_loss:1.949 (26.17s, ETA:1h:9m)
+2022-03-16 01:41:31,535 - runner - DEBUG: Time split: train:24.97s val:0.95s
+2022-03-16 01:41:31,535 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:41:56,831 - runner - INFO: Epoch 2/160 : train_acc:0.392, train_loss:1.619, val_acc:0.399, val_loss:1.611 (25.30s, ETA:1h:7m)
+2022-03-16 01:41:56,831 - runner - DEBUG: Time split: train:24.13s val:0.95s
+2022-03-16 01:41:56,832 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:42:22,181 - runner - INFO: Epoch 3/160 : train_acc:0.493, train_loss:1.398, val_acc:0.523, val_loss:1.319 (25.35s, ETA:1h:6m)
+2022-03-16 01:42:22,181 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 01:42:22,181 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:42:47,516 - runner - INFO: Epoch 4/160 : train_acc:0.577, train_loss:1.183, val_acc:0.523, val_loss:1.407 (25.33s, ETA:1h:6m)
+2022-03-16 01:42:47,517 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 01:42:47,517 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:43:12,843 - runner - INFO: Epoch 5/160 : train_acc:0.632, train_loss:1.027, val_acc:0.549, val_loss:1.399 (25.33s, ETA:1h:5m)
+2022-03-16 01:43:12,844 - runner - DEBUG: Time split: train:24.14s val:0.97s
+2022-03-16 01:43:12,844 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:43:38,211 - runner - INFO: Epoch 6/160 : train_acc:0.686, train_loss:0.891, val_acc:0.606, val_loss:1.179 (25.37s, ETA:1h:5m)
+2022-03-16 01:43:38,212 - runner - DEBUG: Time split: train:24.20s val:0.95s
+2022-03-16 01:43:38,212 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:44:03,616 - runner - INFO: Epoch 7/160 : train_acc:0.720, train_loss:0.800, val_acc:0.649, val_loss:1.085 (25.40s, ETA:1h:5m)
+2022-03-16 01:44:03,616 - runner - DEBUG: Time split: train:24.24s val:0.95s
+2022-03-16 01:44:03,617 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:44:29,028 - runner - INFO: Epoch 8/160 : train_acc:0.747, train_loss:0.723, val_acc:0.602, val_loss:1.316 (25.41s, ETA:1h:4m)
+2022-03-16 01:44:29,028 - runner - DEBUG: Time split: train:24.20s val:0.95s
+2022-03-16 01:44:29,029 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:44:54,484 - runner - INFO: Epoch 9/160 : train_acc:0.769, train_loss:0.667, val_acc:0.723, val_loss:0.890 (25.45s, ETA:1h:4m)
+2022-03-16 01:44:54,484 - runner - DEBUG: Time split: train:24.27s val:0.96s
+2022-03-16 01:44:54,485 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:45:19,840 - runner - INFO: Epoch 10/160 : train_acc:0.783, train_loss:0.626, val_acc:0.679, val_loss:1.036 (25.35s, ETA:1h:3m)
+2022-03-16 01:45:19,840 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 01:45:19,841 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:45:45,204 - runner - INFO: Epoch 11/160 : train_acc:0.796, train_loss:0.589, val_acc:0.716, val_loss:0.921 (25.36s, ETA:1h:3m)
+2022-03-16 01:45:45,204 - runner - DEBUG: Time split: train:24.20s val:0.95s
+2022-03-16 01:45:45,205 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:46:10,575 - runner - INFO: Epoch 12/160 : train_acc:0.810, train_loss:0.550, val_acc:0.713, val_loss:1.009 (25.37s, ETA:1h:3m)
+2022-03-16 01:46:10,576 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 01:46:10,576 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:46:35,906 - runner - INFO: Epoch 13/160 : train_acc:0.819, train_loss:0.526, val_acc:0.701, val_loss:0.979 (25.33s, ETA:1h:2m)
+2022-03-16 01:46:35,906 - runner - DEBUG: Time split: train:24.19s val:0.96s
+2022-03-16 01:46:35,906 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:47:01,289 - runner - INFO: Epoch 14/160 : train_acc:0.825, train_loss:0.500, val_acc:0.775, val_loss:0.696 (25.38s, ETA:1h:2m)
+2022-03-16 01:47:01,289 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 01:47:01,290 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:47:26,638 - runner - INFO: Epoch 15/160 : train_acc:0.838, train_loss:0.475, val_acc:0.792, val_loss:0.632 (25.35s, ETA:1h:1m)
+2022-03-16 01:47:26,638 - runner - DEBUG: Time split: train:24.19s val:0.96s
+2022-03-16 01:47:26,638 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:47:51,956 - runner - INFO: Epoch 16/160 : train_acc:0.841, train_loss:0.456, val_acc:0.756, val_loss:0.788 (25.32s, ETA:1h:1m)
+2022-03-16 01:47:51,957 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 01:47:51,957 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:48:17,292 - runner - INFO: Epoch 17/160 : train_acc:0.849, train_loss:0.439, val_acc:0.718, val_loss:0.938 (25.33s, ETA:1h:0m)
+2022-03-16 01:48:17,292 - runner - DEBUG: Time split: train:24.18s val:0.94s
+2022-03-16 01:48:17,293 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:48:42,600 - runner - INFO: Epoch 18/160 : train_acc:0.854, train_loss:0.420, val_acc:0.735, val_loss:0.940 (25.31s, ETA:1h:0m)
+2022-03-16 01:48:42,601 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 01:48:42,601 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:49:07,958 - runner - INFO: Epoch 19/160 : train_acc:0.858, train_loss:0.406, val_acc:0.801, val_loss:0.634 (25.36s, ETA:1h:0m)
+2022-03-16 01:49:07,958 - runner - DEBUG: Time split: train:24.20s val:0.95s
+2022-03-16 01:49:07,959 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:49:33,359 - runner - INFO: Epoch 20/160 : train_acc:0.866, train_loss:0.391, val_acc:0.799, val_loss:0.640 (25.40s, ETA:0h:59m)
+2022-03-16 01:49:33,360 - runner - DEBUG: Time split: train:24.19s val:0.95s
+2022-03-16 01:49:33,360 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:49:58,711 - runner - INFO: Epoch 21/160 : train_acc:0.870, train_loss:0.376, val_acc:0.757, val_loss:0.800 (25.35s, ETA:0h:59m)
+2022-03-16 01:49:58,712 - runner - DEBUG: Time split: train:24.18s val:0.96s
+2022-03-16 01:49:58,712 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:50:24,052 - runner - INFO: Epoch 22/160 : train_acc:0.873, train_loss:0.370, val_acc:0.742, val_loss:0.943 (25.34s, ETA:0h:58m)
+2022-03-16 01:50:24,052 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 01:50:24,053 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:50:49,434 - runner - INFO: Epoch 23/160 : train_acc:0.875, train_loss:0.358, val_acc:0.787, val_loss:0.696 (25.38s, ETA:0h:58m)
+2022-03-16 01:50:49,434 - runner - DEBUG: Time split: train:24.18s val:0.96s
+2022-03-16 01:50:49,435 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:51:14,845 - runner - INFO: Epoch 24/160 : train_acc:0.880, train_loss:0.346, val_acc:0.780, val_loss:0.780 (25.41s, ETA:0h:58m)
+2022-03-16 01:51:14,845 - runner - DEBUG: Time split: train:24.20s val:0.95s
+2022-03-16 01:51:14,845 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:51:40,166 - runner - INFO: Epoch 25/160 : train_acc:0.884, train_loss:0.332, val_acc:0.820, val_loss:0.593 (25.32s, ETA:0h:57m)
+2022-03-16 01:51:40,167 - runner - DEBUG: Time split: train:24.15s val:0.97s
+2022-03-16 01:51:40,167 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:52:05,496 - runner - INFO: Epoch 26/160 : train_acc:0.885, train_loss:0.329, val_acc:0.783, val_loss:0.760 (25.33s, ETA:0h:56m)
+2022-03-16 01:52:05,496 - runner - DEBUG: Time split: train:24.16s val:0.93s
+2022-03-16 01:52:05,497 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:52:30,880 - runner - INFO: Epoch 27/160 : train_acc:0.889, train_loss:0.319, val_acc:0.769, val_loss:0.863 (25.38s, ETA:0h:56m)
+2022-03-16 01:52:30,880 - runner - DEBUG: Time split: train:24.20s val:0.97s
+2022-03-16 01:52:30,881 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:52:56,239 - runner - INFO: Epoch 28/160 : train_acc:0.894, train_loss:0.306, val_acc:0.827, val_loss:0.589 (25.36s, ETA:0h:56m)
+2022-03-16 01:52:56,240 - runner - DEBUG: Time split: train:24.18s val:0.96s
+2022-03-16 01:52:56,240 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:53:21,577 - runner - INFO: Epoch 29/160 : train_acc:0.895, train_loss:0.303, val_acc:0.795, val_loss:0.731 (25.34s, ETA:0h:55m)
+2022-03-16 01:53:21,577 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 01:53:21,578 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:53:46,946 - runner - INFO: Epoch 30/160 : train_acc:0.899, train_loss:0.297, val_acc:0.825, val_loss:0.599 (25.37s, ETA:0h:55m)
+2022-03-16 01:53:46,947 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 01:53:46,947 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:54:12,296 - runner - INFO: Epoch 31/160 : train_acc:0.899, train_loss:0.290, val_acc:0.767, val_loss:0.875 (25.35s, ETA:0h:54m)
+2022-03-16 01:54:12,296 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 01:54:12,297 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:54:37,624 - runner - INFO: Epoch 32/160 : train_acc:0.903, train_loss:0.280, val_acc:0.790, val_loss:0.753 (25.33s, ETA:0h:54m)
+2022-03-16 01:54:37,625 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 01:54:37,625 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:55:03,000 - runner - INFO: Epoch 33/160 : train_acc:0.905, train_loss:0.273, val_acc:0.821, val_loss:0.617 (25.37s, ETA:0h:54m)
+2022-03-16 01:55:03,000 - runner - DEBUG: Time split: train:24.22s val:0.94s
+2022-03-16 01:55:03,001 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:55:28,384 - runner - INFO: Epoch 34/160 : train_acc:0.907, train_loss:0.270, val_acc:0.865, val_loss:0.453 (25.38s, ETA:0h:53m)
+2022-03-16 01:55:28,384 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 01:55:28,385 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:55:53,753 - runner - INFO: Epoch 35/160 : train_acc:0.907, train_loss:0.266, val_acc:0.828, val_loss:0.587 (25.37s, ETA:0h:53m)
+2022-03-16 01:55:53,753 - runner - DEBUG: Time split: train:24.19s val:0.97s
+2022-03-16 01:55:53,754 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:56:19,108 - runner - INFO: Epoch 36/160 : train_acc:0.910, train_loss:0.257, val_acc:0.787, val_loss:0.840 (25.35s, ETA:0h:52m)
+2022-03-16 01:56:19,108 - runner - DEBUG: Time split: train:24.19s val:0.95s
+2022-03-16 01:56:19,109 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:56:44,468 - runner - INFO: Epoch 37/160 : train_acc:0.912, train_loss:0.255, val_acc:0.817, val_loss:0.660 (25.36s, ETA:0h:52m)
+2022-03-16 01:56:44,468 - runner - DEBUG: Time split: train:24.19s val:0.95s
+2022-03-16 01:56:44,469 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:57:09,861 - runner - INFO: Epoch 38/160 : train_acc:0.914, train_loss:0.246, val_acc:0.855, val_loss:0.481 (25.39s, ETA:0h:52m)
+2022-03-16 01:57:09,861 - runner - DEBUG: Time split: train:24.21s val:0.94s
+2022-03-16 01:57:09,862 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:57:35,244 - runner - INFO: Epoch 39/160 : train_acc:0.914, train_loss:0.248, val_acc:0.839, val_loss:0.577 (25.38s, ETA:0h:51m)
+2022-03-16 01:57:35,245 - runner - DEBUG: Time split: train:24.18s val:0.96s
+2022-03-16 01:57:35,245 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:58:00,654 - runner - INFO: Epoch 40/160 : train_acc:0.916, train_loss:0.241, val_acc:0.838, val_loss:0.552 (25.41s, ETA:0h:51m)
+2022-03-16 01:58:00,655 - runner - DEBUG: Time split: train:24.16s val:0.97s
+2022-03-16 01:58:00,655 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:58:26,063 - runner - INFO: Epoch 41/160 : train_acc:0.919, train_loss:0.235, val_acc:0.859, val_loss:0.467 (25.41s, ETA:0h:50m)
+2022-03-16 01:58:26,064 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 01:58:26,064 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:58:51,757 - runner - INFO: Epoch 42/160 : train_acc:0.920, train_loss:0.231, val_acc:0.853, val_loss:0.487 (25.69s, ETA:0h:50m)
+2022-03-16 01:58:51,757 - runner - DEBUG: Time split: train:24.21s val:0.95s
+2022-03-16 01:58:51,757 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:59:17,104 - runner - INFO: Epoch 43/160 : train_acc:0.921, train_loss:0.228, val_acc:0.853, val_loss:0.513 (25.35s, ETA:0h:49m)
+2022-03-16 01:59:17,105 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 01:59:17,105 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 01:59:42,551 - runner - INFO: Epoch 44/160 : train_acc:0.923, train_loss:0.223, val_acc:0.801, val_loss:0.744 (25.45s, ETA:0h:49m)
+2022-03-16 01:59:42,551 - runner - DEBUG: Time split: train:24.28s val:0.96s
+2022-03-16 01:59:42,552 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:00:07,936 - runner - INFO: Epoch 45/160 : train_acc:0.922, train_loss:0.224, val_acc:0.735, val_loss:1.076 (25.38s, ETA:0h:49m)
+2022-03-16 02:00:07,937 - runner - DEBUG: Time split: train:24.20s val:0.97s
+2022-03-16 02:00:07,937 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:00:33,296 - runner - INFO: Epoch 46/160 : train_acc:0.924, train_loss:0.216, val_acc:0.863, val_loss:0.459 (25.36s, ETA:0h:48m)
+2022-03-16 02:00:33,296 - runner - DEBUG: Time split: train:24.20s val:0.94s
+2022-03-16 02:00:33,297 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:00:58,704 - runner - INFO: Epoch 47/160 : train_acc:0.925, train_loss:0.214, val_acc:0.850, val_loss:0.515 (25.41s, ETA:0h:48m)
+2022-03-16 02:00:58,705 - runner - DEBUG: Time split: train:24.25s val:0.95s
+2022-03-16 02:00:58,706 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:01:24,068 - runner - INFO: Epoch 48/160 : train_acc:0.928, train_loss:0.206, val_acc:0.860, val_loss:0.514 (25.36s, ETA:0h:47m)
+2022-03-16 02:01:24,069 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 02:01:24,069 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:01:49,425 - runner - INFO: Epoch 49/160 : train_acc:0.926, train_loss:0.210, val_acc:0.843, val_loss:0.549 (25.36s, ETA:0h:47m)
+2022-03-16 02:01:49,425 - runner - DEBUG: Time split: train:24.17s val:0.94s
+2022-03-16 02:01:49,426 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:02:14,758 - runner - INFO: Epoch 50/160 : train_acc:0.929, train_loss:0.201, val_acc:0.867, val_loss:0.467 (25.33s, ETA:0h:46m)
+2022-03-16 02:02:14,759 - runner - DEBUG: Time split: train:24.18s val:0.94s
+2022-03-16 02:02:14,759 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:02:40,089 - runner - INFO: Epoch 51/160 : train_acc:0.929, train_loss:0.205, val_acc:0.841, val_loss:0.585 (25.33s, ETA:0h:46m)
+2022-03-16 02:02:40,090 - runner - DEBUG: Time split: train:24.14s val:0.94s
+2022-03-16 02:02:40,090 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:03:05,420 - runner - INFO: Epoch 52/160 : train_acc:0.932, train_loss:0.195, val_acc:0.854, val_loss:0.471 (25.33s, ETA:0h:46m)
+2022-03-16 02:03:05,420 - runner - DEBUG: Time split: train:24.18s val:0.94s
+2022-03-16 02:03:05,421 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:03:30,776 - runner - INFO: Epoch 53/160 : train_acc:0.933, train_loss:0.193, val_acc:0.822, val_loss:0.729 (25.35s, ETA:0h:45m)
+2022-03-16 02:03:30,776 - runner - DEBUG: Time split: train:24.19s val:0.95s
+2022-03-16 02:03:30,777 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:03:56,116 - runner - INFO: Epoch 54/160 : train_acc:0.933, train_loss:0.193, val_acc:0.835, val_loss:0.617 (25.34s, ETA:0h:45m)
+2022-03-16 02:03:56,116 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 02:03:56,117 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:04:21,490 - runner - INFO: Epoch 55/160 : train_acc:0.932, train_loss:0.191, val_acc:0.806, val_loss:0.723 (25.37s, ETA:0h:44m)
+2022-03-16 02:04:21,490 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 02:04:21,491 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:04:46,816 - runner - INFO: Epoch 56/160 : train_acc:0.934, train_loss:0.187, val_acc:0.822, val_loss:0.797 (25.32s, ETA:0h:44m)
+2022-03-16 02:04:46,816 - runner - DEBUG: Time split: train:24.15s val:0.96s
+2022-03-16 02:04:46,817 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:05:12,176 - runner - INFO: Epoch 57/160 : train_acc:0.934, train_loss:0.190, val_acc:0.867, val_loss:0.450 (25.36s, ETA:0h:43m)
+2022-03-16 02:05:12,176 - runner - DEBUG: Time split: train:24.19s val:0.96s
+2022-03-16 02:05:12,177 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:05:37,514 - runner - INFO: Epoch 58/160 : train_acc:0.935, train_loss:0.187, val_acc:0.880, val_loss:0.404 (25.34s, ETA:0h:43m)
+2022-03-16 02:05:37,514 - runner - DEBUG: Time split: train:24.15s val:0.94s
+2022-03-16 02:05:37,515 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:06:02,914 - runner - INFO: Epoch 59/160 : train_acc:0.934, train_loss:0.189, val_acc:0.850, val_loss:0.540 (25.40s, ETA:0h:43m)
+2022-03-16 02:06:02,915 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 02:06:02,915 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:06:28,324 - runner - INFO: Epoch 60/160 : train_acc:0.937, train_loss:0.180, val_acc:0.865, val_loss:0.535 (25.41s, ETA:0h:42m)
+2022-03-16 02:06:28,324 - runner - DEBUG: Time split: train:24.21s val:0.93s
+2022-03-16 02:06:28,325 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:06:53,632 - runner - INFO: Epoch 61/160 : train_acc:0.937, train_loss:0.182, val_acc:0.859, val_loss:0.504 (25.31s, ETA:0h:42m)
+2022-03-16 02:06:53,633 - runner - DEBUG: Time split: train:24.16s val:0.94s
+2022-03-16 02:06:53,633 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:07:19,074 - runner - INFO: Epoch 62/160 : train_acc:0.936, train_loss:0.182, val_acc:0.861, val_loss:0.511 (25.44s, ETA:0h:41m)
+2022-03-16 02:07:19,074 - runner - DEBUG: Time split: train:24.22s val:0.95s
+2022-03-16 02:07:19,075 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:07:44,437 - runner - INFO: Epoch 63/160 : train_acc:0.939, train_loss:0.174, val_acc:0.870, val_loss:0.455 (25.36s, ETA:0h:41m)
+2022-03-16 02:07:44,438 - runner - DEBUG: Time split: train:24.16s val:0.95s
+2022-03-16 02:07:44,438 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:08:09,799 - runner - INFO: Epoch 64/160 : train_acc:0.937, train_loss:0.181, val_acc:0.866, val_loss:0.533 (25.36s, ETA:0h:41m)
+2022-03-16 02:08:09,800 - runner - DEBUG: Time split: train:24.15s val:0.96s
+2022-03-16 02:08:09,800 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:08:35,136 - runner - INFO: Epoch 65/160 : train_acc:0.939, train_loss:0.174, val_acc:0.875, val_loss:0.476 (25.33s, ETA:0h:40m)
+2022-03-16 02:08:35,136 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 02:08:35,137 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:09:00,510 - runner - INFO: Epoch 66/160 : train_acc:0.940, train_loss:0.172, val_acc:0.869, val_loss:0.464 (25.37s, ETA:0h:40m)
+2022-03-16 02:09:00,511 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 02:09:00,511 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:09:25,848 - runner - INFO: Epoch 67/160 : train_acc:0.940, train_loss:0.171, val_acc:0.850, val_loss:0.564 (25.34s, ETA:0h:39m)
+2022-03-16 02:09:25,848 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 02:09:25,849 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:09:51,193 - runner - INFO: Epoch 68/160 : train_acc:0.941, train_loss:0.170, val_acc:0.859, val_loss:0.527 (25.34s, ETA:0h:39m)
+2022-03-16 02:09:51,193 - runner - DEBUG: Time split: train:24.21s val:0.93s
+2022-03-16 02:09:51,193 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:10:16,544 - runner - INFO: Epoch 69/160 : train_acc:0.938, train_loss:0.175, val_acc:0.872, val_loss:0.423 (25.35s, ETA:0h:38m)
+2022-03-16 02:10:16,544 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 02:10:16,545 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:10:41,856 - runner - INFO: Epoch 70/160 : train_acc:0.943, train_loss:0.164, val_acc:0.877, val_loss:0.439 (25.31s, ETA:0h:38m)
+2022-03-16 02:10:41,856 - runner - DEBUG: Time split: train:24.15s val:0.95s
+2022-03-16 02:10:41,857 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:11:07,251 - runner - INFO: Epoch 71/160 : train_acc:0.941, train_loss:0.167, val_acc:0.868, val_loss:0.488 (25.39s, ETA:0h:38m)
+2022-03-16 02:11:07,252 - runner - DEBUG: Time split: train:24.23s val:0.96s
+2022-03-16 02:11:07,252 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:11:32,600 - runner - INFO: Epoch 72/160 : train_acc:0.943, train_loss:0.162, val_acc:0.867, val_loss:0.478 (25.35s, ETA:0h:37m)
+2022-03-16 02:11:32,600 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 02:11:32,601 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:11:57,943 - runner - INFO: Epoch 73/160 : train_acc:0.942, train_loss:0.163, val_acc:0.878, val_loss:0.471 (25.34s, ETA:0h:37m)
+2022-03-16 02:11:57,944 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 02:11:57,944 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:12:23,341 - runner - INFO: Epoch 74/160 : train_acc:0.945, train_loss:0.158, val_acc:0.872, val_loss:0.473 (25.40s, ETA:0h:36m)
+2022-03-16 02:12:23,341 - runner - DEBUG: Time split: train:24.21s val:0.94s
+2022-03-16 02:12:23,342 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:12:48,771 - runner - INFO: Epoch 75/160 : train_acc:0.943, train_loss:0.163, val_acc:0.851, val_loss:0.641 (25.43s, ETA:0h:36m)
+2022-03-16 02:12:48,772 - runner - DEBUG: Time split: train:24.27s val:0.95s
+2022-03-16 02:12:48,772 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:13:14,136 - runner - INFO: Epoch 76/160 : train_acc:0.944, train_loss:0.159, val_acc:0.883, val_loss:0.454 (25.36s, ETA:0h:35m)
+2022-03-16 02:13:14,136 - runner - DEBUG: Time split: train:24.21s val:0.95s
+2022-03-16 02:13:14,136 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:13:39,520 - runner - INFO: Epoch 77/160 : train_acc:0.945, train_loss:0.158, val_acc:0.853, val_loss:0.522 (25.38s, ETA:0h:35m)
+2022-03-16 02:13:39,520 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 02:13:39,521 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:14:04,913 - runner - INFO: Epoch 78/160 : train_acc:0.946, train_loss:0.152, val_acc:0.828, val_loss:0.688 (25.39s, ETA:0h:35m)
+2022-03-16 02:14:04,913 - runner - DEBUG: Time split: train:24.21s val:0.97s
+2022-03-16 02:14:04,914 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:14:30,323 - runner - INFO: Epoch 79/160 : train_acc:0.946, train_loss:0.156, val_acc:0.882, val_loss:0.437 (25.41s, ETA:0h:34m)
+2022-03-16 02:14:30,323 - runner - DEBUG: Time split: train:24.23s val:0.97s
+2022-03-16 02:14:30,323 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-16 02:14:55,704 - runner - INFO: Epoch 80/160 : train_acc:0.947, train_loss:0.154, val_acc:0.840, val_loss:0.656 (25.38s, ETA:0h:34m)
+2022-03-16 02:14:55,705 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 02:14:55,705 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:15:21,158 - runner - INFO: Epoch 81/160 : train_acc:0.973, train_loss:0.077, val_acc:0.916, val_loss:0.306 (25.45s, ETA:0h:33m)
+2022-03-16 02:15:21,159 - runner - DEBUG: Time split: train:24.23s val:0.96s
+2022-03-16 02:15:21,159 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:15:46,630 - runner - INFO: Epoch 82/160 : train_acc:0.984, train_loss:0.048, val_acc:0.918, val_loss:0.323 (25.47s, ETA:0h:33m)
+2022-03-16 02:15:46,630 - runner - DEBUG: Time split: train:24.27s val:0.94s
+2022-03-16 02:15:46,631 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:16:11,947 - runner - INFO: Epoch 83/160 : train_acc:0.986, train_loss:0.041, val_acc:0.923, val_loss:0.326 (25.32s, ETA:0h:32m)
+2022-03-16 02:16:11,948 - runner - DEBUG: Time split: train:24.16s val:0.94s
+2022-03-16 02:16:11,948 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:16:37,311 - runner - INFO: Epoch 84/160 : train_acc:0.988, train_loss:0.035, val_acc:0.922, val_loss:0.332 (25.36s, ETA:0h:32m)
+2022-03-16 02:16:37,312 - runner - DEBUG: Time split: train:24.17s val:0.97s
+2022-03-16 02:16:37,312 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:17:02,637 - runner - INFO: Epoch 85/160 : train_acc:0.989, train_loss:0.033, val_acc:0.922, val_loss:0.332 (25.32s, ETA:0h:32m)
+2022-03-16 02:17:02,638 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 02:17:02,638 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:17:28,011 - runner - INFO: Epoch 86/160 : train_acc:0.992, train_loss:0.026, val_acc:0.921, val_loss:0.345 (25.37s, ETA:0h:31m)
+2022-03-16 02:17:28,011 - runner - DEBUG: Time split: train:24.21s val:0.94s
+2022-03-16 02:17:28,012 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:17:53,432 - runner - INFO: Epoch 87/160 : train_acc:0.992, train_loss:0.023, val_acc:0.925, val_loss:0.349 (25.42s, ETA:0h:31m)
+2022-03-16 02:17:53,432 - runner - DEBUG: Time split: train:24.24s val:0.97s
+2022-03-16 02:17:53,433 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:18:18,803 - runner - INFO: Epoch 88/160 : train_acc:0.993, train_loss:0.021, val_acc:0.925, val_loss:0.358 (25.37s, ETA:0h:30m)
+2022-03-16 02:18:18,803 - runner - DEBUG: Time split: train:24.21s val:0.95s
+2022-03-16 02:18:18,804 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:18:44,187 - runner - INFO: Epoch 89/160 : train_acc:0.993, train_loss:0.020, val_acc:0.921, val_loss:0.361 (25.38s, ETA:0h:30m)
+2022-03-16 02:18:44,187 - runner - DEBUG: Time split: train:24.22s val:0.96s
+2022-03-16 02:18:44,187 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:19:09,629 - runner - INFO: Epoch 90/160 : train_acc:0.994, train_loss:0.018, val_acc:0.925, val_loss:0.361 (25.44s, ETA:0h:30m)
+2022-03-16 02:19:09,630 - runner - DEBUG: Time split: train:24.25s val:0.97s
+2022-03-16 02:19:09,630 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:19:34,968 - runner - INFO: Epoch 91/160 : train_acc:0.995, train_loss:0.015, val_acc:0.923, val_loss:0.377 (25.34s, ETA:0h:29m)
+2022-03-16 02:19:34,969 - runner - DEBUG: Time split: train:24.18s val:0.94s
+2022-03-16 02:19:34,969 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:20:00,335 - runner - INFO: Epoch 92/160 : train_acc:0.995, train_loss:0.016, val_acc:0.926, val_loss:0.375 (25.37s, ETA:0h:29m)
+2022-03-16 02:20:00,335 - runner - DEBUG: Time split: train:24.19s val:0.96s
+2022-03-16 02:20:00,336 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:20:25,759 - runner - INFO: Epoch 93/160 : train_acc:0.996, train_loss:0.014, val_acc:0.925, val_loss:0.381 (25.42s, ETA:0h:28m)
+2022-03-16 02:20:25,760 - runner - DEBUG: Time split: train:24.26s val:0.95s
+2022-03-16 02:20:25,760 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:20:51,153 - runner - INFO: Epoch 94/160 : train_acc:0.996, train_loss:0.013, val_acc:0.926, val_loss:0.393 (25.39s, ETA:0h:28m)
+2022-03-16 02:20:51,154 - runner - DEBUG: Time split: train:24.18s val:0.96s
+2022-03-16 02:20:51,154 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:21:16,544 - runner - INFO: Epoch 95/160 : train_acc:0.997, train_loss:0.011, val_acc:0.923, val_loss:0.395 (25.39s, ETA:0h:27m)
+2022-03-16 02:21:16,545 - runner - DEBUG: Time split: train:24.21s val:0.96s
+2022-03-16 02:21:16,545 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:21:41,891 - runner - INFO: Epoch 96/160 : train_acc:0.996, train_loss:0.011, val_acc:0.928, val_loss:0.396 (25.35s, ETA:0h:27m)
+2022-03-16 02:21:41,892 - runner - DEBUG: Time split: train:24.19s val:0.96s
+2022-03-16 02:21:41,892 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:22:07,280 - runner - INFO: Epoch 97/160 : train_acc:0.997, train_loss:0.010, val_acc:0.927, val_loss:0.400 (25.39s, ETA:0h:27m)
+2022-03-16 02:22:07,281 - runner - DEBUG: Time split: train:24.19s val:0.95s
+2022-03-16 02:22:07,281 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:22:32,666 - runner - INFO: Epoch 98/160 : train_acc:0.997, train_loss:0.010, val_acc:0.924, val_loss:0.414 (25.38s, ETA:0h:26m)
+2022-03-16 02:22:32,667 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 02:22:32,667 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:22:58,057 - runner - INFO: Epoch 99/160 : train_acc:0.997, train_loss:0.010, val_acc:0.922, val_loss:0.411 (25.39s, ETA:0h:26m)
+2022-03-16 02:22:58,058 - runner - DEBUG: Time split: train:24.19s val:0.96s
+2022-03-16 02:22:58,058 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:23:23,401 - runner - INFO: Epoch 100/160 : train_acc:0.998, train_loss:0.008, val_acc:0.927, val_loss:0.415 (25.34s, ETA:0h:25m)
+2022-03-16 02:23:23,401 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 02:23:23,402 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:23:48,764 - runner - INFO: Epoch 101/160 : train_acc:0.998, train_loss:0.007, val_acc:0.921, val_loss:0.428 (25.36s, ETA:0h:25m)
+2022-03-16 02:23:48,764 - runner - DEBUG: Time split: train:24.15s val:0.95s
+2022-03-16 02:23:48,765 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:24:14,147 - runner - INFO: Epoch 102/160 : train_acc:0.998, train_loss:0.008, val_acc:0.928, val_loss:0.409 (25.38s, ETA:0h:24m)
+2022-03-16 02:24:14,148 - runner - DEBUG: Time split: train:24.19s val:0.95s
+2022-03-16 02:24:14,148 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:24:39,557 - runner - INFO: Epoch 103/160 : train_acc:0.998, train_loss:0.008, val_acc:0.928, val_loss:0.416 (25.41s, ETA:0h:24m)
+2022-03-16 02:24:39,557 - runner - DEBUG: Time split: train:24.21s val:0.97s
+2022-03-16 02:24:39,558 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:25:04,907 - runner - INFO: Epoch 104/160 : train_acc:0.998, train_loss:0.008, val_acc:0.924, val_loss:0.426 (25.35s, ETA:0h:24m)
+2022-03-16 02:25:04,908 - runner - DEBUG: Time split: train:24.18s val:0.95s
+2022-03-16 02:25:04,908 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:25:30,267 - runner - INFO: Epoch 105/160 : train_acc:0.998, train_loss:0.007, val_acc:0.924, val_loss:0.431 (25.36s, ETA:0h:23m)
+2022-03-16 02:25:30,268 - runner - DEBUG: Time split: train:24.18s val:0.97s
+2022-03-16 02:25:30,268 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:25:55,740 - runner - INFO: Epoch 106/160 : train_acc:0.998, train_loss:0.006, val_acc:0.927, val_loss:0.430 (25.47s, ETA:0h:23m)
+2022-03-16 02:25:55,741 - runner - DEBUG: Time split: train:24.26s val:0.94s
+2022-03-16 02:25:55,741 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:26:21,165 - runner - INFO: Epoch 107/160 : train_acc:0.998, train_loss:0.007, val_acc:0.926, val_loss:0.440 (25.42s, ETA:0h:22m)
+2022-03-16 02:26:21,166 - runner - DEBUG: Time split: train:24.23s val:0.96s
+2022-03-16 02:26:21,166 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:26:46,515 - runner - INFO: Epoch 108/160 : train_acc:0.998, train_loss:0.006, val_acc:0.927, val_loss:0.438 (25.35s, ETA:0h:22m)
+2022-03-16 02:26:46,516 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 02:26:46,516 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:27:11,894 - runner - INFO: Epoch 109/160 : train_acc:0.998, train_loss:0.007, val_acc:0.924, val_loss:0.449 (25.38s, ETA:0h:21m)
+2022-03-16 02:27:11,895 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 02:27:11,895 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:27:37,247 - runner - INFO: Epoch 110/160 : train_acc:0.998, train_loss:0.006, val_acc:0.923, val_loss:0.445 (25.35s, ETA:0h:21m)
+2022-03-16 02:27:37,247 - runner - DEBUG: Time split: train:24.20s val:0.94s
+2022-03-16 02:27:37,248 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:28:02,590 - runner - INFO: Epoch 111/160 : train_acc:0.998, train_loss:0.006, val_acc:0.925, val_loss:0.452 (25.34s, ETA:0h:21m)
+2022-03-16 02:28:02,591 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 02:28:02,591 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:28:27,971 - runner - INFO: Epoch 112/160 : train_acc:0.998, train_loss:0.006, val_acc:0.926, val_loss:0.454 (25.38s, ETA:0h:20m)
+2022-03-16 02:28:27,972 - runner - DEBUG: Time split: train:24.18s val:0.94s
+2022-03-16 02:28:27,973 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:28:53,345 - runner - INFO: Epoch 113/160 : train_acc:0.999, train_loss:0.005, val_acc:0.926, val_loss:0.455 (25.37s, ETA:0h:20m)
+2022-03-16 02:28:53,346 - runner - DEBUG: Time split: train:24.18s val:0.96s
+2022-03-16 02:28:53,346 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:29:18,775 - runner - INFO: Epoch 114/160 : train_acc:0.999, train_loss:0.005, val_acc:0.926, val_loss:0.453 (25.43s, ETA:0h:19m)
+2022-03-16 02:29:18,776 - runner - DEBUG: Time split: train:24.19s val:1.00s
+2022-03-16 02:29:18,776 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:29:44,173 - runner - INFO: Epoch 115/160 : train_acc:0.999, train_loss:0.005, val_acc:0.927, val_loss:0.460 (25.40s, ETA:0h:19m)
+2022-03-16 02:29:44,173 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 02:29:44,174 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:30:09,641 - runner - INFO: Epoch 116/160 : train_acc:0.999, train_loss:0.005, val_acc:0.925, val_loss:0.451 (25.47s, ETA:0h:19m)
+2022-03-16 02:30:09,642 - runner - DEBUG: Time split: train:24.25s val:0.95s
+2022-03-16 02:30:09,642 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:30:35,002 - runner - INFO: Epoch 117/160 : train_acc:0.999, train_loss:0.005, val_acc:0.924, val_loss:0.487 (25.36s, ETA:0h:18m)
+2022-03-16 02:30:35,003 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 02:30:35,003 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:31:00,406 - runner - INFO: Epoch 118/160 : train_acc:0.999, train_loss:0.005, val_acc:0.922, val_loss:0.470 (25.40s, ETA:0h:18m)
+2022-03-16 02:31:00,406 - runner - DEBUG: Time split: train:24.20s val:0.97s
+2022-03-16 02:31:00,406 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:31:25,887 - runner - INFO: Epoch 119/160 : train_acc:0.999, train_loss:0.004, val_acc:0.924, val_loss:0.479 (25.48s, ETA:0h:17m)
+2022-03-16 02:31:25,888 - runner - DEBUG: Time split: train:24.29s val:0.96s
+2022-03-16 02:31:25,888 - runner - DEBUG: Next learning rate: 0.0100
+2022-03-16 02:31:51,223 - runner - INFO: Epoch 120/160 : train_acc:0.999, train_loss:0.004, val_acc:0.922, val_loss:0.475 (25.34s, ETA:0h:17m)
+2022-03-16 02:31:51,224 - runner - DEBUG: Time split: train:24.15s val:0.97s
+2022-03-16 02:31:51,224 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:32:16,578 - runner - INFO: Epoch 121/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.466 (25.35s, ETA:0h:16m)
+2022-03-16 02:32:16,578 - runner - DEBUG: Time split: train:24.17s val:0.94s
+2022-03-16 02:32:16,579 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:32:41,963 - runner - INFO: Epoch 122/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.468 (25.38s, ETA:0h:16m)
+2022-03-16 02:32:41,964 - runner - DEBUG: Time split: train:24.21s val:0.96s
+2022-03-16 02:32:41,964 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:33:07,312 - runner - INFO: Epoch 123/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.463 (25.35s, ETA:0h:16m)
+2022-03-16 02:33:07,313 - runner - DEBUG: Time split: train:24.16s val:0.95s
+2022-03-16 02:33:07,313 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:33:32,768 - runner - INFO: Epoch 124/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.463 (25.45s, ETA:0h:15m)
+2022-03-16 02:33:32,769 - runner - DEBUG: Time split: train:24.17s val:0.98s
+2022-03-16 02:33:32,769 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:33:58,206 - runner - INFO: Epoch 125/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.461 (25.44s, ETA:0h:15m)
+2022-03-16 02:33:58,207 - runner - DEBUG: Time split: train:24.23s val:0.95s
+2022-03-16 02:33:58,207 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:34:23,572 - runner - INFO: Epoch 126/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.458 (25.36s, ETA:0h:14m)
+2022-03-16 02:34:23,573 - runner - DEBUG: Time split: train:24.17s val:0.98s
+2022-03-16 02:34:23,573 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:34:48,992 - runner - INFO: Epoch 127/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.459 (25.42s, ETA:0h:14m)
+2022-03-16 02:34:48,993 - runner - DEBUG: Time split: train:24.25s val:0.95s
+2022-03-16 02:34:48,993 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:35:14,440 - runner - INFO: Epoch 128/160 : train_acc:0.999, train_loss:0.003, val_acc:0.927, val_loss:0.461 (25.45s, ETA:0h:13m)
+2022-03-16 02:35:14,441 - runner - DEBUG: Time split: train:24.20s val:0.98s
+2022-03-16 02:35:14,441 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:35:39,805 - runner - INFO: Epoch 129/160 : train_acc:1.000, train_loss:0.003, val_acc:0.926, val_loss:0.460 (25.36s, ETA:0h:13m)
+2022-03-16 02:35:39,805 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 02:35:39,806 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:36:05,181 - runner - INFO: Epoch 130/160 : train_acc:0.999, train_loss:0.003, val_acc:0.926, val_loss:0.458 (25.38s, ETA:0h:13m)
+2022-03-16 02:36:05,182 - runner - DEBUG: Time split: train:24.18s val:0.96s
+2022-03-16 02:36:05,182 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:36:30,654 - runner - INFO: Epoch 131/160 : train_acc:0.999, train_loss:0.002, val_acc:0.926, val_loss:0.459 (25.47s, ETA:0h:12m)
+2022-03-16 02:36:30,654 - runner - DEBUG: Time split: train:24.25s val:0.96s
+2022-03-16 02:36:30,655 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:36:56,058 - runner - INFO: Epoch 132/160 : train_acc:1.000, train_loss:0.002, val_acc:0.926, val_loss:0.460 (25.40s, ETA:0h:12m)
+2022-03-16 02:36:56,058 - runner - DEBUG: Time split: train:24.21s val:0.96s
+2022-03-16 02:36:56,059 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:37:21,458 - runner - INFO: Epoch 133/160 : train_acc:1.000, train_loss:0.003, val_acc:0.926, val_loss:0.460 (25.40s, ETA:0h:11m)
+2022-03-16 02:37:21,458 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 02:37:21,459 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:37:46,828 - runner - INFO: Epoch 134/160 : train_acc:1.000, train_loss:0.003, val_acc:0.926, val_loss:0.463 (25.37s, ETA:0h:11m)
+2022-03-16 02:37:46,829 - runner - DEBUG: Time split: train:24.15s val:0.94s
+2022-03-16 02:37:46,829 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:38:12,197 - runner - INFO: Epoch 135/160 : train_acc:0.999, train_loss:0.002, val_acc:0.927, val_loss:0.464 (25.37s, ETA:0h:10m)
+2022-03-16 02:38:12,197 - runner - DEBUG: Time split: train:24.16s val:0.96s
+2022-03-16 02:38:12,198 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:38:37,654 - runner - INFO: Epoch 136/160 : train_acc:0.999, train_loss:0.002, val_acc:0.926, val_loss:0.461 (25.46s, ETA:0h:10m)
+2022-03-16 02:38:37,655 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 02:38:37,655 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:39:03,096 - runner - INFO: Epoch 137/160 : train_acc:0.999, train_loss:0.002, val_acc:0.927, val_loss:0.461 (25.44s, ETA:0h:10m)
+2022-03-16 02:39:03,097 - runner - DEBUG: Time split: train:24.26s val:0.94s
+2022-03-16 02:39:03,098 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:39:28,489 - runner - INFO: Epoch 138/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.463 (25.39s, ETA:0h:9m)
+2022-03-16 02:39:28,490 - runner - DEBUG: Time split: train:24.17s val:0.97s
+2022-03-16 02:39:28,490 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:39:53,843 - runner - INFO: Epoch 139/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.460 (25.35s, ETA:0h:9m)
+2022-03-16 02:39:53,844 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 02:39:53,844 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:40:19,267 - runner - INFO: Epoch 140/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.42s, ETA:0h:8m)
+2022-03-16 02:40:19,268 - runner - DEBUG: Time split: train:24.26s val:0.95s
+2022-03-16 02:40:19,268 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:40:44,602 - runner - INFO: Epoch 141/160 : train_acc:0.999, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.33s, ETA:0h:8m)
+2022-03-16 02:40:44,602 - runner - DEBUG: Time split: train:24.16s val:0.94s
+2022-03-16 02:40:44,603 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:41:10,017 - runner - INFO: Epoch 142/160 : train_acc:0.999, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.41s, ETA:0h:8m)
+2022-03-16 02:41:10,017 - runner - DEBUG: Time split: train:24.18s val:0.99s
+2022-03-16 02:41:10,018 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:41:35,413 - runner - INFO: Epoch 143/160 : train_acc:0.999, train_loss:0.002, val_acc:0.929, val_loss:0.456 (25.40s, ETA:0h:7m)
+2022-03-16 02:41:35,414 - runner - DEBUG: Time split: train:24.20s val:0.95s
+2022-03-16 02:41:35,415 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:42:00,751 - runner - INFO: Epoch 144/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.34s, ETA:0h:7m)
+2022-03-16 02:42:00,751 - runner - DEBUG: Time split: train:24.14s val:0.95s
+2022-03-16 02:42:00,752 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:42:26,100 - runner - INFO: Epoch 145/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.35s, ETA:0h:6m)
+2022-03-16 02:42:26,100 - runner - DEBUG: Time split: train:24.12s val:0.97s
+2022-03-16 02:42:26,100 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:42:51,461 - runner - INFO: Epoch 146/160 : train_acc:0.999, train_loss:0.002, val_acc:0.928, val_loss:0.457 (25.36s, ETA:0h:6m)
+2022-03-16 02:42:51,462 - runner - DEBUG: Time split: train:24.15s val:0.97s
+2022-03-16 02:42:51,462 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:43:16,964 - runner - INFO: Epoch 147/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.458 (25.50s, ETA:0h:5m)
+2022-03-16 02:43:16,965 - runner - DEBUG: Time split: train:24.24s val:0.96s
+2022-03-16 02:43:16,965 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:43:42,392 - runner - INFO: Epoch 148/160 : train_acc:0.999, train_loss:0.002, val_acc:0.928, val_loss:0.458 (25.43s, ETA:0h:5m)
+2022-03-16 02:43:42,392 - runner - DEBUG: Time split: train:24.20s val:0.96s
+2022-03-16 02:43:42,393 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:44:07,737 - runner - INFO: Epoch 149/160 : train_acc:0.999, train_loss:0.002, val_acc:0.927, val_loss:0.458 (25.34s, ETA:0h:5m)
+2022-03-16 02:44:07,738 - runner - DEBUG: Time split: train:24.16s val:0.97s
+2022-03-16 02:44:07,738 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:44:33,107 - runner - INFO: Epoch 150/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.37s, ETA:0h:4m)
+2022-03-16 02:44:33,107 - runner - DEBUG: Time split: train:24.19s val:0.95s
+2022-03-16 02:44:33,108 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:44:58,454 - runner - INFO: Epoch 151/160 : train_acc:1.000, train_loss:0.002, val_acc:0.927, val_loss:0.460 (25.35s, ETA:0h:4m)
+2022-03-16 02:44:58,454 - runner - DEBUG: Time split: train:24.17s val:0.95s
+2022-03-16 02:44:58,455 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:45:23,888 - runner - INFO: Epoch 152/160 : train_acc:1.000, train_loss:0.002, val_acc:0.927, val_loss:0.461 (25.43s, ETA:0h:3m)
+2022-03-16 02:45:23,888 - runner - DEBUG: Time split: train:24.27s val:0.96s
+2022-03-16 02:45:23,889 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:45:49,245 - runner - INFO: Epoch 153/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.460 (25.36s, ETA:0h:3m)
+2022-03-16 02:45:49,246 - runner - DEBUG: Time split: train:24.16s val:0.95s
+2022-03-16 02:45:49,246 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:46:14,612 - runner - INFO: Epoch 154/160 : train_acc:0.999, train_loss:0.002, val_acc:0.928, val_loss:0.460 (25.37s, ETA:0h:2m)
+2022-03-16 02:46:14,612 - runner - DEBUG: Time split: train:24.14s val:0.96s
+2022-03-16 02:46:14,613 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:46:40,076 - runner - INFO: Epoch 155/160 : train_acc:1.000, train_loss:0.002, val_acc:0.929, val_loss:0.458 (25.46s, ETA:0h:2m)
+2022-03-16 02:46:40,077 - runner - DEBUG: Time split: train:24.26s val:0.96s
+2022-03-16 02:46:40,077 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:47:05,463 - runner - INFO: Epoch 156/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.39s, ETA:0h:2m)
+2022-03-16 02:47:05,464 - runner - DEBUG: Time split: train:24.20s val:0.95s
+2022-03-16 02:47:05,464 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:47:30,822 - runner - INFO: Epoch 157/160 : train_acc:0.999, train_loss:0.002, val_acc:0.928, val_loss:0.458 (25.36s, ETA:0h:1m)
+2022-03-16 02:47:30,822 - runner - DEBUG: Time split: train:24.18s val:0.94s
+2022-03-16 02:47:30,823 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:47:56,181 - runner - INFO: Epoch 158/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.36s, ETA:0h:1m)
+2022-03-16 02:47:56,181 - runner - DEBUG: Time split: train:24.16s val:0.95s
+2022-03-16 02:47:56,182 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:48:21,650 - runner - INFO: Epoch 159/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.458 (25.47s, ETA:0h:0m)
+2022-03-16 02:48:21,650 - runner - DEBUG: Time split: train:24.26s val:0.96s
+2022-03-16 02:48:21,651 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:48:47,002 - runner - INFO: Epoch 160/160 : train_acc:1.000, train_loss:0.002, val_acc:0.928, val_loss:0.459 (25.35s, ETA:0h:0m)
+2022-03-16 02:48:47,003 - runner - DEBUG: Time split: train:24.17s val:0.96s
+2022-03-16 02:48:47,003 - runner - DEBUG: Next learning rate: 0.0010
+2022-03-16 02:48:48,879 - runner - INFO: Experiment Completed.
