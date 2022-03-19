@@ -15,7 +15,7 @@ def plot_gradient_magnitude(weights_root, out):
         ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
 
     plot_bn_vs_other_gradient_magnitudes(epoch_checkpoints)
-    out = join(out, "gradient_magnitudes.png")
+    out = join(out, "gradient_magnitudes.pdf")
     plt.savefig(out)
     plt.clf()
 
@@ -25,7 +25,7 @@ def plot_gradient_magnitude_rel(weights_root, out):
         ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
 
     plot_bn_vs_other_gradient_magnitudes_relative(epoch_checkpoints)
-    out = join(out, "gradient_magnitudes_relative.png")
+    out = join(out, "gradient_magnitudes_relative.pdf")
     plt.savefig(out)
     plt.clf()
 
@@ -35,7 +35,7 @@ def plot_parameter_magnitude(weights_root, out):
         ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
 
     plot_bn_vs_other_parameter_magnitudes(epoch_checkpoints)
-    out = join(out, "parameter_magnitudes.png")
+    out = join(out, "parameter_magnitudes.pdf")
     plt.savefig(out)
     plt.clf()
 
@@ -47,7 +47,7 @@ def plot_acc_curve(stat, out):
         
 
     plot_accuracy(train_acc, val_acc)
-    out = join(out, "accuracy.png")
+    out = join(out, "accuracy.pdf")
     plt.savefig(out)
     plt.clf()
 
@@ -76,7 +76,7 @@ def plot_loss_curve(stat, out):
     
 
     plot_loss(train_loss, val_loss)
-    out = join(out, "loss.png")
+    out = join(out, "loss.pdf")
     plt.savefig(out)
     plt.clf()
 
@@ -168,8 +168,8 @@ if __name__ == "__main__":
         plot_loss_curve(stats, graphs_root)
 
     if args.experiment_name == "all" and args.graph_type == "all_acc":
-        plot_final_accs_curve(final_stats_base, join(graphs_root, "resnet_accs.png"), exp_types_base, "Accuracies for Resnet Models")
-        plot_final_accs_curve(final_stats_frankle, join(graphs_root, "frankle_accs.png"), exp_types_frankle, "Accuracies for Frankle (Frozen) Models")
+        plot_final_accs_curve(final_stats_base, join(graphs_root, "resnet_accs.pdf"), exp_types_base, "Accuracies for Resnet Models")
+        plot_final_accs_curve(final_stats_frankle, join(graphs_root, "frankle_accs.pdf"), exp_types_frankle, "Accuracies for Frankle (Frozen) Models")
 
     if args.show:
         plt.show()

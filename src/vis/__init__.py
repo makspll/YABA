@@ -181,6 +181,8 @@ def plot_final_accuracy(test_accs, exp_types, title):
                 color = "green"
                 if "nodecay_" in exp_types[i]:
                     color = "red"
+            if "sparse" in exp_types[i]:
+                color = "blue"
 
             plt.plot(depths, test_accs[i], label=exp_types[i], linewidth = 2, color = color)
 
