@@ -1,0 +1,192 @@
+2022-03-19 17:49:35,151 - runner - INFO: Froze parametrs: []
+2022-03-19 17:49:35,151 - runner - INFO: Unfrozen parametrs: []
+2022-03-19 17:49:35,153 - runner - INFO: Froze parametrs: ['bn1.weight', 'bn1.bias', 'layer1.0.bn1.weight', 'layer1.0.bn1.bias', 'layer1.0.bn2.weight', 'layer1.0.bn2.bias', 'layer1.1.bn1.weight', 'layer1.1.bn1.bias', 'layer1.1.bn2.weight', 'layer1.1.bn2.bias', 'layer1.2.bn1.weight', 'layer1.2.bn1.bias', 'layer1.2.bn2.weight', 'layer1.2.bn2.bias', 'layer1.3.bn1.weight', 'layer1.3.bn1.bias', 'layer1.3.bn2.weight', 'layer1.3.bn2.bias', 'layer1.4.bn1.weight', 'layer1.4.bn1.bias', 'layer1.4.bn2.weight', 'layer1.4.bn2.bias', 'layer1.5.bn1.weight', 'layer1.5.bn1.bias', 'layer1.5.bn2.weight', 'layer1.5.bn2.bias', 'layer1.6.bn1.weight', 'layer1.6.bn1.bias', 'layer1.6.bn2.weight', 'layer1.6.bn2.bias', 'layer1.7.bn1.weight', 'layer1.7.bn1.bias', 'layer1.7.bn2.weight', 'layer1.7.bn2.bias', 'layer1.8.bn1.weight', 'layer1.8.bn1.bias', 'layer1.8.bn2.weight', 'layer1.8.bn2.bias', 'layer1.9.bn1.weight', 'layer1.9.bn1.bias', 'layer1.9.bn2.weight', 'layer1.9.bn2.bias', 'layer1.10.bn1.weight', 'layer1.10.bn1.bias', 'layer1.10.bn2.weight', 'layer1.10.bn2.bias', 'layer1.11.bn1.weight', 'layer1.11.bn1.bias', 'layer1.11.bn2.weight', 'layer1.11.bn2.bias', 'layer1.12.bn1.weight', 'layer1.12.bn1.bias', 'layer1.12.bn2.weight', 'layer1.12.bn2.bias', 'layer1.13.bn1.weight', 'layer1.13.bn1.bias', 'layer1.13.bn2.weight', 'layer1.13.bn2.bias', 'layer1.14.bn1.weight', 'layer1.14.bn1.bias', 'layer1.14.bn2.weight', 'layer1.14.bn2.bias', 'layer1.15.bn1.weight', 'layer1.15.bn1.bias', 'layer1.15.bn2.weight', 'layer1.15.bn2.bias', 'layer1.16.bn1.weight', 'layer1.16.bn1.bias', 'layer1.16.bn2.weight', 'layer1.16.bn2.bias', 'layer1.17.bn1.weight', 'layer1.17.bn1.bias', 'layer1.17.bn2.weight', 'layer1.17.bn2.bias', 'layer1.18.bn1.weight', 'layer1.18.bn1.bias', 'layer1.18.bn2.weight', 'layer1.18.bn2.bias', 'layer1.19.bn1.weight', 'layer1.19.bn1.bias', 'layer1.19.bn2.weight', 'layer1.19.bn2.bias', 'layer1.20.bn1.weight', 'layer1.20.bn1.bias', 'layer1.20.bn2.weight', 'layer1.20.bn2.bias', 'layer1.21.bn1.weight', 'layer1.21.bn1.bias', 'layer1.21.bn2.weight', 'layer1.21.bn2.bias', 'layer1.22.bn1.weight', 'layer1.22.bn1.bias', 'layer1.22.bn2.weight', 'layer1.22.bn2.bias', 'layer1.23.bn1.weight', 'layer1.23.bn1.bias', 'layer1.23.bn2.weight', 'layer1.23.bn2.bias', 'layer1.24.bn1.weight', 'layer1.24.bn1.bias', 'layer1.24.bn2.weight', 'layer1.24.bn2.bias', 'layer1.25.bn1.weight', 'layer1.25.bn1.bias', 'layer1.25.bn2.weight', 'layer1.25.bn2.bias', 'layer1.26.bn1.weight', 'layer1.26.bn1.bias', 'layer1.26.bn2.weight', 'layer1.26.bn2.bias', 'layer1.27.bn1.weight', 'layer1.27.bn1.bias', 'layer1.27.bn2.weight', 'layer1.27.bn2.bias', 'layer1.28.bn1.weight', 'layer1.28.bn1.bias', 'layer1.28.bn2.weight', 'layer1.28.bn2.bias', 'layer1.29.bn1.weight', 'layer1.29.bn1.bias', 'layer1.29.bn2.weight', 'layer1.29.bn2.bias', 'layer1.30.bn1.weight', 'layer1.30.bn1.bias', 'layer1.30.bn2.weight', 'layer1.30.bn2.bias', 'layer1.31.bn1.weight', 'layer1.31.bn1.bias', 'layer1.31.bn2.weight', 'layer1.31.bn2.bias', 'layer1.32.bn1.weight', 'layer1.32.bn1.bias', 'layer1.32.bn2.weight', 'layer1.32.bn2.bias', 'layer1.33.bn1.weight', 'layer1.33.bn1.bias', 'layer1.33.bn2.weight', 'layer1.33.bn2.bias', 'layer1.34.bn1.weight', 'layer1.34.bn1.bias', 'layer1.34.bn2.weight', 'layer1.34.bn2.bias', 'layer1.35.bn1.weight', 'layer1.35.bn1.bias', 'layer1.35.bn2.weight', 'layer1.35.bn2.bias', 'layer2.0.bn1.weight', 'layer2.0.bn1.bias', 'layer2.0.bn2.weight', 'layer2.0.bn2.bias', 'layer2.1.bn1.weight', 'layer2.1.bn1.bias', 'layer2.1.bn2.weight', 'layer2.1.bn2.bias', 'layer2.2.bn1.weight', 'layer2.2.bn1.bias', 'layer2.2.bn2.weight', 'layer2.2.bn2.bias', 'layer2.3.bn1.weight', 'layer2.3.bn1.bias', 'layer2.3.bn2.weight', 'layer2.3.bn2.bias', 'layer2.4.bn1.weight', 'layer2.4.bn1.bias', 'layer2.4.bn2.weight', 'layer2.4.bn2.bias', 'layer2.5.bn1.weight', 'layer2.5.bn1.bias', 'layer2.5.bn2.weight', 'layer2.5.bn2.bias', 'layer2.6.bn1.weight', 'layer2.6.bn1.bias', 'layer2.6.bn2.weight', 'layer2.6.bn2.bias', 'layer2.7.bn1.weight', 'layer2.7.bn1.bias', 'layer2.7.bn2.weight', 'layer2.7.bn2.bias', 'layer2.8.bn1.weight', 'layer2.8.bn1.bias', 'layer2.8.bn2.weight', 'layer2.8.bn2.bias', 'layer2.9.bn1.weight', 'layer2.9.bn1.bias', 'layer2.9.bn2.weight', 'layer2.9.bn2.bias', 'layer2.10.bn1.weight', 'layer2.10.bn1.bias', 'layer2.10.bn2.weight', 'layer2.10.bn2.bias', 'layer2.11.bn1.weight', 'layer2.11.bn1.bias', 'layer2.11.bn2.weight', 'layer2.11.bn2.bias', 'layer2.12.bn1.weight', 'layer2.12.bn1.bias', 'layer2.12.bn2.weight', 'layer2.12.bn2.bias', 'layer2.13.bn1.weight', 'layer2.13.bn1.bias', 'layer2.13.bn2.weight', 'layer2.13.bn2.bias', 'layer2.14.bn1.weight', 'layer2.14.bn1.bias', 'layer2.14.bn2.weight', 'layer2.14.bn2.bias', 'layer2.15.bn1.weight', 'layer2.15.bn1.bias', 'layer2.15.bn2.weight', 'layer2.15.bn2.bias', 'layer2.16.bn1.weight', 'layer2.16.bn1.bias', 'layer2.16.bn2.weight', 'layer2.16.bn2.bias', 'layer2.17.bn1.weight', 'layer2.17.bn1.bias', 'layer2.17.bn2.weight', 'layer2.17.bn2.bias', 'layer2.18.bn1.weight', 'layer2.18.bn1.bias', 'layer2.18.bn2.weight', 'layer2.18.bn2.bias', 'layer2.19.bn1.weight', 'layer2.19.bn1.bias', 'layer2.19.bn2.weight', 'layer2.19.bn2.bias', 'layer2.20.bn1.weight', 'layer2.20.bn1.bias', 'layer2.20.bn2.weight', 'layer2.20.bn2.bias', 'layer2.21.bn1.weight', 'layer2.21.bn1.bias', 'layer2.21.bn2.weight', 'layer2.21.bn2.bias', 'layer2.22.bn1.weight', 'layer2.22.bn1.bias', 'layer2.22.bn2.weight', 'layer2.22.bn2.bias', 'layer2.23.bn1.weight', 'layer2.23.bn1.bias', 'layer2.23.bn2.weight', 'layer2.23.bn2.bias', 'layer2.24.bn1.weight', 'layer2.24.bn1.bias', 'layer2.24.bn2.weight', 'layer2.24.bn2.bias', 'layer2.25.bn1.weight', 'layer2.25.bn1.bias', 'layer2.25.bn2.weight', 'layer2.25.bn2.bias', 'layer2.26.bn1.weight', 'layer2.26.bn1.bias', 'layer2.26.bn2.weight', 'layer2.26.bn2.bias', 'layer2.27.bn1.weight', 'layer2.27.bn1.bias', 'layer2.27.bn2.weight', 'layer2.27.bn2.bias', 'layer2.28.bn1.weight', 'layer2.28.bn1.bias', 'layer2.28.bn2.weight', 'layer2.28.bn2.bias', 'layer2.29.bn1.weight', 'layer2.29.bn1.bias', 'layer2.29.bn2.weight', 'layer2.29.bn2.bias', 'layer2.30.bn1.weight', 'layer2.30.bn1.bias', 'layer2.30.bn2.weight', 'layer2.30.bn2.bias', 'layer2.31.bn1.weight', 'layer2.31.bn1.bias', 'layer2.31.bn2.weight', 'layer2.31.bn2.bias', 'layer2.32.bn1.weight', 'layer2.32.bn1.bias', 'layer2.32.bn2.weight', 'layer2.32.bn2.bias', 'layer2.33.bn1.weight', 'layer2.33.bn1.bias', 'layer2.33.bn2.weight', 'layer2.33.bn2.bias', 'layer2.34.bn1.weight', 'layer2.34.bn1.bias', 'layer2.34.bn2.weight', 'layer2.34.bn2.bias', 'layer2.35.bn1.weight', 'layer2.35.bn1.bias', 'layer2.35.bn2.weight', 'layer2.35.bn2.bias', 'layer3.0.bn1.weight', 'layer3.0.bn1.bias', 'layer3.0.bn2.weight', 'layer3.0.bn2.bias', 'layer3.1.bn1.weight', 'layer3.1.bn1.bias', 'layer3.1.bn2.weight', 'layer3.1.bn2.bias', 'layer3.2.bn1.weight', 'layer3.2.bn1.bias', 'layer3.2.bn2.weight', 'layer3.2.bn2.bias', 'layer3.3.bn1.weight', 'layer3.3.bn1.bias', 'layer3.3.bn2.weight', 'layer3.3.bn2.bias', 'layer3.4.bn1.weight', 'layer3.4.bn1.bias', 'layer3.4.bn2.weight', 'layer3.4.bn2.bias', 'layer3.5.bn1.weight', 'layer3.5.bn1.bias', 'layer3.5.bn2.weight', 'layer3.5.bn2.bias', 'layer3.6.bn1.weight', 'layer3.6.bn1.bias', 'layer3.6.bn2.weight', 'layer3.6.bn2.bias', 'layer3.7.bn1.weight', 'layer3.7.bn1.bias', 'layer3.7.bn2.weight', 'layer3.7.bn2.bias', 'layer3.8.bn1.weight', 'layer3.8.bn1.bias', 'layer3.8.bn2.weight', 'layer3.8.bn2.bias', 'layer3.9.bn1.weight', 'layer3.9.bn1.bias', 'layer3.9.bn2.weight', 'layer3.9.bn2.bias', 'layer3.10.bn1.weight', 'layer3.10.bn1.bias', 'layer3.10.bn2.weight', 'layer3.10.bn2.bias', 'layer3.11.bn1.weight', 'layer3.11.bn1.bias', 'layer3.11.bn2.weight', 'layer3.11.bn2.bias', 'layer3.12.bn1.weight', 'layer3.12.bn1.bias', 'layer3.12.bn2.weight', 'layer3.12.bn2.bias', 'layer3.13.bn1.weight', 'layer3.13.bn1.bias', 'layer3.13.bn2.weight', 'layer3.13.bn2.bias', 'layer3.14.bn1.weight', 'layer3.14.bn1.bias', 'layer3.14.bn2.weight', 'layer3.14.bn2.bias', 'layer3.15.bn1.weight', 'layer3.15.bn1.bias', 'layer3.15.bn2.weight', 'layer3.15.bn2.bias', 'layer3.16.bn1.weight', 'layer3.16.bn1.bias', 'layer3.16.bn2.weight', 'layer3.16.bn2.bias', 'layer3.17.bn1.weight', 'layer3.17.bn1.bias', 'layer3.17.bn2.weight', 'layer3.17.bn2.bias', 'layer3.18.bn1.weight', 'layer3.18.bn1.bias', 'layer3.18.bn2.weight', 'layer3.18.bn2.bias', 'layer3.19.bn1.weight', 'layer3.19.bn1.bias', 'layer3.19.bn2.weight', 'layer3.19.bn2.bias', 'layer3.20.bn1.weight', 'layer3.20.bn1.bias', 'layer3.20.bn2.weight', 'layer3.20.bn2.bias', 'layer3.21.bn1.weight', 'layer3.21.bn1.bias', 'layer3.21.bn2.weight', 'layer3.21.bn2.bias', 'layer3.22.bn1.weight', 'layer3.22.bn1.bias', 'layer3.22.bn2.weight', 'layer3.22.bn2.bias', 'layer3.23.bn1.weight', 'layer3.23.bn1.bias', 'layer3.23.bn2.weight', 'layer3.23.bn2.bias', 'layer3.24.bn1.weight', 'layer3.24.bn1.bias', 'layer3.24.bn2.weight', 'layer3.24.bn2.bias', 'layer3.25.bn1.weight', 'layer3.25.bn1.bias', 'layer3.25.bn2.weight', 'layer3.25.bn2.bias', 'layer3.26.bn1.weight', 'layer3.26.bn1.bias', 'layer3.26.bn2.weight', 'layer3.26.bn2.bias', 'layer3.27.bn1.weight', 'layer3.27.bn1.bias', 'layer3.27.bn2.weight', 'layer3.27.bn2.bias', 'layer3.28.bn1.weight', 'layer3.28.bn1.bias', 'layer3.28.bn2.weight', 'layer3.28.bn2.bias', 'layer3.29.bn1.weight', 'layer3.29.bn1.bias', 'layer3.29.bn2.weight', 'layer3.29.bn2.bias', 'layer3.30.bn1.weight', 'layer3.30.bn1.bias', 'layer3.30.bn2.weight', 'layer3.30.bn2.bias', 'layer3.31.bn1.weight', 'layer3.31.bn1.bias', 'layer3.31.bn2.weight', 'layer3.31.bn2.bias', 'layer3.32.bn1.weight', 'layer3.32.bn1.bias', 'layer3.32.bn2.weight', 'layer3.32.bn2.bias', 'layer3.33.bn1.weight', 'layer3.33.bn1.bias', 'layer3.33.bn2.weight', 'layer3.33.bn2.bias', 'layer3.34.bn1.weight', 'layer3.34.bn1.bias', 'layer3.34.bn2.weight', 'layer3.34.bn2.bias', 'layer3.35.bn1.weight', 'layer3.35.bn1.bias', 'layer3.35.bn2.weight', 'layer3.35.bn2.bias']
+2022-03-19 17:49:35,153 - runner - INFO: Unfrozen parametrs: ['conv1.weight', 'layer1.0.conv1.weight', 'layer1.0.conv2.weight', 'layer1.1.conv1.weight', 'layer1.1.conv2.weight', 'layer1.2.conv1.weight', 'layer1.2.conv2.weight', 'layer1.3.conv1.weight', 'layer1.3.conv2.weight', 'layer1.4.conv1.weight', 'layer1.4.conv2.weight', 'layer1.5.conv1.weight', 'layer1.5.conv2.weight', 'layer1.6.conv1.weight', 'layer1.6.conv2.weight', 'layer1.7.conv1.weight', 'layer1.7.conv2.weight', 'layer1.8.conv1.weight', 'layer1.8.conv2.weight', 'layer1.9.conv1.weight', 'layer1.9.conv2.weight', 'layer1.10.conv1.weight', 'layer1.10.conv2.weight', 'layer1.11.conv1.weight', 'layer1.11.conv2.weight', 'layer1.12.conv1.weight', 'layer1.12.conv2.weight', 'layer1.13.conv1.weight', 'layer1.13.conv2.weight', 'layer1.14.conv1.weight', 'layer1.14.conv2.weight', 'layer1.15.conv1.weight', 'layer1.15.conv2.weight', 'layer1.16.conv1.weight', 'layer1.16.conv2.weight', 'layer1.17.conv1.weight', 'layer1.17.conv2.weight', 'layer1.18.conv1.weight', 'layer1.18.conv2.weight', 'layer1.19.conv1.weight', 'layer1.19.conv2.weight', 'layer1.20.conv1.weight', 'layer1.20.conv2.weight', 'layer1.21.conv1.weight', 'layer1.21.conv2.weight', 'layer1.22.conv1.weight', 'layer1.22.conv2.weight', 'layer1.23.conv1.weight', 'layer1.23.conv2.weight', 'layer1.24.conv1.weight', 'layer1.24.conv2.weight', 'layer1.25.conv1.weight', 'layer1.25.conv2.weight', 'layer1.26.conv1.weight', 'layer1.26.conv2.weight', 'layer1.27.conv1.weight', 'layer1.27.conv2.weight', 'layer1.28.conv1.weight', 'layer1.28.conv2.weight', 'layer1.29.conv1.weight', 'layer1.29.conv2.weight', 'layer1.30.conv1.weight', 'layer1.30.conv2.weight', 'layer1.31.conv1.weight', 'layer1.31.conv2.weight', 'layer1.32.conv1.weight', 'layer1.32.conv2.weight', 'layer1.33.conv1.weight', 'layer1.33.conv2.weight', 'layer1.34.conv1.weight', 'layer1.34.conv2.weight', 'layer1.35.conv1.weight', 'layer1.35.conv2.weight', 'layer2.0.conv1.weight', 'layer2.0.conv2.weight', 'layer2.1.conv1.weight', 'layer2.1.conv2.weight', 'layer2.2.conv1.weight', 'layer2.2.conv2.weight', 'layer2.3.conv1.weight', 'layer2.3.conv2.weight', 'layer2.4.conv1.weight', 'layer2.4.conv2.weight', 'layer2.5.conv1.weight', 'layer2.5.conv2.weight', 'layer2.6.conv1.weight', 'layer2.6.conv2.weight', 'layer2.7.conv1.weight', 'layer2.7.conv2.weight', 'layer2.8.conv1.weight', 'layer2.8.conv2.weight', 'layer2.9.conv1.weight', 'layer2.9.conv2.weight', 'layer2.10.conv1.weight', 'layer2.10.conv2.weight', 'layer2.11.conv1.weight', 'layer2.11.conv2.weight', 'layer2.12.conv1.weight', 'layer2.12.conv2.weight', 'layer2.13.conv1.weight', 'layer2.13.conv2.weight', 'layer2.14.conv1.weight', 'layer2.14.conv2.weight', 'layer2.15.conv1.weight', 'layer2.15.conv2.weight', 'layer2.16.conv1.weight', 'layer2.16.conv2.weight', 'layer2.17.conv1.weight', 'layer2.17.conv2.weight', 'layer2.18.conv1.weight', 'layer2.18.conv2.weight', 'layer2.19.conv1.weight', 'layer2.19.conv2.weight', 'layer2.20.conv1.weight', 'layer2.20.conv2.weight', 'layer2.21.conv1.weight', 'layer2.21.conv2.weight', 'layer2.22.conv1.weight', 'layer2.22.conv2.weight', 'layer2.23.conv1.weight', 'layer2.23.conv2.weight', 'layer2.24.conv1.weight', 'layer2.24.conv2.weight', 'layer2.25.conv1.weight', 'layer2.25.conv2.weight', 'layer2.26.conv1.weight', 'layer2.26.conv2.weight', 'layer2.27.conv1.weight', 'layer2.27.conv2.weight', 'layer2.28.conv1.weight', 'layer2.28.conv2.weight', 'layer2.29.conv1.weight', 'layer2.29.conv2.weight', 'layer2.30.conv1.weight', 'layer2.30.conv2.weight', 'layer2.31.conv1.weight', 'layer2.31.conv2.weight', 'layer2.32.conv1.weight', 'layer2.32.conv2.weight', 'layer2.33.conv1.weight', 'layer2.33.conv2.weight', 'layer2.34.conv1.weight', 'layer2.34.conv2.weight', 'layer2.35.conv1.weight', 'layer2.35.conv2.weight', 'layer3.0.conv1.weight', 'layer3.0.conv2.weight', 'layer3.1.conv1.weight', 'layer3.1.conv2.weight', 'layer3.2.conv1.weight', 'layer3.2.conv2.weight', 'layer3.3.conv1.weight', 'layer3.3.conv2.weight', 'layer3.4.conv1.weight', 'layer3.4.conv2.weight', 'layer3.5.conv1.weight', 'layer3.5.conv2.weight', 'layer3.6.conv1.weight', 'layer3.6.conv2.weight', 'layer3.7.conv1.weight', 'layer3.7.conv2.weight', 'layer3.8.conv1.weight', 'layer3.8.conv2.weight', 'layer3.9.conv1.weight', 'layer3.9.conv2.weight', 'layer3.10.conv1.weight', 'layer3.10.conv2.weight', 'layer3.11.conv1.weight', 'layer3.11.conv2.weight', 'layer3.12.conv1.weight', 'layer3.12.conv2.weight', 'layer3.13.conv1.weight', 'layer3.13.conv2.weight', 'layer3.14.conv1.weight', 'layer3.14.conv2.weight', 'layer3.15.conv1.weight', 'layer3.15.conv2.weight', 'layer3.16.conv1.weight', 'layer3.16.conv2.weight', 'layer3.17.conv1.weight', 'layer3.17.conv2.weight', 'layer3.18.conv1.weight', 'layer3.18.conv2.weight', 'layer3.19.conv1.weight', 'layer3.19.conv2.weight', 'layer3.20.conv1.weight', 'layer3.20.conv2.weight', 'layer3.21.conv1.weight', 'layer3.21.conv2.weight', 'layer3.22.conv1.weight', 'layer3.22.conv2.weight', 'layer3.23.conv1.weight', 'layer3.23.conv2.weight', 'layer3.24.conv1.weight', 'layer3.24.conv2.weight', 'layer3.25.conv1.weight', 'layer3.25.conv2.weight', 'layer3.26.conv1.weight', 'layer3.26.conv2.weight', 'layer3.27.conv1.weight', 'layer3.27.conv2.weight', 'layer3.28.conv1.weight', 'layer3.28.conv2.weight', 'layer3.29.conv1.weight', 'layer3.29.conv2.weight', 'layer3.30.conv1.weight', 'layer3.30.conv2.weight', 'layer3.31.conv1.weight', 'layer3.31.conv2.weight', 'layer3.32.conv1.weight', 'layer3.32.conv2.weight', 'layer3.33.conv1.weight', 'layer3.33.conv2.weight', 'layer3.34.conv1.weight', 'layer3.34.conv2.weight', 'layer3.35.conv1.weight', 'layer3.35.conv2.weight', 'linear.weight', 'linear.bias']
+2022-03-19 17:49:35,154 - runner - INFO: Layer names containing 'conv' : 217
+2022-03-19 17:49:35,154 - runner - INFO: Layer names containing 'bn' : 217
+2022-03-19 17:49:35,154 - runner - INFO: Non-trainable parameters (Thousands): 0.0
+2022-03-19 17:49:35,155 - runner - INFO: Trainable parameters (Thousands): 3477.85
+2022-03-19 17:49:35,155 - runner - INFO: Total Parameters (Thousands): 3477.85
+2022-03-19 17:49:35,179 - runner - INFO: Using GPU: NVIDIA GeForce GTX 1080 Ti
+2022-03-19 17:49:40,956 - runner - INFO: Using 45000 training samples, and 5000 validation samples.
+2022-03-19 17:49:41,033 - runner - INFO: Begun training at epoch 1.
+2022-03-19 17:50:38,317 - runner - INFO: Epoch 1/160 : train_acc:0.127, train_loss:2.341, val_acc:0.208, val_loss:2.097 (57.28s, ETA:2h:32m)
+2022-03-19 17:50:38,317 - runner - DEBUG: Time split: train:54.89s val:1.95s
+2022-03-19 17:50:38,317 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:51:36,139 - runner - INFO: Epoch 2/160 : train_acc:0.251, train_loss:1.924, val_acc:0.264, val_loss:1.875 (57.82s, ETA:2h:33m)
+2022-03-19 17:51:36,140 - runner - DEBUG: Time split: train:55.43s val:1.87s
+2022-03-19 17:51:36,140 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:52:33,329 - runner - INFO: Epoch 3/160 : train_acc:0.324, train_loss:1.748, val_acc:0.361, val_loss:1.705 (57.19s, ETA:2h:30m)
+2022-03-19 17:52:33,330 - runner - DEBUG: Time split: train:54.52s val:1.99s
+2022-03-19 17:52:33,330 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:53:30,832 - runner - INFO: Epoch 4/160 : train_acc:0.428, train_loss:1.547, val_acc:0.441, val_loss:1.728 (57.50s, ETA:2h:30m)
+2022-03-19 17:53:30,832 - runner - DEBUG: Time split: train:54.89s val:2.00s
+2022-03-19 17:53:30,833 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:54:28,837 - runner - INFO: Epoch 5/160 : train_acc:0.530, train_loss:1.289, val_acc:0.575, val_loss:1.225 (58.00s, ETA:2h:30m)
+2022-03-19 17:54:28,838 - runner - DEBUG: Time split: train:55.45s val:1.88s
+2022-03-19 17:54:28,839 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:55:26,833 - runner - INFO: Epoch 6/160 : train_acc:0.627, train_loss:1.045, val_acc:0.537, val_loss:1.445 (57.99s, ETA:2h:29m)
+2022-03-19 17:55:26,833 - runner - DEBUG: Time split: train:55.53s val:1.88s
+2022-03-19 17:55:26,834 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:56:24,707 - runner - INFO: Epoch 7/160 : train_acc:0.691, train_loss:0.879, val_acc:0.624, val_loss:1.196 (57.87s, ETA:2h:28m)
+2022-03-19 17:56:24,707 - runner - DEBUG: Time split: train:55.24s val:1.90s
+2022-03-19 17:56:24,708 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:57:22,457 - runner - INFO: Epoch 8/160 : train_acc:0.730, train_loss:0.769, val_acc:0.657, val_loss:1.213 (57.75s, ETA:2h:27m)
+2022-03-19 17:57:22,457 - runner - DEBUG: Time split: train:55.15s val:1.91s
+2022-03-19 17:57:22,458 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:58:20,012 - runner - INFO: Epoch 9/160 : train_acc:0.754, train_loss:0.696, val_acc:0.700, val_loss:1.120 (57.55s, ETA:2h:25m)
+2022-03-19 17:58:20,013 - runner - DEBUG: Time split: train:54.95s val:1.91s
+2022-03-19 17:58:20,013 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 17:59:17,424 - runner - INFO: Epoch 10/160 : train_acc:0.782, train_loss:0.633, val_acc:0.732, val_loss:0.832 (57.41s, ETA:2h:24m)
+2022-03-19 17:59:17,424 - runner - DEBUG: Time split: train:54.91s val:1.91s
+2022-03-19 17:59:17,425 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:00:15,276 - runner - INFO: Epoch 11/160 : train_acc:0.796, train_loss:0.585, val_acc:0.767, val_loss:0.700 (57.85s, ETA:2h:24m)
+2022-03-19 18:00:15,277 - runner - DEBUG: Time split: train:55.24s val:1.90s
+2022-03-19 18:00:15,277 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:01:13,156 - runner - INFO: Epoch 12/160 : train_acc:0.814, train_loss:0.544, val_acc:0.774, val_loss:0.695 (57.88s, ETA:2h:23m)
+2022-03-19 18:01:13,156 - runner - DEBUG: Time split: train:55.23s val:2.03s
+2022-03-19 18:01:13,157 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:02:10,557 - runner - INFO: Epoch 13/160 : train_acc:0.822, train_loss:0.513, val_acc:0.798, val_loss:0.617 (57.40s, ETA:2h:21m)
+2022-03-19 18:02:10,558 - runner - DEBUG: Time split: train:54.89s val:1.90s
+2022-03-19 18:02:10,559 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:03:07,911 - runner - INFO: Epoch 14/160 : train_acc:0.833, train_loss:0.480, val_acc:0.801, val_loss:0.622 (57.35s, ETA:2h:20m)
+2022-03-19 18:03:07,912 - runner - DEBUG: Time split: train:54.82s val:1.90s
+2022-03-19 18:03:07,912 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:04:05,743 - runner - INFO: Epoch 15/160 : train_acc:0.842, train_loss:0.451, val_acc:0.805, val_loss:0.618 (57.83s, ETA:2h:20m)
+2022-03-19 18:04:05,743 - runner - DEBUG: Time split: train:55.27s val:1.89s
+2022-03-19 18:04:05,743 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:05:03,656 - runner - INFO: Epoch 16/160 : train_acc:0.853, train_loss:0.428, val_acc:0.788, val_loss:0.654 (57.91s, ETA:2h:19m)
+2022-03-19 18:05:03,656 - runner - DEBUG: Time split: train:55.38s val:1.89s
+2022-03-19 18:05:03,657 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:06:02,004 - runner - INFO: Epoch 17/160 : train_acc:0.856, train_loss:0.410, val_acc:0.820, val_loss:0.558 (58.35s, ETA:2h:20m)
+2022-03-19 18:06:02,005 - runner - DEBUG: Time split: train:55.76s val:2.00s
+2022-03-19 18:06:02,005 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:07:00,309 - runner - INFO: Epoch 18/160 : train_acc:0.864, train_loss:0.392, val_acc:0.809, val_loss:0.603 (58.30s, ETA:2h:18m)
+2022-03-19 18:07:00,310 - runner - DEBUG: Time split: train:55.53s val:1.95s
+2022-03-19 18:07:00,310 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:07:58,263 - runner - INFO: Epoch 19/160 : train_acc:0.872, train_loss:0.373, val_acc:0.829, val_loss:0.534 (57.95s, ETA:2h:17m)
+2022-03-19 18:07:58,264 - runner - DEBUG: Time split: train:55.42s val:1.87s
+2022-03-19 18:07:58,264 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:08:55,602 - runner - INFO: Epoch 20/160 : train_acc:0.878, train_loss:0.354, val_acc:0.833, val_loss:0.555 (57.34s, ETA:2h:14m)
+2022-03-19 18:08:55,603 - runner - DEBUG: Time split: train:54.91s val:1.93s
+2022-03-19 18:08:55,604 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:09:53,074 - runner - INFO: Epoch 21/160 : train_acc:0.882, train_loss:0.341, val_acc:0.818, val_loss:0.605 (57.47s, ETA:2h:14m)
+2022-03-19 18:09:53,074 - runner - DEBUG: Time split: train:55.02s val:1.89s
+2022-03-19 18:09:53,075 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:10:50,850 - runner - INFO: Epoch 22/160 : train_acc:0.887, train_loss:0.327, val_acc:0.832, val_loss:0.523 (57.77s, ETA:2h:13m)
+2022-03-19 18:10:50,851 - runner - DEBUG: Time split: train:55.34s val:1.86s
+2022-03-19 18:10:50,851 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:11:48,778 - runner - INFO: Epoch 23/160 : train_acc:0.889, train_loss:0.319, val_acc:0.837, val_loss:0.505 (57.93s, ETA:2h:13m)
+2022-03-19 18:11:48,778 - runner - DEBUG: Time split: train:55.42s val:1.91s
+2022-03-19 18:11:48,779 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:12:47,182 - runner - INFO: Epoch 24/160 : train_acc:0.896, train_loss:0.303, val_acc:0.828, val_loss:0.533 (58.40s, ETA:2h:13m)
+2022-03-19 18:12:47,183 - runner - DEBUG: Time split: train:55.71s val:1.99s
+2022-03-19 18:12:47,183 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:13:45,302 - runner - INFO: Epoch 25/160 : train_acc:0.894, train_loss:0.300, val_acc:0.848, val_loss:0.465 (58.12s, ETA:2h:11m)
+2022-03-19 18:13:45,302 - runner - DEBUG: Time split: train:55.68s val:1.90s
+2022-03-19 18:13:45,303 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:14:43,404 - runner - INFO: Epoch 26/160 : train_acc:0.899, train_loss:0.287, val_acc:0.804, val_loss:0.675 (58.10s, ETA:2h:10m)
+2022-03-19 18:14:43,404 - runner - DEBUG: Time split: train:55.69s val:1.93s
+2022-03-19 18:14:43,404 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:15:42,112 - runner - INFO: Epoch 27/160 : train_acc:0.901, train_loss:0.282, val_acc:0.842, val_loss:0.505 (58.71s, ETA:2h:11m)
+2022-03-19 18:15:42,113 - runner - DEBUG: Time split: train:56.28s val:1.95s
+2022-03-19 18:15:42,113 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:16:40,114 - runner - INFO: Epoch 28/160 : train_acc:0.908, train_loss:0.266, val_acc:0.845, val_loss:0.529 (58.00s, ETA:2h:8m)
+2022-03-19 18:16:40,114 - runner - DEBUG: Time split: train:55.47s val:1.90s
+2022-03-19 18:16:40,115 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:17:37,477 - runner - INFO: Epoch 29/160 : train_acc:0.908, train_loss:0.264, val_acc:0.853, val_loss:0.474 (57.36s, ETA:2h:6m)
+2022-03-19 18:17:37,478 - runner - DEBUG: Time split: train:54.87s val:1.87s
+2022-03-19 18:17:37,478 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:18:35,056 - runner - INFO: Epoch 30/160 : train_acc:0.911, train_loss:0.252, val_acc:0.844, val_loss:0.535 (57.58s, ETA:2h:5m)
+2022-03-19 18:18:35,057 - runner - DEBUG: Time split: train:55.18s val:1.98s
+2022-03-19 18:18:35,058 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:19:32,663 - runner - INFO: Epoch 31/160 : train_acc:0.915, train_loss:0.246, val_acc:0.849, val_loss:0.510 (57.61s, ETA:2h:4m)
+2022-03-19 18:19:32,664 - runner - DEBUG: Time split: train:55.05s val:1.91s
+2022-03-19 18:19:32,664 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:20:31,418 - runner - INFO: Epoch 32/160 : train_acc:0.918, train_loss:0.235, val_acc:0.851, val_loss:0.462 (58.75s, ETA:2h:6m)
+2022-03-19 18:20:31,419 - runner - DEBUG: Time split: train:56.19s val:1.93s
+2022-03-19 18:20:31,419 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:21:29,270 - runner - INFO: Epoch 33/160 : train_acc:0.919, train_loss:0.233, val_acc:0.843, val_loss:0.539 (57.85s, ETA:2h:3m)
+2022-03-19 18:21:29,270 - runner - DEBUG: Time split: train:55.43s val:1.88s
+2022-03-19 18:21:29,271 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:22:26,917 - runner - INFO: Epoch 34/160 : train_acc:0.920, train_loss:0.225, val_acc:0.836, val_loss:0.570 (57.65s, ETA:2h:2m)
+2022-03-19 18:22:26,918 - runner - DEBUG: Time split: train:55.24s val:1.87s
+2022-03-19 18:22:26,918 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:23:24,207 - runner - INFO: Epoch 35/160 : train_acc:0.921, train_loss:0.225, val_acc:0.858, val_loss:0.473 (57.29s, ETA:2h:0m)
+2022-03-19 18:23:24,209 - runner - DEBUG: Time split: train:54.84s val:1.89s
+2022-03-19 18:23:24,209 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:24:21,243 - runner - INFO: Epoch 36/160 : train_acc:0.925, train_loss:0.216, val_acc:0.861, val_loss:0.468 (57.03s, ETA:1h:58m)
+2022-03-19 18:24:21,243 - runner - DEBUG: Time split: train:54.62s val:1.89s
+2022-03-19 18:24:21,244 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:25:19,340 - runner - INFO: Epoch 37/160 : train_acc:0.926, train_loss:0.210, val_acc:0.870, val_loss:0.451 (58.10s, ETA:2h:0m)
+2022-03-19 18:25:19,340 - runner - DEBUG: Time split: train:55.65s val:1.90s
+2022-03-19 18:25:19,341 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:26:16,603 - runner - INFO: Epoch 38/160 : train_acc:0.927, train_loss:0.208, val_acc:0.857, val_loss:0.468 (57.26s, ETA:1h:57m)
+2022-03-19 18:26:16,604 - runner - DEBUG: Time split: train:54.78s val:1.87s
+2022-03-19 18:26:16,604 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:27:13,177 - runner - INFO: Epoch 39/160 : train_acc:0.933, train_loss:0.193, val_acc:0.865, val_loss:0.497 (56.57s, ETA:1h:55m)
+2022-03-19 18:27:13,177 - runner - DEBUG: Time split: train:54.19s val:1.86s
+2022-03-19 18:27:13,178 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:28:09,826 - runner - INFO: Epoch 40/160 : train_acc:0.928, train_loss:0.203, val_acc:0.859, val_loss:0.501 (56.65s, ETA:1h:54m)
+2022-03-19 18:28:09,827 - runner - DEBUG: Time split: train:54.21s val:1.89s
+2022-03-19 18:28:09,827 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:29:06,411 - runner - INFO: Epoch 41/160 : train_acc:0.931, train_loss:0.196, val_acc:0.851, val_loss:0.524 (56.58s, ETA:1h:53m)
+2022-03-19 18:29:06,412 - runner - DEBUG: Time split: train:54.16s val:1.87s
+2022-03-19 18:29:06,412 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:30:03,087 - runner - INFO: Epoch 42/160 : train_acc:0.934, train_loss:0.188, val_acc:0.866, val_loss:0.443 (56.67s, ETA:1h:52m)
+2022-03-19 18:30:03,087 - runner - DEBUG: Time split: train:54.22s val:1.87s
+2022-03-19 18:30:03,088 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:31:00,246 - runner - INFO: Epoch 43/160 : train_acc:0.936, train_loss:0.182, val_acc:0.867, val_loss:0.460 (57.16s, ETA:1h:52m)
+2022-03-19 18:31:00,247 - runner - DEBUG: Time split: train:54.66s val:2.00s
+2022-03-19 18:31:00,248 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:31:57,956 - runner - INFO: Epoch 44/160 : train_acc:0.936, train_loss:0.186, val_acc:0.841, val_loss:0.610 (57.71s, ETA:1h:52m)
+2022-03-19 18:31:57,957 - runner - DEBUG: Time split: train:55.21s val:1.95s
+2022-03-19 18:31:57,957 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:32:55,254 - runner - INFO: Epoch 45/160 : train_acc:0.939, train_loss:0.174, val_acc:0.877, val_loss:0.420 (57.30s, ETA:1h:50m)
+2022-03-19 18:32:55,255 - runner - DEBUG: Time split: train:54.79s val:1.99s
+2022-03-19 18:32:55,255 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:33:52,914 - runner - INFO: Epoch 46/160 : train_acc:0.941, train_loss:0.168, val_acc:0.859, val_loss:0.513 (57.66s, ETA:1h:50m)
+2022-03-19 18:33:52,915 - runner - DEBUG: Time split: train:55.22s val:1.91s
+2022-03-19 18:33:52,915 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:34:50,659 - runner - INFO: Epoch 47/160 : train_acc:0.940, train_loss:0.170, val_acc:0.875, val_loss:0.458 (57.74s, ETA:1h:49m)
+2022-03-19 18:34:50,660 - runner - DEBUG: Time split: train:55.22s val:2.01s
+2022-03-19 18:34:50,660 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:35:48,076 - runner - INFO: Epoch 48/160 : train_acc:0.942, train_loss:0.167, val_acc:0.871, val_loss:0.450 (57.42s, ETA:1h:48m)
+2022-03-19 18:35:48,077 - runner - DEBUG: Time split: train:55.01s val:1.90s
+2022-03-19 18:35:48,078 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:36:45,647 - runner - INFO: Epoch 49/160 : train_acc:0.940, train_loss:0.171, val_acc:0.856, val_loss:0.506 (57.57s, ETA:1h:47m)
+2022-03-19 18:36:45,648 - runner - DEBUG: Time split: train:55.04s val:1.95s
+2022-03-19 18:36:45,648 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:37:42,916 - runner - INFO: Epoch 50/160 : train_acc:0.943, train_loss:0.164, val_acc:0.859, val_loss:0.517 (57.27s, ETA:1h:45m)
+2022-03-19 18:37:42,917 - runner - DEBUG: Time split: train:54.73s val:1.93s
+2022-03-19 18:37:42,917 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:38:39,909 - runner - INFO: Epoch 51/160 : train_acc:0.945, train_loss:0.159, val_acc:0.872, val_loss:0.471 (56.99s, ETA:1h:44m)
+2022-03-19 18:38:39,910 - runner - DEBUG: Time split: train:54.60s val:1.88s
+2022-03-19 18:38:39,910 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:39:37,572 - runner - INFO: Epoch 52/160 : train_acc:0.944, train_loss:0.160, val_acc:0.865, val_loss:0.476 (57.66s, ETA:1h:44m)
+2022-03-19 18:39:37,572 - runner - DEBUG: Time split: train:55.14s val:1.99s
+2022-03-19 18:39:37,572 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:40:35,556 - runner - INFO: Epoch 53/160 : train_acc:0.946, train_loss:0.158, val_acc:0.868, val_loss:0.480 (57.98s, ETA:1h:44m)
+2022-03-19 18:40:35,556 - runner - DEBUG: Time split: train:55.53s val:1.89s
+2022-03-19 18:40:35,557 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:41:33,245 - runner - INFO: Epoch 54/160 : train_acc:0.946, train_loss:0.152, val_acc:0.874, val_loss:0.438 (57.69s, ETA:1h:42m)
+2022-03-19 18:41:33,246 - runner - DEBUG: Time split: train:55.31s val:1.87s
+2022-03-19 18:41:33,246 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:42:30,835 - runner - INFO: Epoch 55/160 : train_acc:0.946, train_loss:0.154, val_acc:0.879, val_loss:0.425 (57.59s, ETA:1h:41m)
+2022-03-19 18:42:30,835 - runner - DEBUG: Time split: train:54.76s val:1.97s
+2022-03-19 18:42:30,835 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:43:28,331 - runner - INFO: Epoch 56/160 : train_acc:0.948, train_loss:0.149, val_acc:0.882, val_loss:0.425 (57.50s, ETA:1h:40m)
+2022-03-19 18:43:28,331 - runner - DEBUG: Time split: train:55.11s val:1.88s
+2022-03-19 18:43:28,331 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:44:25,852 - runner - INFO: Epoch 57/160 : train_acc:0.946, train_loss:0.153, val_acc:0.871, val_loss:0.452 (57.52s, ETA:1h:39m)
+2022-03-19 18:44:25,853 - runner - DEBUG: Time split: train:55.03s val:1.90s
+2022-03-19 18:44:25,853 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:45:23,472 - runner - INFO: Epoch 58/160 : train_acc:0.950, train_loss:0.144, val_acc:0.880, val_loss:0.437 (57.62s, ETA:1h:38m)
+2022-03-19 18:45:23,473 - runner - DEBUG: Time split: train:55.10s val:1.96s
+2022-03-19 18:45:23,473 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:46:22,147 - runner - INFO: Epoch 59/160 : train_acc:0.949, train_loss:0.145, val_acc:0.866, val_loss:0.463 (58.67s, ETA:1h:39m)
+2022-03-19 18:46:22,148 - runner - DEBUG: Time split: train:56.22s val:1.92s
+2022-03-19 18:46:22,148 - runner - DEBUG: Next learning rate: 0.1000
+2022-03-19 18:47:19,705 - runner - INFO: Epoch 60/160 : train_acc:0.949, train_loss:0.145, val_acc:0.861, val_loss:0.520 (57.56s, ETA:1h:36m)
+2022-03-19 18:47:19,705 - runner - DEBUG: Time split: train:55.08s val:1.97s
+2022-03-19 18:47:19,706 - runner - DEBUG: Next learning rate: 0.1000
