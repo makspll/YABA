@@ -3,18 +3,19 @@ dataset: !DCIFAR10
   download: true
 epochs: 160
 eval_mode: false
-experiment_name: resnet_218_cifar10
+experiment_name: nobatchdecay_resnet_110_cifar10
 fast_mode: true
 freeze_parameter_list: []
 gpus:
 - 0
-- 1
 model: !MResnetCIFAR
   num_blocks:
-  - 36
-  - 36
-  - 36
+  - 18
+  - 18
+  - 18
   num_classes: 10
+no_decay_parameter_list:
+- .*bn.*
 optimizer: !OSGD
   lr: 0.1
   momentum: 0.9
@@ -24,7 +25,7 @@ scheduler: !SMultiStep
   milestones:
   - 80
   - 120
-seed: 7112018
+seed: 69420
 store_intermediate_weights: true
 target_transforms: []
 target_transforms_test: []
