@@ -22,9 +22,6 @@ def plot_bn_vs_other_gradient_magnitudes(gradient_epoch_filenames : List[str]):
         non_bn_mags = []
 
         for param_name,gradient in gradients.items():
-            # if 'weight' in param_name: # no biases, or optimizer parameters
-            #     print("skipping:",param_name)
-            #     continue
 
             if gradient is None:
                 abs_mean = 0
@@ -52,6 +49,106 @@ def plot_bn_vs_other_gradient_magnitudes(gradient_epoch_filenames : List[str]):
     plt.title('BN vs non-BN layer average gradient magnitudes')
     plt.xlabel("Epoch")
     plt.ylabel("Average gradient magnitude")
+
+
+def plot_bn_vs_other_gradient_magnitudes_relative(gradient_epoch_filenames : List[str]):
+
+    # can't fit all in memory, so go through each filename
+    bn_grad_average_mags = []
+    non_bn_grads_average_mags = []
+
+    # collect absolute magnitudes for bn vs non bn layers
+    for checkpoint in gradient_epoch_filenames:
+        logging.info(f"Processing: {checkpoint}")
+
+        chkp = torch.load(checkpoint,map_location='cpu')
+        params = chkp['model_state']
+        gradients = chkp['gradients']
+
+        bn_mags = []
+        non_bn_mags = []
+
+        for param_name,gradient in gradients.items():
+
+            param = params[param_name]
+
+            if gradient is None:
+                abs_mean = 0
+            else:
+                abs_mean = (gradient / param).abs().mean()
+
+
+            if 'bn' in param_name:
+                bn_mags.append(abs_mean)
+            else:
+                non_bn_mags.append(abs_mean)
+
+        # calculate averages 
+        bn_grad_average_mags.append(np.mean(bn_mags))
+        non_bn_grads_average_mags.append(np.mean(non_bn_mags))
+
+    plt.plot(range(1,len(gradient_epoch_filenames)+1),
+                bn_grad_average_mags,
+                    label="BN")
+
+    plt.plot(range(1,len(gradient_epoch_filenames)+1),
+                non_bn_grads_average_mags,
+                    label="non-BN")
+    plt.legend()
+    plt.title('BN vs non-BN layer average relative gradient magnitudes')
+    plt.xlabel("Epoch")
+    plt.ylabel("Average relative gradient magnitude")
+
+
+def plot_bn_vs_other_parameter_magnitudes(gradient_epoch_filenames : List[str]):
+
+    # can't fit all in memory, so go through each filename
+    bn_grad_average_mags = []
+    non_bn_grads_average_mags = []
+
+    # collect absolute magnitudes for bn vs non bn layers
+    for checkpoint in gradient_epoch_filenames:
+        logging.info(f"Processing: {checkpoint}")
+
+        chkp = torch.load(checkpoint,map_location='cpu')
+        params = chkp['model_state']
+
+        bn_mags = []
+        non_bn_mags = []
+
+        for param_name,parameter in params.items():
+
+# bn1.running_mean
+# tensor(0.4746)
+# bn1.running_var
+            if parameter is None or "running_mean" in param_name or "running_var" in param_name:
+                abs_mean = 0
+            else:
+                try:
+                    abs_mean = parameter.abs().mean()
+                except:
+                    continue
+
+            if 'bn' in param_name:
+                bn_mags.append(abs_mean)
+            else:
+                non_bn_mags.append(abs_mean)
+
+        # calculate averages 
+        bn_grad_average_mags.append(np.mean(bn_mags))
+        non_bn_grads_average_mags.append(np.mean(non_bn_mags))
+
+    plt.plot(range(1,len(gradient_epoch_filenames)+1),
+                bn_grad_average_mags,
+                    label="BN")
+
+    plt.plot(range(1,len(gradient_epoch_filenames)+1),
+                non_bn_grads_average_mags,
+                    label="non-BN")
+    plt.legend()
+    plt.title('BN vs non-BN layer average parameter magnitudes')
+    plt.xlabel("Epoch")
+    plt.ylabel("Average parameter magnitude")
 
 def plot_accuracy(train_accs, val_accs):
     

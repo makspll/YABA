@@ -1,6 +1,6 @@
 
 from common import err_if_none_arg
-from vis import plot_bn_vs_other_gradient_magnitudes, plot_accuracy, plot_loss, plot_final_accuracy
+from vis import plot_bn_vs_other_gradient_magnitudes, plot_accuracy, plot_bn_vs_other_gradient_magnitudes_relative, plot_bn_vs_other_parameter_magnitudes, plot_loss, plot_final_accuracy
 from args import GRAPH_PARSER
 from os.path import join,isdir,isfile,basename
 import os 
@@ -16,6 +16,26 @@ def plot_gradient_magnitude(weights_root, out):
 
     plot_bn_vs_other_gradient_magnitudes(epoch_checkpoints)
     out = join(out, "gradient_magnitudes.png")
+    plt.savefig(out)
+    plt.clf()
+
+def plot_gradient_magnitude_rel(weights_root, out):
+    # get all 
+    epoch_checkpoints = sorted([join(weights_root,x) for x in os.listdir(weights_root) if isfile(join(weights_root,x)) and x.startswith("epoch")]
+        ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
+
+    plot_bn_vs_other_gradient_magnitudes_relative(epoch_checkpoints)
+    out = join(out, "gradient_magnitudes_relative.png")
+    plt.savefig(out)
+    plt.clf()
+
+def plot_parameter_magnitude(weights_root, out):
+    # get all 
+    epoch_checkpoints = sorted([join(weights_root,x) for x in os.listdir(weights_root) if isfile(join(weights_root,x)) and x.startswith("epoch")]
+        ,key=lambda x: int(''.join([c for c in basename(x) if c.isdigit()])))
+
+    plot_bn_vs_other_parameter_magnitudes(epoch_checkpoints)
+    out = join(out, "parameter_magnitudes.png")
     plt.savefig(out)
     plt.clf()
 
@@ -121,7 +141,6 @@ if __name__ == "__main__":
         final_stats_frankle.append(stats)
             
 
-    
     experiment_root = join(args.experiments,args.experiment_name)
     
     weights_root = join(experiment_root,"weights")
@@ -135,6 +154,12 @@ if __name__ == "__main__":
  
     if args.graph_type == "gradient_magnitude" or args.graph_type == "all":
         plot_gradient_magnitude(weights_root, graphs_root)
+
+    if args.graph_type == "gradient_magnitude_rel" or args.graph_type == "all":
+        plot_gradient_magnitude_rel(weights_root, graphs_root)
+    
+    if args.graph_type == "parameter_magnitude" or args.graph_type == "all":
+        plot_parameter_magnitude(weights_root, graphs_root)
 
     if args.graph_type == "accuracy"  or args.graph_type == "all":
         plot_acc_curve(stats, graphs_root)
