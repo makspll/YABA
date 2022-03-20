@@ -55,6 +55,7 @@ def plot_final_accs_curve(stats, out, exp_types, title):
     all_accs = []
     for stat in stats:
         exp_accs = []
+        
         for s in stat:
             try:
                 csv_values  = pd.read_csv(s)
@@ -62,7 +63,7 @@ def plot_final_accs_curve(stats, out, exp_types, title):
             except:
                 exp_accs.append(0)
         all_accs.append(exp_accs)
-
+    
     plot_final_accuracy(all_accs, exp_types, title)
     plt.savefig(out)
     plt.clf()
@@ -106,8 +107,10 @@ if __name__ == "__main__":
             exp_type = (os.path.basename(os.path.normpath(d)))
             exp_type = re.findall('([a-zA-Z\_ ]*)\d*.*',exp_type)
             exp_type = (exp_type[0][:-1])
+            
             if "frankle" in exp_type:
                 exp_types_frankle.append(exp_type)
+                
             else:
                 exp_types_base.append(exp_type)
 
@@ -168,7 +171,7 @@ if __name__ == "__main__":
         plot_loss_curve(stats, graphs_root)
 
     if args.experiment_name == "all" and args.graph_type == "all_acc":
-        plot_final_accs_curve(final_stats_base, join(graphs_root, "resnet_accs.pdf"), exp_types_base, "Accuracies for Resnet Models")
+        plot_final_accs_curve(final_stats_base, join(graphs_root, "resnet_accs.pdf"), exp_types_base, "Accuracies for ResNet Models")
         plot_final_accs_curve(final_stats_frankle, join(graphs_root, "frankle_accs.pdf"), exp_types_frankle, "Accuracies for Frankle (Frozen) Models")
 
     if args.show:
