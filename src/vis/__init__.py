@@ -185,7 +185,7 @@ def plot_final_accuracy(test_accs, exp_types, title):
             if "BNShalf" in name:
                 color = "green"
 
-            plt.plot(depths, test_accs[i], label=name, linewidth = 2, color = color)
+            plt.plot(depths, test_accs[i], "-o", label=name, linewidth = 2, color = color)
 
     plt.legend()
     plt.xticks(depths)
