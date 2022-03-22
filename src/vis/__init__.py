@@ -169,22 +169,23 @@ def plot_accuracy(train_accs, val_accs):
 def plot_final_accuracy(test_accs, exp_types, title):
     
     depths = ["56", "110", "218"]
-    print(test_accs)
     for i in range(len(exp_types)):
         if "moresparse" not in exp_types[i]:
+            name = exp_types[i].replace("_", " ")
+            name = name.replace("resnet", "ResNet")
+            name = name.replace("frankle", "Frankle")
+            name = name.replace("nbd", "NBD")
+            name = name.replace("nd", "ND")
+            name = name.replace("bns", "BNS")
             color = "blue"
-            if "nobatchdecay_" in exp_types[i]:
+            if "NBD" in name:
                 color = "orange"
-            elif "noregulardecay" in exp_types[i]:
-                color = "cyan"
-            elif "resnet" in exp_types[i]:
+            elif "ND" in name:
+                color = "red"
+            if "BNShalf" in name:
                 color = "green"
-                if "nodecay_" in exp_types[i]:
-                    color = "red"
-            if "sparse" in exp_types[i]:
-                color = "blue"
 
-            plt.plot(depths, test_accs[i], label=exp_types[i], linewidth = 2, color = color)
+            plt.plot(depths, test_accs[i], "-o", label=name, linewidth = 2, color = color)
 
     plt.legend()
     plt.xticks(depths)
